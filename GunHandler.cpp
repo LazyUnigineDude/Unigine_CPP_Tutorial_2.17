@@ -10,7 +10,7 @@ void GunHandler::Update()
 			if (Unigine::Game::getTime() > RateofFireTime)
 			{
 				RateofFireTime = Unigine::Game::getTime() + (1 / RoF);
-				Shoot(Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Game::getPlayer()->getWorldDirection() * 100);
+				Shoot(Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()) * 100);
 			}
 		}
 		if (Unigine::Input::isKeyDown(Unigine::Input::KEY_R)) {Reload(); }
@@ -28,7 +28,7 @@ void GunHandler::GetGun(Unigine::ObjectPtr Gun) {
 	Reload();
 }
 
-void GunHandler::Shoot(Unigine::Math::vec3& Lookat) {
+void GunHandler::Shoot(Unigine::Math::Vec3& Lookat) {
 	if (AmountInGun > 0) {
 	Unigine::NodePtr _Bullet = Unigine::World::loadNode(Gun->getProperty(0)->getParameterPtr(0)->getValueFile());
 	_Bullet->setWorldPosition(Gun.get()->getChild(0)->getWorldPosition());

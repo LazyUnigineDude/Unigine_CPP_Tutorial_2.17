@@ -14,7 +14,7 @@ void DetectionRay::Update() {
 
 	Unigine::ObjectPtr IObj = Unigine::World::getIntersection(
 		CameraNode.get()->getWorldPosition(),
-		CameraNode.get()->getWorldPosition() + (CameraNode.get()->getWorldDirection() * 100),
+		CameraNode.get()->getWorldPosition() + Unigine::Math::Vec3((CameraNode.get()->getWorldDirection() * 100)),
 		0x00000002,
 		RayPtr
 	);
@@ -28,7 +28,7 @@ void DetectionRay::Update() {
 			//Unigine::Console::message("Picked Up"); //Works
 			Equip.get()->addChild(IObj);
 			//Equip.get()->getChild(0)->setPosition(Unigine::Math::vec3_zero); // Works Too
-			IObj.get()->setPosition(Unigine::Math::vec3_zero);
+			IObj.get()->setPosition(Unigine::Math::Vec3_zero);
 
 			// Change state to equipped
 			ShooterAnim* _temp = getComponent<ShooterAnim>(node->getChild(0)->getChild(0));

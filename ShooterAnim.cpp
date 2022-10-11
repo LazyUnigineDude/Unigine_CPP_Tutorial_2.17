@@ -53,7 +53,7 @@ void ShooterAnim::ChangeState(int SHOOTERSTATE) {
 	{
 
 	case ShooterAnim::IDLE:
-		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_SHIFT))
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT))
 		{
 			ResetWeight(); MainState = ANIMSTATES::RUN; PrevState = ANIMSTATES::IDLE;
 		}
@@ -68,7 +68,7 @@ void ShooterAnim::ChangeState(int SHOOTERSTATE) {
 		MainCharacter->lerpLayer(ANIMSTATES::IDLE, PrevState + SHOOTERSTATE, ANIMSTATES::IDLE + SHOOTERSTATE, Weight * 2);
 		break;
 	case ShooterAnim::WALK:
-		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_SHIFT))
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT))
 		{
 			ResetWeight(); MainState = ANIMSTATES::RUN; PrevState = ANIMSTATES::WALK;
 		}
@@ -86,7 +86,7 @@ void ShooterAnim::ChangeState(int SHOOTERSTATE) {
 		MainCharacter->lerpLayer(ANIMSTATES::IDLE, PrevState + SHOOTERSTATE, ANIMSTATES::REVERSE_WALK + SHOOTERSTATE, Weight * 1.65f);
 		break;
 	case ShooterAnim::RUN:
-		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_SHIFT))
+		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_LEFT_SHIFT))
 		{
 			ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::RUN;
 		}

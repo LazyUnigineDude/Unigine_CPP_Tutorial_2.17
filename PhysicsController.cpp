@@ -36,7 +36,7 @@ void PhysicsController::UpdatePhysics() {
 		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NX) * 8);
 	}
 
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_SHIFT)) { MainCharacter->setLinearVelocity(MainCharacter->getLinearVelocity() * 1.08f); }
+	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) { MainCharacter->setLinearVelocity(MainCharacter->getLinearVelocity() * 1.08f); }
 }
 
 void PhysicsController::AutoRotate() {

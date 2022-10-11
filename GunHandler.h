@@ -17,7 +17,7 @@ protected:
 
 private:
 
-	void Shoot(Unigine::Math::vec3& Lookat);
+	void Shoot(Unigine::Math::Vec3& Lookat);
 	void Reload();
 
 	Unigine::ObjectPtr Gun = nullptr;

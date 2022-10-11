@@ -11,7 +11,7 @@ void IntersectionRay::Update() {
 
 	Unigine::ObjectPtr IObj = Unigine::World::getIntersection(
 		PointerNode.get()->getWorldPosition(),
-		Unigine::Game::getPlayer()->getWorldDirection() * 100,
+		Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()) * 100,
 		1,
 		RayPtr
 	);

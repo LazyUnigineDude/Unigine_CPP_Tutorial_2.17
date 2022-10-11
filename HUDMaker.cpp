@@ -3,13 +3,14 @@
 REGISTER_COMPONENT(HUDMaker)
 
 void HUDMaker::Init(){
-	GUI = Unigine::Gui::get();
+	GUI = Unigine::Gui::getCurrent();
 	Canvas = Unigine::WidgetCanvas::create();
 	Image = Unigine::WidgetSprite::create();
 	MainCharacterHealth = getComponent<HealthBar>(MainCharacter.get());
 	CurrentHealth = MainCharacterHealth->GetHealth();
 
-	int Width = Unigine::App::getWidth(), Height = Unigine::App::getHeight();
+	Width = GUI->getWidth();
+	Height = GUI->getHeight();
 
 	// TEXT
 	//int x = Canvas->addText(1);
@@ -53,7 +54,7 @@ void HUDMaker::Init(){
 
 void HUDMaker::Update()
 {
-	GUI = Unigine::Gui::get();
+	GUI = Unigine::Gui::getCurrent();
 
 	if (CurrentHealth > MainCharacterHealth->GetHealth())
 	{

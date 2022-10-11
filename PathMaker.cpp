@@ -21,13 +21,16 @@ void PathMaker::MoveAlongPath() {
 	num %= Path->getNumPoints();
 }
 
-Unigine::Math::vec3 PathMaker::GetCurrentPathPosition() 
-{ return Path->calcSegmentPoint(num, Weight); }
+Unigine::Math::Vec3 PathMaker::GetCurrentPathPosition() 
+{
+	return Path->calcSegmentPoint(num, Weight);
+}
 
 void PathMaker::MoveObject(Unigine::NodePtr Object) {
 
+	Unigine::Math::Vec3
+		Point = Path->calcSegmentPoint(num, Weight);
 	Unigine::Math::vec3
-		Point = Path->calcSegmentPoint(num, Weight),
 		Dir = Path->calcSegmentTangent(num, Weight),
 		Up = Path->calcSegmentUpVector(num, Weight);
 
@@ -41,21 +44,21 @@ void PathMaker::RenderPath() {
 
 	for (int i = 0; i < Path->getNumPoints(); i++)
 	{
-		Unigine::Math::vec3 Point = Path->getPoint(i);
+		Unigine::Math::Vec3 Point = Path->getPoint(i);
 		Unigine::Visualizer::renderPoint3D(Point, 0.1f, Unigine::Math::vec4_black);
 
-		Unigine::Math::vec3
+		Unigine::Math::Vec3
 			SPoint = Path->getSegmentStartPoint(i),
-			STang = Path->getSegmentStartTangent(i),
 			EPoint = Path->getSegmentEndPoint(i),
-			ETang = Path->getSegmentEndTangent(i);
+			STang = Unigine::Math::Vec3(Path->getSegmentStartTangent(i)),
+			ETang = Unigine::Math::Vec3(Path->getSegmentEndTangent(i));
 
 		Unigine::Visualizer::renderVector(SPoint, SPoint + STang, Unigine::Math::vec4_green);
 		Unigine::Visualizer::renderVector(EPoint, EPoint + ETang, Unigine::Math::vec4_red);
 
 		for (int j = 0; j < segments; j++)
 		{
-			Unigine::Math::vec3
+			Unigine::Math::Vec3
 				p0 = Path->calcSegmentPoint(i, j / segments),
 				p1 = Path->calcSegmentPoint(i, (j +1) / segments);
 

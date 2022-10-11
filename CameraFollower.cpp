@@ -35,7 +35,7 @@ void CameraFollower::Update() {
 
 void CameraFollower::UpdateCamera() {
 
-	Unigine::Math::vec2 MousePos = Unigine::Input::getMouseDelta();
+	Unigine::Math::ivec2 MousePos = Unigine::Input::getMouseDeltaPosition();
 	
 	Angle += HorInv * MousePos.x * Unigine::Game::getIFps() * RotSpeedH;
 

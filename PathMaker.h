@@ -13,7 +13,7 @@ public:
 		void MoveObject(Unigine::NodePtr Object);
 		void RenderPath();
 		void MoveAlongPath();
-		Unigine::Math::vec3 GetCurrentPathPosition();
+		Unigine::Math::Vec3 GetCurrentPathPosition();
 
 private:
 
