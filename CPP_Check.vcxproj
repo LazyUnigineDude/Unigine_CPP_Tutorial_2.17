@@ -68,16 +68,46 @@
       <AdditionalDependencies>Unigine_double_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
+<ItemGroup>
+    <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="AppEditorLogic.cpp" />
     <ClCompile Include="AppSystemLogic.cpp" />
     <ClCompile Include="AppWorldLogic.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="CameraFollower.cpp" />
+    <ClCompile Include="DetectionRay.cpp" />
+    <ClCompile Include="GunHandler.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
+    <ClCompile Include="HUDMaker.cpp" />
+    <ClCompile Include="IntersectionRay.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PathMaker.cpp" />
+    <ClCompile Include="PhysicsController.cpp" />
+    <ClCompile Include="PropertyChecker.cpp" />
+    <ClCompile Include="ShooterAI.cpp" />
+    <ClCompile Include="ShooterAnim.cpp" />
+    <ClCompile Include="SomeClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationState.h" />
     <ClInclude Include="AppEditorLogic.h" />
     <ClInclude Include="AppSystemLogic.h" />
     <ClInclude Include="AppWorldLogic.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="CameraController.h" />
+    <ClInclude Include="CameraFollower.h" />
+    <ClInclude Include="DetectionRay.h" />
+    <ClInclude Include="GunHandler.h" />
+    <ClInclude Include="HealthBar.h" />
+    <ClInclude Include="HUDMaker.h" />
+    <ClInclude Include="IntersectionRay.h" />
+    <ClInclude Include="PathMaker.h" />
+    <ClInclude Include="PhysicsController.h" />
+    <ClInclude Include="PropertyChecker.h" />
+    <ClInclude Include="ShooterAI.h" />
+    <ClInclude Include="ShooterAnim.h" />
+    <ClInclude Include="SomeClass.h" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="../utils/natvis/unigine_stl.natvis" />
