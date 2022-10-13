@@ -22,7 +22,6 @@ protected:
 
 private:
 
-	float Mass;
 	Unigine::BodyRigidPtr MainCharacter;
 	void AutoRotate();
 };

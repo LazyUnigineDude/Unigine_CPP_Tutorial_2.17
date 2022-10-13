@@ -5,7 +5,6 @@ REGISTER_COMPONENT(PhysicsController)
 void PhysicsController::Init() {
 
 	MainCharacter = node->getObjectBodyRigid();
-	Mass = MainCharacter->getMass();
 }
 
 void PhysicsController::UpdatePhysics() {
