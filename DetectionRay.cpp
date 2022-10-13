@@ -6,7 +6,7 @@ REGISTER_COMPONENT(DetectionRay)
 void DetectionRay::Init(){
 
 	RayPtr = Unigine::WorldIntersection::create();
-	Equip = node.get()->getChild(0)->getChild(0)->getChild(0)->getChild(0);
+	Equip = node.get()->getChild(0)->getChild(0)->getChild(0);
 }
 
 
@@ -31,7 +31,7 @@ void DetectionRay::Update() {
 			IObj.get()->setPosition(Unigine::Math::Vec3_zero);
 
 			// Change state to equipped
-			ShooterAnim* _temp = getComponent<ShooterAnim>(node->getChild(0)->getChild(0));
+			ShooterAnim* _temp = getComponent<ShooterAnim>(node->getChild(0));
 			_temp->ChangeState(_temp->EQUIPPED);
 			GunHandler* _gun = getComponent<GunHandler>(node->getChild(1));
 			_gun->GetGun(IObj);

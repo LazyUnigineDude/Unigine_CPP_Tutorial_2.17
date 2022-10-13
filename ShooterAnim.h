@@ -28,14 +28,14 @@ private:
 	float Weight = 0, Weight_ = 0, x = 2, y = 5;
 	bool isWeightChanged = false;
 
-	enum ANIMSTATES { IDLE, WALK, RUN, REVERSE_WALK, COUNT };
+	enum ANIMSTATES { IDLE, WALK, RUN, REVERSE_WALK, SIDEWALK_L, SIDEWALK_R, COUNT };
 
 
 	void ResetWeight();
 	void ChangeState(int SHOOTERSTATE);
 	void ShooterState();
 	
-	SHOOTER_STATE State = SHOOTER_STATE::NORMAL;
+	SHOOTER_STATE State;
 	ANIMSTATES MainState = ANIMSTATES::IDLE, PrevState = ANIMSTATES::IDLE;
 	
 	Unigine::ObjectPtr Gun;

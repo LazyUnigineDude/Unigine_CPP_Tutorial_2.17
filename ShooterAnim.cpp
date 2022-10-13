@@ -54,59 +54,64 @@ void ShooterAnim::ChangeState(int SHOOTERSTATE) {
 
 	case ShooterAnim::IDLE:
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT))
-		{
-			ResetWeight(); MainState = ANIMSTATES::RUN; PrevState = ANIMSTATES::IDLE;
-		}
+			{ ResetWeight(); MainState = ANIMSTATES::RUN; PrevState = ANIMSTATES::IDLE; }
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W))
-		{
-			ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::IDLE;
-		}
+			{ ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::IDLE; }
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S))
-		{
-			ResetWeight(); MainState = ANIMSTATES::REVERSE_WALK; PrevState = ANIMSTATES::IDLE;
-		}
+			{ ResetWeight(); MainState = ANIMSTATES::REVERSE_WALK; PrevState = ANIMSTATES::IDLE; }
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_A))
+			{ ResetWeight(); MainState = ANIMSTATES::SIDEWALK_L; PrevState = ANIMSTATES::IDLE; }
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_D))
+			{ ResetWeight(); MainState = ANIMSTATES::SIDEWALK_R; PrevState = ANIMSTATES::IDLE; }
 		MainCharacter->lerpLayer(ANIMSTATES::IDLE, PrevState + SHOOTERSTATE, ANIMSTATES::IDLE + SHOOTERSTATE, Weight * 2);
 		break;
 	case ShooterAnim::WALK:
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT))
-		{
-			ResetWeight(); MainState = ANIMSTATES::RUN; PrevState = ANIMSTATES::WALK;
-		}
+			{ ResetWeight(); MainState = ANIMSTATES::RUN; PrevState = ANIMSTATES::WALK; }
 		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_W))
-		{
-			ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::WALK;
-		}
+			{ ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::WALK; }
 		MainCharacter->lerpLayer(ANIMSTATES::IDLE, PrevState + SHOOTERSTATE, ANIMSTATES::WALK + SHOOTERSTATE, Weight * 1.7f);
 		break;
 	case ShooterAnim::REVERSE_WALK:
 		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_S))
-		{
-			ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::REVERSE_WALK;
-		}
+			{ ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::REVERSE_WALK; }
 		MainCharacter->lerpLayer(ANIMSTATES::IDLE, PrevState + SHOOTERSTATE, ANIMSTATES::REVERSE_WALK + SHOOTERSTATE, Weight * 1.65f);
 		break;
 	case ShooterAnim::RUN:
 		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_LEFT_SHIFT))
-		{
-			ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::RUN;
-		}
+			{ ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::RUN; }
 		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_W))
-		{
-			ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::RUN;
-		}
+			{ ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::RUN; }
 		MainCharacter->lerpLayer(ANIMSTATES::IDLE, PrevState + SHOOTERSTATE, ANIMSTATES::RUN + SHOOTERSTATE, Weight * 3);
 		break;
-
+	case ShooterAnim::SIDEWALK_L:
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W))
+			{ ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::SIDEWALK_L; }
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S))
+			{ ResetWeight(); MainState = ANIMSTATES::REVERSE_WALK; PrevState = ANIMSTATES::SIDEWALK_L; }
+		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_A))
+			{ ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::SIDEWALK_L; }
+		MainCharacter->lerpLayer(ANIMSTATES::IDLE, PrevState + SHOOTERSTATE, ANIMSTATES::SIDEWALK_L + SHOOTERSTATE, Weight * 1.65f);
+		break;
+	case ShooterAnim::SIDEWALK_R:
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W))
+			{ ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::SIDEWALK_R; }
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S))
+			{ ResetWeight(); MainState = ANIMSTATES::REVERSE_WALK; PrevState = ANIMSTATES::SIDEWALK_R; }
+		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_D))
+			{ ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::SIDEWALK_R; }
+		MainCharacter->lerpLayer(ANIMSTATES::IDLE, PrevState + SHOOTERSTATE, ANIMSTATES::SIDEWALK_R + SHOOTERSTATE, Weight * 1.65f);
+		break;
 	default:
 		break;
 	}
 }
 
-
 void ShooterAnim::Init() {
 
 	MainCharacter = Unigine::checked_ptr_cast<Unigine::ObjectMeshSkinned>(node);
 	MainCharacter->setNumLayers(ANIMSTATES::COUNT * SHOOTER_STATE::_COUNT);
+	State = NORMAL;
 
 	for (int i = 0; i < ANIMSTATES::COUNT; i++)
 	{
@@ -118,18 +123,14 @@ void ShooterAnim::Init() {
 
 		Temp = Unigine::FileSystem::getGUID(ANIM_AIM[i].getRaw()).getFileSystemString();
 		MainCharacter->setAnimation(i + (ANIMSTATES::COUNT  * 2), MainCharacter->addAnimation(Temp));
-
 	}
 }
 
 void ShooterAnim::Update(){
 
 	for (int i = 0; i < ANIMSTATES::COUNT; i++)
-	{
-		MainCharacter->setFrame(i + (State * ANIMSTATES::COUNT), Unigine::Game::getTime() * 30);
-	}
+	{ MainCharacter->setFrame(i + (State * ANIMSTATES::COUNT), Unigine::Game::getTime() * 30); }
 
 	Weight = Unigine::Math::clamp(Weight + Unigine::Game::getIFps(), 0.0f, 1.0f);
-
 	ShooterState();
 }

@@ -49,14 +49,12 @@ void GunHandler::Reload() {
 
 	int reload = ReloadAmount - AmountInGun;
 
-	if (CurrentBulletAmount == 0) { Unigine::Log::message("Empty\n"); }
-	else if (CurrentBulletAmount > reload)
-	{
+	if (CurrentBulletAmount + AmountInGun == 0) { Unigine::Log::message("Empty\n"); }
+	else if (CurrentBulletAmount >= reload) {
 		CurrentBulletAmount -= reload;
 		AmountInGun += reload;
 	}
-	else if (CurrentBulletAmount < reload)
-	{
+	else if (CurrentBulletAmount < reload) {
 		AmountInGun += CurrentBulletAmount;
 		CurrentBulletAmount = 0;
 	}

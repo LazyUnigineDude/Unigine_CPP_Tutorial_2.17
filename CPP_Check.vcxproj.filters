@@ -37,9 +37,6 @@
     <ClCompile Include="HUDMaker.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
-    <ClCompile Include="IntersectionRay.cpp">
-      <Filter>Interaction_GunHandler</Filter>
-    </ClCompile>
     <ClCompile Include="PropertyChecker.cpp">
       <Filter>Basics</Filter>
     </ClCompile>
@@ -57,6 +54,9 @@
     </ClCompile>
     <ClCompile Include="ShooterAnim.cpp">
       <Filter>Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="IntersectionRay.cpp">
+      <Filter>Basics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +93,6 @@
     <ClInclude Include="HUDMaker.h">
       <Filter>HUD</Filter>
     </ClInclude>
-    <ClInclude Include="IntersectionRay.h">
-      <Filter>Interaction_GunHandler</Filter>
-    </ClInclude>
     <ClInclude Include="PropertyChecker.h">
       <Filter>Basics</Filter>
     </ClInclude>
@@ -113,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsController.h">
       <Filter>Shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="IntersectionRay.h">
+      <Filter>Basics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

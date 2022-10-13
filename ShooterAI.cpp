@@ -30,6 +30,7 @@ void ShooterAI::Update() {
 		else isInsideFrustum = false;
 
 		AiState();
+		Path->RenderPath();
 }
 
 void ShooterAI::AiState() {
@@ -104,7 +105,7 @@ void ShooterAI::Shoot() {
 
 	Unigine::NodePtr _Bullet = Unigine::World::loadNode(BulletPrefab.get());
 	_Bullet->setWorldPosition(node->getChild(0)->getWorldPosition());
-	_Bullet->worldLookAt(node->getWorldPosition() + Unigine::Math::Vec3(node->getWorldDirection(Unigine::Math::AXIS_Y)));
+	_Bullet->worldLookAt(node->getChild(0)->getWorldPosition() + Unigine::Math::Vec3(node->getWorldDirection(Unigine::Math::AXIS_Y)));
 
 	Bullet* bullet = getComponent<Bullet>(_Bullet);
 	bullet->setDamage(1);

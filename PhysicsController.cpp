@@ -5,38 +5,44 @@ REGISTER_COMPONENT(PhysicsController)
 void PhysicsController::Init() {
 
 	MainCharacter = node->getObjectBodyRigid();
-	MainCharacter->setMaxLinearVelocity(Max_Speed.get() * 2);
+	Mass = MainCharacter->getMass();
 }
 
 void PhysicsController::UpdatePhysics() {
 
-
 	AutoRotate();
+	Unigine::Log::message("%f %f %f\n", MainCharacter->getLinearVelocity().x, MainCharacter->getLinearVelocity().y, MainCharacter->getLinearVelocity().z);
 
 	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W))
 	{
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_Y) * 10);
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_Y) * FBLR_Speed.get().x * 20);
 	}
 
 
 	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S))
 	{
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NY) * 6);
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NY) * FBLR_Speed.get().y * 20);
 	}
 
 
 	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_D))
 	{
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_X) * 8);
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_X) * FBLR_Speed.get().z * 20);
 	}
 
 
 	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_A))
 	{
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NX) * 8);
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NX) * FBLR_Speed.get().w * 20);
 	}
 
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) { MainCharacter->setLinearVelocity(MainCharacter->getLinearVelocity() * 1.08f); }
+	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) {
+		MainCharacter->setMaxLinearVelocity(Max_Speed.get() * 1.5f);
+	}
+
+	else {
+		MainCharacter->setMaxLinearVelocity(Max_Speed.get());
+	}
 }
 
 void PhysicsController::AutoRotate() {
