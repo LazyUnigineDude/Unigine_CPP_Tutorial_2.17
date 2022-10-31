@@ -24,11 +24,16 @@ void ShooterAI::Update() {
 		// Logic
 		BFrustum = Unigine::Math::BoundFrustum(Frustum, Unigine::Math::inverse(Unigine::Math::mat4(View)));
 		if (BFrustum.inside(Unigine::Math::vec3(MainCharacter->getWorldPosition()))) {
-			isInsideFrustum = true;
-			float distance = Unigine::Math::distance(Unigine::Math::vec3(MainCharacter->getWorldPosition()), Unigine::Math::vec3(node->getWorldPosition()));
-			DistanceFactor = distance / FieldDistance;
+
+			Unigine::ObjectPtr x = Unigine::World::getIntersection(node->getWorldPosition(), MainCharacter->getWorldPosition(), 1);
+			Unigine::Visualizer::renderLine3D(node->getWorldPosition(), MainCharacter->getWorldPosition(), Unigine::Math::vec4_red);
+			if (x->getName() == MainCharacter->getChild(0)->getName()) {
+				isVisible = true;
+				float distance = Unigine::Math::distance(Unigine::Math::vec3(MainCharacter->getWorldPosition()), Unigine::Math::vec3(node->getWorldPosition()));
+				DistanceFactor = distance / FieldDistance;
+			}
+			else isVisible = false;
 		}
-		else isInsideFrustum = false;
 
 		AiState();
 		Path->RenderPath();
@@ -43,7 +48,7 @@ void ShooterAI::AiState() {
 	case ShooterAI::IDLE:
 		//Unigine::Log::message("IDLE\n");
 		Weight = Unigine::Math::clamp(Weight -= Unigine::Game::getIFps(), 0.0f, 1.0f);
-		if (isInsideFrustum) { ChangeState(CurrentState::ALERT); }
+		if (isVisible) { ChangeState(CurrentState::ALERT); }
 			if (Unigine::Math::distance(Unigine::Math::vec3(node->getWorldPosition()), Unigine::Math::vec3(Path->GetCurrentPathPosition())) > 0.1f) {
 				RotateTowards(Path->GetCurrentPathPosition(), node, 0.05f);
 				MoveTowards(Path->GetCurrentPathPosition(), node, 1);
@@ -57,20 +62,20 @@ void ShooterAI::AiState() {
 		//Unigine::Log::message("ALRT\n");
 		Weight = Unigine::Math::clamp(Weight += Unigine::Game::getIFps() / DistanceFactor, 0.0f, 1.0f);
 		if (Weight == 1.0f) { ChangeState(CurrentState::AGGRESSIVE); }
-		if (!isInsideFrustum) { ChangeState(CurrentState::IDLE); }
+		if (!isVisible) { ChangeState(CurrentState::IDLE); }
 			RotateTowards(MainCharacter->getWorldPosition(), node, 0.005f);
 		break;
 	case ShooterAI::SEARCH:
 		//Unigine::Log::message("SRCH\n");
 		Weight = Unigine::Math::clamp(Weight -= Unigine::Game::getIFps() / 5, 0.0f, 1.0f);
 		if (Weight == 0.0f) { ChangeState(CurrentState::IDLE); }
-		if (isInsideFrustum) { ChangeState(CurrentState::AGGRESSIVE); Weight = 1; }
+		if (isVisible) { ChangeState(CurrentState::AGGRESSIVE); Weight = 1; }
 			RotateTowards(MainCharacter->getWorldPosition(), node, 0.05f);
 			MoveTowards(MainCharacter->getWorldPosition(), node, 3);
 		break;
 	case ShooterAI::AGGRESSIVE:
 		//Unigine::Log::message("AGRO\n");
-		if (!isInsideFrustum) { ChangeState(CurrentState::SEARCH); }
+		if (!isVisible) { ChangeState(CurrentState::SEARCH); }
 			RotateTowards(MainCharacter->getWorldPosition(), node, 0.05f);
 			MoveTowards(MainCharacter->getWorldPosition(), node, 5);
 			if (Unigine::Math::distance(Unigine::Math::vec3(node->getWorldPosition()), Unigine::Math::vec3(MainCharacter->getWorldPosition())) < 20.0f) { ChangeState(SHOOT); CurrentTime = Unigine::Game::getTime(); }

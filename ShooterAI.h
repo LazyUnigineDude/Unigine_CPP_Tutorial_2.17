@@ -37,7 +37,6 @@ private:
 	PathMaker* Path;
 	Bullet* BulletPtr;
 
-	bool isInsideFrustum = false;
+	bool isVisible = false;
 	Unigine::Math::BoundFrustum BFrustum;
-	Unigine::Vector<Unigine::NodePtr> ObjCaptured;
 };
