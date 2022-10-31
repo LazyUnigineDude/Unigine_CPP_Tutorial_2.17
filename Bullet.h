@@ -15,10 +15,9 @@ protected:
 	void Update();
 
 private:
-	float StartTime, LifeTime = 0.4f;
+	float StartTime, LifeTime = 5.0f;
 	int Damage = 0;
 
 	Unigine::BodyPtr Body;
 	void OnEnter(Unigine::BodyPtr Body, int num);
 };
-

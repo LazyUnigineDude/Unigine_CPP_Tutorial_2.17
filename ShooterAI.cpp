@@ -1,12 +1,13 @@
 #include "ShooterAI.h"
 REGISTER_COMPONENT(ShooterAI)
+#include "PhysicsController.h"
 
 void ShooterAI::Init() {
 
 	Path = getComponent<PathMaker>(PathMakerNode);
 	Path->InitPath();
 	Health = getComponent<HealthBar>(node);
-	CurrentHealth = Health->GetHealth();
+	CurrentHealth = 15;
 }
 
 void ShooterAI::Update() {
@@ -77,6 +78,7 @@ void ShooterAI::AiState() {
 	case ShooterAI::SHOOT:
 			if (CurrentTime + 1 < Unigine::Game::getTime()) { Shoot(); ChangeState(AGGRESSIVE); }
 			RotateTowards(MainCharacter->getWorldPosition(), node, 0.02f);
+			Unigine::Visualizer::renderLine3D(node->getWorldPosition(), node->getWorldPosition() + Unigine::Math::Vec3(node->getWorldDirection(Unigine::Math::AXIS_Y)) * 20, Unigine::Math::vec4_blue);
 		break;
 	default: break;
 	}
@@ -103,13 +105,36 @@ void ShooterAI::MoveTowards(Unigine::Math::Vec3 RotateTowards, Unigine::NodePtr 
 
 void ShooterAI::Shoot() {
 
+	Unigine::Math::Vec3 FuturePoint = MainCharacter->getWorldPosition() + Unigine::Math::Vec3(MainCharacter->getBodyLinearVelocity().normalize());
+	FuturePoint.z = 1;
+	Unigine::Visualizer::renderCapsule(0.5f, 1.5f, Unigine::Math::dmat4(MainCharacter->getWorldRotation(), FuturePoint), Unigine::Math::vec4_black,2);
+	Unigine::Visualizer::renderPoint3D(FuturePoint, 0.1f, Unigine::Math::vec4_red,false,2);
+
 	Unigine::NodePtr _Bullet = Unigine::World::loadNode(BulletPrefab.get());
 	_Bullet->setWorldPosition(node->getChild(0)->getWorldPosition());
-	_Bullet->worldLookAt(node->getChild(0)->getWorldPosition() + Unigine::Math::Vec3(node->getWorldDirection(Unigine::Math::AXIS_Y)));
 
 	Bullet* bullet = getComponent<Bullet>(_Bullet);
 	bullet->setDamage(1);
-
 	Unigine::BodyRigidPtr _BulletPhysics = _Bullet->getObjectBodyRigid();
-	_BulletPhysics->addLinearImpulse(_Bullet->getWorldDirection(Unigine::Math::AXIS_Y) * 50);
+
+	double FutureDistance = Unigine::Math::distance(Unigine::Math::vec3(MainCharacter->getWorldPosition()), Unigine::Math::vec3(FuturePoint)),
+		Distance = Unigine::Math::distance(Unigine::Math::vec3(node->getWorldPosition()), Unigine::Math::vec3(MainCharacter->getWorldPosition())),
+		speed = getComponent<PhysicsController>(MainCharacter)->getSpeed();
+
+
+	if (speed <= 1 && speed > 0) {
+
+		_Bullet->worldLookAt(Unigine::Math::lerp(MainCharacter->getWorldPosition(), FuturePoint, speed / FutureDistance));
+		_BulletPhysics->addLinearImpulse(_Bullet->getWorldDirection(Unigine::Math::AXIS_Y) * Distance);
+	}
+	else if (speed > 1)
+	{
+		_Bullet->worldLookAt(FuturePoint);
+		_BulletPhysics->addLinearImpulse(_Bullet->getWorldDirection(Unigine::Math::AXIS_Y) * Distance * (speed / FutureDistance));
+	}
+	else
+	{
+		_Bullet->worldLookAt(node->getChild(0)->getWorldPosition() + Unigine::Math::Vec3(node->getWorldDirection(Unigine::Math::AXIS_Y)));
+		_BulletPhysics->addLinearImpulse(_Bullet->getWorldDirection(Unigine::Math::AXIS_Y) * Distance);
+	}
 }

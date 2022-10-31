@@ -1,4 +1,4 @@
-#include "PhysicsController.h"
+	#include "PhysicsController.h"
 
 REGISTER_COMPONENT(PhysicsController)
 
@@ -10,7 +10,6 @@ void PhysicsController::Init() {
 void PhysicsController::UpdatePhysics() {
 
 	AutoRotate();
-	Unigine::Log::message("%f %f %f\n", MainCharacter->getLinearVelocity().x, MainCharacter->getLinearVelocity().y, MainCharacter->getLinearVelocity().z);
 
 	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W))
 	{
@@ -54,4 +53,11 @@ void PhysicsController::AutoRotate() {
 	float Angle = Unigine::Math::getAngle(CameraView, PlayerView, node->getWorldDirection(Unigine::Math::AXIS_Z));
 
 	MainCharacter->addAngularImpulse(node->getWorldDirection() * Angle);
+}
+
+double PhysicsController::getSpeed() {
+
+	double speed = Unigine::Math::pow2(MainCharacter->getLinearVelocity().x) + Unigine::Math::pow2(MainCharacter->getLinearVelocity().y) + Unigine::Math::pow2(MainCharacter->getLinearVelocity().z);
+	speed = Unigine::Math::sqrtFast(speed);
+	return speed;
 }

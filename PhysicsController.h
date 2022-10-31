@@ -13,6 +13,7 @@ public:
 
 		PROP_PARAM(Float, Max_Speed, 10)
 		PROP_PARAM(Vec4, FBLR_Speed)
+		double getSpeed();
 
 protected:
 
