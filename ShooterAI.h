@@ -15,8 +15,9 @@ public:
 		PROP_PARAM(Node, MainCharacter)
 		PROP_PARAM(Node, PathMakerNode)
 		PROP_PARAM(File, BulletPrefab)
+		PROP_PARAM(Node, PhysicalTriggerNode)
 	
-	enum CurrentState{IDLE, ALERT, SEARCH, AGGRESSIVE, SHOOT};
+	enum CurrentState{IDLE, ALERT, SEARCH, AGGRESSIVE, SHOOT, DODGE};
 	void ChangeState(CurrentState NEW_STATE) { if (STATE != NEW_STATE) { STATE = NEW_STATE; } }
 
 protected:
@@ -25,14 +26,16 @@ protected:
 	void Update();
 
 private:
+	void GetObjectEnteredInArea(Unigine::BodyPtr Body);
 	void AiState();
 	void RotateTowards(Unigine::Math::Vec3 RotateTowards, Unigine::NodePtr Obj2Move, float RoatateSpeed);
 	void MoveTowards(Unigine::Math::Vec3 RotateTowards, Unigine::NodePtr Obj2Move, int Speed);
-	CurrentState STATE  = CurrentState::IDLE;
+	CurrentState STATE  = CurrentState::DODGE;
 	float Weight = 0, DistanceFactor = 1, CurrentTime = 0;
 	int FieldDistance = 30, CurrentHealth;
 	void Shoot();
 
+	Unigine::PhysicalTriggerPtr DodgeArea;
 	HealthBar* Health;
 	PathMaker* Path;
 	Bullet* BulletPtr;

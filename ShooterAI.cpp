@@ -8,6 +8,8 @@ void ShooterAI::Init() {
 	Path->InitPath();
 	Health = getComponent<HealthBar>(node);
 	CurrentHealth = 15;
+	DodgeArea = Unigine::static_ptr_cast<Unigine::PhysicalTrigger>(PhysicalTriggerNode.get());
+	DodgeArea->addEnterCallback(Unigine::MakeCallback(this, &ShooterAI::GetObjectEnteredInArea));
 }
 
 void ShooterAI::Update() {
@@ -26,7 +28,7 @@ void ShooterAI::Update() {
 		if (BFrustum.inside(Unigine::Math::vec3(MainCharacter->getWorldPosition()))) {
 
 			Unigine::ObjectPtr x = Unigine::World::getIntersection(node->getWorldPosition(), MainCharacter->getWorldPosition(), 1);
-			Unigine::Visualizer::renderLine3D(node->getWorldPosition(), MainCharacter->getWorldPosition(), Unigine::Math::vec4_red);
+			Unigine::Visualizer::renderLine3D(node->getChild(0)->getWorldPosition(), MainCharacter->getWorldPosition(), Unigine::Math::vec4_red);
 			if (x->getName() == MainCharacter->getChild(0)->getName()) {
 				isVisible = true;
 				float distance = Unigine::Math::distance(Unigine::Math::vec3(MainCharacter->getWorldPosition()), Unigine::Math::vec3(node->getWorldPosition()));
@@ -37,11 +39,38 @@ void ShooterAI::Update() {
 
 		AiState();
 		Path->RenderPath();
+		Unigine::Visualizer::renderSphere(DodgeArea->getSize().x, DodgeArea->getWorldTransform(), Unigine::Math::vec4_red);
+}
+
+void ShooterAI::GetObjectEnteredInArea(Unigine::BodyPtr Body) {
+
+	if (Body->getObject()->getName() != node->getName()) {
+		Unigine::Log::message("%s Entered\n", Body->getObject()->getName());
+
+		Unigine::ObjectPtr x = Unigine::World::getIntersection(Body->getPosition(), Body->getPosition() + Unigine::Math::Vec3(Body->getObject()->getBodyLinearVelocity()), 1);
+		Unigine::Visualizer::renderLine3D(Body->getPosition(), Body->getPosition() + Unigine::Math::Vec3(Body->getObject()->getBodyLinearVelocity()), Unigine::Math::vec4_red, 1);
+
+		if (x && x->getName() == node->getName() && STATE == DODGE) {
+
+			Unigine::Math::Vec3 MainVector = Unigine::Math::Vec3(Body->getObject()->getBodyLinearVelocity()).normalize();
+			float Angle = Unigine::Math::getAngle(Unigine::Math::vec3(node->getWorldPosition()) + node->getWorldDirection(), Unigine::Math::vec3(MainVector) ,Unigine::Math::vec3_up);
+			Unigine::Log::message("Angle: %f\n", Angle);
+			(Angle > 0) ? Angle = 90.0f : Angle = -90.0f;
+			Unigine::Log::message("New Angle: %f\n", Angle);
+			Unigine::Math::Vec3 RotatedVector = Unigine::Math::Vec3(
+				MainVector.x * Unigine::Math::cos(Angle) - MainVector.y * Unigine::Math::sin(Angle),
+				MainVector.x * Unigine::Math::sin(Angle) + MainVector.y * Unigine::Math::cos(Angle),
+				0).normalize();
+			Unigine::Visualizer::renderVector(Body->getPosition(), Body->getPosition() - MainVector, Unigine::Math::vec4_green, 0.25f, true, 1);
+			Unigine::Visualizer::renderVector(Body->getPosition(), Body->getPosition() - RotatedVector, Unigine::Math::vec4_green, 0.25f, true, 1);
+			node->setWorldPosition(node->getWorldPosition() + RotatedVector * 10);
+		}
+	}
 }
 
 void ShooterAI::AiState() {
 
-	if (CurrentHealth != Health->GetHealth()) { ChangeState(AGGRESSIVE); Weight = 1.0f; CurrentHealth = Health->GetHealth(); }
+	//if (CurrentHealth != Health->GetHealth()) { ChangeState(AGGRESSIVE); Weight = 1.0f; CurrentHealth = Health->GetHealth(); }
 
 	switch (STATE)
 	{
@@ -84,6 +113,8 @@ void ShooterAI::AiState() {
 			if (CurrentTime + 1 < Unigine::Game::getTime()) { Shoot(); ChangeState(AGGRESSIVE); }
 			RotateTowards(MainCharacter->getWorldPosition(), node, 0.02f);
 			Unigine::Visualizer::renderLine3D(node->getWorldPosition(), node->getWorldPosition() + Unigine::Math::Vec3(node->getWorldDirection(Unigine::Math::AXIS_Y)) * 20, Unigine::Math::vec4_blue);
+		break;
+	case ShooterAI::DODGE:
 		break;
 	default: break;
 	}
