@@ -10,6 +10,7 @@ void ShooterAI::Init() {
 	CurrentHealth = 15;
 	DodgeArea = Unigine::static_ptr_cast<Unigine::PhysicalTrigger>(PhysicalTriggerNode.get());
 	DodgeArea->addEnterCallback(Unigine::MakeCallback(this, &ShooterAI::GetObjectEnteredInArea));
+	NavMeshCheck();
 }
 
 void ShooterAI::Update() {
@@ -38,8 +39,29 @@ void ShooterAI::Update() {
 		}
 
 		AiState();
-		Path->RenderPath();
+		//Path->RenderPath();
 		Unigine::Visualizer::renderSphere(DodgeArea->getSize().x, DodgeArea->getWorldTransform(), Unigine::Math::vec4_red);
+}
+
+void ShooterAI::NavMeshCheck() {
+	
+	NavMesh = Unigine::static_ptr_cast<Unigine::NavigationMesh>(NavigationNode.get());
+
+	PathPoints1 = NavigationNode->getChild(0)->getWorldPosition();
+	PathPoints2 = NavigationNode->getChild(1)->getWorldPosition();
+	PathPoints3 = NavigationNode->getChild(2)->getWorldPosition();
+	PathPoints3 = NavigationNode->getChild(3)->getWorldPosition();
+
+	Pathing1 = Unigine::PathRoute::create();
+	Pathing2 = Unigine::PathRoute::create();
+	Pathing3 = Unigine::PathRoute::create();
+	Pathing4 = Unigine::PathRoute::create();
+
+	Pathing1->create2D(PathPoints1, PathPoints2);
+	Pathing2->create2D(PathPoints2, PathPoints3);
+	Pathing3->create2D(PathPoints3, PathPoints4);
+	Pathing4->create2D(PathPoints4, PathPoints1);
+
 }
 
 void ShooterAI::GetObjectEnteredInArea(Unigine::BodyPtr Body) {
@@ -77,15 +99,29 @@ void ShooterAI::AiState() {
 	case ShooterAI::IDLE:
 		//Unigine::Log::message("IDLE\n");
 		Weight = Unigine::Math::clamp(Weight -= Unigine::Game::getIFps(), 0.0f, 1.0f);
-		if (isVisible) { ChangeState(CurrentState::ALERT); }
-			if (Unigine::Math::distance(Unigine::Math::vec3(node->getWorldPosition()), Unigine::Math::vec3(Path->GetCurrentPathPosition())) > 0.1f) {
+		//if (isVisible) { ChangeState(CurrentState::ALERT); }
+			/*if (Unigine::Math::distance(Unigine::Math::vec3(node->getWorldPosition()), Unigine::Math::vec3(Path->GetCurrentPathPosition())) > 0.1f) {
 				RotateTowards(Path->GetCurrentPathPosition(), node, 0.05f);
 				MoveTowards(Path->GetCurrentPathPosition(), node, 1);
 			}
 			else {
 				Path->MoveAlongPath();
 				Path->MoveObject(node);
-			}
+			}*/
+		NavMesh->renderVisualizer();
+
+		if (Pathing1->isReached()) {
+			Pathing1->renderVisualizer(Unigine::Math::vec4_white);
+		}
+		if (Pathing2->isReached()) {
+			Pathing2->renderVisualizer(Unigine::Math::vec4_white);
+		}
+		if (Pathing3->isReached()) {
+			Pathing3->renderVisualizer(Unigine::Math::vec4_white);
+		}
+		if (Pathing4->isReached()) {
+			Pathing4->renderVisualizer(Unigine::Math::vec4_white);
+		}
 		break;
 	case ShooterAI::ALERT:
 		//Unigine::Log::message("ALRT\n");
