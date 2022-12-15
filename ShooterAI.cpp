@@ -10,6 +10,7 @@ void ShooterAI::Init() {
 	CurrentHealth = 15;
 	DodgeArea = Unigine::static_ptr_cast<Unigine::PhysicalTrigger>(PhysicalTriggerNode.get());
 	DodgeArea->addEnterCallback(Unigine::MakeCallback(this, &ShooterAI::GetObjectEnteredInArea));
+	ObstaclePtr = Unigine::static_ptr_cast<Unigine::ObstacleBox>(ObstacleNode.get());
 	NavMeshCheck();
 }
 
@@ -122,6 +123,7 @@ void ShooterAI::AiState() {
 		if (Pathing4->isReached()) {
 			Pathing4->renderVisualizer(Unigine::Math::vec4_white);
 		}
+		ObstaclePtr->renderVisualizer();
 		break;
 	case ShooterAI::ALERT:
 		//Unigine::Log::message("ALRT\n");

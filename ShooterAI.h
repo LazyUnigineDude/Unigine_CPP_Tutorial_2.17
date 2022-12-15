@@ -17,6 +17,7 @@ public:
 		PROP_PARAM(File, BulletPrefab)
 		PROP_PARAM(Node, PhysicalTriggerNode)
 		PROP_PARAM(Node, NavigationNode)
+		PROP_PARAM(Node, ObstacleNode)
 	
 	enum CurrentState{IDLE, ALERT, SEARCH, AGGRESSIVE, SHOOT, DODGE};
 	void ChangeState(CurrentState NEW_STATE) { if (STATE != NEW_STATE) { STATE = NEW_STATE; } }
@@ -45,6 +46,7 @@ private:
 	Unigine::NavigationMeshPtr NavMesh;
 	Unigine::PathRoutePtr Pathing1, Pathing2, Pathing3, Pathing4;
 	Unigine::Math::Vec3 PathPoints1, PathPoints2, PathPoints3, PathPoints4;
+	Unigine::ObstacleBoxPtr ObstaclePtr;
 
 	bool isVisible = false;
 	Unigine::Math::BoundFrustum BFrustum;
