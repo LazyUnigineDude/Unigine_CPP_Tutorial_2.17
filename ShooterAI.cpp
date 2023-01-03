@@ -167,13 +167,13 @@ void ShooterAI::RotateTowards(Unigine::Math::Vec3 RotateTowards, Unigine::NodePt
 	Obj2Move->rotate(-Obj2Move->getWorldRotation().x, -Obj2Move->getWorldRotation().y, Angle * RoatateSpeed);
 }
 
-void ShooterAI::MoveTowards(Unigine::Math::Vec3 RotateTowards, Unigine::NodePtr Obj2Move, int Speed) {
+void ShooterAI::MoveTowards(Unigine::Math::Vec3 MoveTowards, Unigine::NodePtr Obj2Move, int Speed) {
 
 	Unigine::Math::Vec3 Pos = Unigine::Math::lerp(
 		Obj2Move->getWorldPosition(),
-		RotateTowards,
+		MoveTowards,
 		Unigine::Game::getIFps() * Speed /
-		Unigine::Math::distance(Unigine::Math::vec3(Obj2Move->getWorldPosition()), Unigine::Math::vec3(RotateTowards)));
+		Unigine::Math::distance(Unigine::Math::vec3(Obj2Move->getWorldPosition()), Unigine::Math::vec3(MoveTowards)));
 	Obj2Move->setWorldPosition(Pos);
 }
 
