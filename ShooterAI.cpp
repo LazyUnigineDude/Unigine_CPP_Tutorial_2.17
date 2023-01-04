@@ -4,13 +4,17 @@ REGISTER_COMPONENT(ShooterAI)
 
 void ShooterAI::Init() {
 
-	Path = getComponent<PathMaker>(PathMakerNode);
-	Path->InitPath();
+	//Path = getComponent<PathMaker>(PathMakerNode);
+	//Path->InitPath();
+
+	ObjPath = getComponent<PathMaker>(ObstacleNode);
+	ObjPath->InitPath();
+
 	Health = getComponent<HealthBar>(node);
 	CurrentHealth = 15;
 	DodgeArea = Unigine::static_ptr_cast<Unigine::PhysicalTrigger>(PhysicalTriggerNode.get());
 	DodgeArea->addEnterCallback(Unigine::MakeCallback(this, &ShooterAI::GetObjectEnteredInArea));
-	ObstaclePtr = Unigine::static_ptr_cast<Unigine::ObstacleBox>(ObstacleNode.get());
+	ObstaclePtr = Unigine::static_ptr_cast<Unigine::ObstacleBox>(ObstacleNode->getChild(0));
 	NavMeshCheck();
 }
 
@@ -41,6 +45,8 @@ void ShooterAI::Update() {
 
 		AiState();
 		//Path->RenderPath();
+		ObjPath->MoveAlongPath();
+		ObjPath->MoveObject(ObstacleNode);
 		Unigine::Visualizer::renderSphere(DodgeArea->getSize().x, DodgeArea->getWorldTransform(), Unigine::Math::vec4_red);
 }
 
@@ -58,10 +64,7 @@ void ShooterAI::NavMeshCheck() {
 	Pathing3 = Unigine::PathRoute::create();
 	Pathing4 = Unigine::PathRoute::create();
 
-	Pathing1->create2D(PathPoints1, PathPoints2);
-	Pathing2->create2D(PathPoints2, PathPoints3);
-	Pathing3->create2D(PathPoints3, PathPoints4);
-	Pathing4->create2D(PathPoints4, PathPoints1);
+	Pathing1->setRadius()
 
 }
 
@@ -109,6 +112,10 @@ void ShooterAI::AiState() {
 				Path->MoveAlongPath();
 				Path->MoveObject(node);
 			}*/
+		Pathing1->create2D(PathPoints1, PathPoints2);
+		Pathing2->create2D(PathPoints2, PathPoints3);
+		Pathing3->create2D(PathPoints3, PathPoints4);
+		Pathing4->create2D(PathPoints4, PathPoints1);
 		NavMesh->renderVisualizer();
 
 		if (Pathing1->isReached()) {

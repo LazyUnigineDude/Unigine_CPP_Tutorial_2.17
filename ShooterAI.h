@@ -40,7 +40,7 @@ private:
 
 	Unigine::PhysicalTriggerPtr DodgeArea;
 	HealthBar* Health;
-	PathMaker* Path;
+	PathMaker* Path, *ObjPath;
 	Bullet* BulletPtr;
 
 	Unigine::NavigationMeshPtr NavMesh;
