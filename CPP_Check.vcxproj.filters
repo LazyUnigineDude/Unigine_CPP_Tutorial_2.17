@@ -58,6 +58,9 @@
     <ClCompile Include="IntersectionRay.cpp">
       <Filter>Basics</Filter>
     </ClCompile>
+    <ClCompile Include="NavigationMaker.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="IntersectionRay.h">
       <Filter>Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationMaker.h">
+      <Filter>AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

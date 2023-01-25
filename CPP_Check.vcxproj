@@ -68,7 +68,7 @@
       <AdditionalDependencies>Unigine_double_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-<ItemGroup>
+  <ItemGroup>
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="AppEditorLogic.cpp" />
     <ClCompile Include="AppSystemLogic.cpp" />
@@ -82,6 +82,7 @@
     <ClCompile Include="HUDMaker.cpp" />
     <ClCompile Include="IntersectionRay.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NavigationMaker.cpp" />
     <ClCompile Include="PathMaker.cpp" />
     <ClCompile Include="PhysicsController.cpp" />
     <ClCompile Include="PropertyChecker.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUDMaker.h" />
     <ClInclude Include="IntersectionRay.h" />
+    <ClInclude Include="NavigationMaker.h" />
     <ClInclude Include="PathMaker.h" />
     <ClInclude Include="PhysicsController.h" />
     <ClInclude Include="PropertyChecker.h" />
