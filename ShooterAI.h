@@ -16,8 +16,7 @@ public:
 		PROP_PARAM(Node, PathMakerNode)
 		PROP_PARAM(File, BulletPrefab)
 		PROP_PARAM(Node, PhysicalTriggerNode)
-		PROP_PARAM(Node, NavigationNode)
-		PROP_PARAM(Node, ObstacleNode)
+		PROP_PARAM(Node, PathFindingNode)
 	
 	enum CurrentState{IDLE, ALERT, SEARCH, AGGRESSIVE, SHOOT, DODGE};
 	void ChangeState(CurrentState NEW_STATE) { if (STATE != NEW_STATE) { STATE = NEW_STATE; } }
