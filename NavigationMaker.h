@@ -1,7 +1,6 @@
 #pragma once
 #include <Unigine.h>
 #include <vector>
-#include "ShooterAI.h"
 
 class NavigationMaker : public Unigine::ComponentBase {
 

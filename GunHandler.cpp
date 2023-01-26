@@ -28,7 +28,7 @@ void GunHandler::GetGun(Unigine::ObjectPtr Gun) {
 	Reload();
 }
 
-void GunHandler::Shoot(Unigine::Math::Vec3& Lookat) {
+void GunHandler::Shoot(Unigine::Math::Vec3 Lookat) {
 	if (AmountInGun > 0) {
 	Unigine::NodePtr _Bullet = Unigine::World::loadNode(Gun->getProperty(0)->getParameterPtr(0)->getValueFile());
 	_Bullet->setWorldPosition(/*Gun.get()->getChild(0)->getWorldPosition()*/Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()));
