@@ -78,6 +78,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="CameraFollower.cpp" />
+    <ClCompile Include="DetectionMaker.cpp" />
     <ClCompile Include="DetectionRay.cpp" />
     <ClCompile Include="GunHandler.cpp" />
     <ClCompile Include="HealthBar.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CameraFollower.h" />
+    <ClInclude Include="DetectionMaker.h" />
     <ClInclude Include="DetectionRay.h" />
     <ClInclude Include="GunHandler.h" />
     <ClInclude Include="HealthBar.h" />
