@@ -4,30 +4,24 @@ REGISTER_COMPONENT(ShooterAI)
 
 void ShooterAI::Init() {
 
-	//Path = getComponent<PathMaker>(PathMakerNode);
-	//Path->InitPath();
-
-	ObjPath = getComponent<PathMaker>(ObstacleNode);
-	ObjPath->InitPath();
-
 	Health = getComponent<HealthBar>(node);
 	CurrentHealth = 15;
 	DodgeArea = Unigine::static_ptr_cast<Unigine::PhysicalTrigger>(PhysicalTriggerNode.get());
 	DodgeArea->addEnterCallback(Unigine::MakeCallback(this, &ShooterAI::GetObjectEnteredInArea));
-	ObstaclePtr = Unigine::static_ptr_cast<Unigine::ObstacleBox>(ObstacleNode->getChild(0));
-	NavMeshCheck();
+
 }
 
 void ShooterAI::Update() {
 
-	// Calculate the Area, Position and Rotation
-	Unigine::Math::mat4 Frustum(Unigine::Math::perspective(40, 1.4f, 0.05, FieldDistance));
+		// Calculate the Area, Position and Rotation
+		Unigine::Math::mat4 Frustum(Unigine::Math::perspective(40, 1.4f, 0.05, FieldDistance));
 		Unigine::Math::quat Rotation(node->getWorldRotation() * Unigine::Math::quat(90, 0, 0));
 		Unigine::Math::Mat4 View(Rotation, node->getChild(0)->getWorldPosition());
 	
 		// Render
 		Unigine::Visualizer::renderFrustum(Frustum, View, Unigine::Math::vec4_black);
 		Unigine::Visualizer::renderVector(node->getWorldPosition(), node->getWorldPosition() + Unigine::Math::Vec3(node->getWorldDirection(Unigine::Math::AXIS_Y)) * 2, Unigine::Math::vec4_black);
+		Unigine::Visualizer::renderSphere(DodgeArea->getSize().x, DodgeArea->getWorldTransform(), Unigine::Math::vec4_red);
 
 		// Logic
 		BFrustum = Unigine::Math::BoundFrustum(Frustum, Unigine::Math::inverse(Unigine::Math::mat4(View)));
@@ -44,28 +38,6 @@ void ShooterAI::Update() {
 		}
 
 		AiState();
-		//Path->RenderPath();
-		ObjPath->MoveAlongPath();
-		ObjPath->MoveObject(ObstacleNode);
-		Unigine::Visualizer::renderSphere(DodgeArea->getSize().x, DodgeArea->getWorldTransform(), Unigine::Math::vec4_red);
-}
-
-void ShooterAI::NavMeshCheck() {
-	
-	NavMesh = Unigine::static_ptr_cast<Unigine::NavigationMesh>(NavigationNode.get());
-
-	PathPoints1 = NavigationNode->getChild(0)->getWorldPosition();
-	PathPoints2 = NavigationNode->getChild(1)->getWorldPosition();
-	PathPoints3 = NavigationNode->getChild(2)->getWorldPosition();
-	PathPoints3 = NavigationNode->getChild(3)->getWorldPosition();
-
-	Pathing1 = Unigine::PathRoute::create();
-	Pathing2 = Unigine::PathRoute::create();
-	Pathing3 = Unigine::PathRoute::create();
-	Pathing4 = Unigine::PathRoute::create();
-
-	Pathing1->setRadius()
-
 }
 
 void ShooterAI::GetObjectEnteredInArea(Unigine::BodyPtr Body) {
@@ -112,76 +84,38 @@ void ShooterAI::AiState() {
 				Path->MoveAlongPath();
 				Path->MoveObject(node);
 			}*/
-		Pathing1->create2D(PathPoints1, PathPoints2);
-		Pathing2->create2D(PathPoints2, PathPoints3);
-		Pathing3->create2D(PathPoints3, PathPoints4);
-		Pathing4->create2D(PathPoints4, PathPoints1);
-		NavMesh->renderVisualizer();
-
-		if (Pathing1->isReached()) {
-			Pathing1->renderVisualizer(Unigine::Math::vec4_white);
-		}
-		if (Pathing2->isReached()) {
-			Pathing2->renderVisualizer(Unigine::Math::vec4_white);
-		}
-		if (Pathing3->isReached()) {
-			Pathing3->renderVisualizer(Unigine::Math::vec4_white);
-		}
-		if (Pathing4->isReached()) {
-			Pathing4->renderVisualizer(Unigine::Math::vec4_white);
-		}
-		ObstaclePtr->renderVisualizer();
 		break;
 	case ShooterAI::ALERT:
 		//Unigine::Log::message("ALRT\n");
 		Weight = Unigine::Math::clamp(Weight += Unigine::Game::getIFps() / DistanceFactor, 0.0f, 1.0f);
 		if (Weight == 1.0f) { ChangeState(CurrentState::AGGRESSIVE); }
 		if (!isVisible) { ChangeState(CurrentState::IDLE); }
-			RotateTowards(MainCharacter->getWorldPosition(), node, 0.005f);
+			//RotateTowards(MainCharacter->getWorldPosition(), node, 0.005f);
 		break;
 	case ShooterAI::SEARCH:
 		//Unigine::Log::message("SRCH\n");
 		Weight = Unigine::Math::clamp(Weight -= Unigine::Game::getIFps() / 5, 0.0f, 1.0f);
 		if (Weight == 0.0f) { ChangeState(CurrentState::IDLE); }
 		if (isVisible) { ChangeState(CurrentState::AGGRESSIVE); Weight = 1; }
-			RotateTowards(MainCharacter->getWorldPosition(), node, 0.05f);
-			MoveTowards(MainCharacter->getWorldPosition(), node, 3);
+			//RotateTowards(MainCharacter->getWorldPosition(), node, 0.05f);
+			//MoveTowards(MainCharacter->getWorldPosition(), node, 3);
 		break;
 	case ShooterAI::AGGRESSIVE:
 		//Unigine::Log::message("AGRO\n");
 		if (!isVisible) { ChangeState(CurrentState::SEARCH); }
-			RotateTowards(MainCharacter->getWorldPosition(), node, 0.05f);
-			MoveTowards(MainCharacter->getWorldPosition(), node, 5);
+		//	RotateTowards(MainCharacter->getWorldPosition(), node, 0.05f);
+			//MoveTowards(MainCharacter->getWorldPosition(), node, 5);
 			if (Unigine::Math::distance(Unigine::Math::vec3(node->getWorldPosition()), Unigine::Math::vec3(MainCharacter->getWorldPosition())) < 20.0f) { ChangeState(SHOOT); CurrentTime = Unigine::Game::getTime(); }
 		break;
 	case ShooterAI::SHOOT:
 			if (CurrentTime + 1 < Unigine::Game::getTime()) { Shoot(); ChangeState(AGGRESSIVE); }
-			RotateTowards(MainCharacter->getWorldPosition(), node, 0.02f);
+			//RotateTowards(MainCharacter->getWorldPosition(), node, 0.02f);
 			Unigine::Visualizer::renderLine3D(node->getWorldPosition(), node->getWorldPosition() + Unigine::Math::Vec3(node->getWorldDirection(Unigine::Math::AXIS_Y)) * 20, Unigine::Math::vec4_blue);
 		break;
 	case ShooterAI::DODGE:
 		break;
 	default: break;
 	}
-}
-
-void ShooterAI::RotateTowards(Unigine::Math::Vec3 RotateTowards, Unigine::NodePtr Obj2Move, float RoatateSpeed) {
-
-	Unigine::Math::vec3 Vec1 = Obj2Move->getWorldDirection(Unigine::Math::AXIS_Y),
-						Vec2 = Unigine::Math::vec3((RotateTowards - Obj2Move->getWorldPosition())).normalize();
-
-	float Angle = Unigine::Math::getAngle(Vec1, Vec2, Unigine::Math::vec3_up);
-	Obj2Move->rotate(-Obj2Move->getWorldRotation().x, -Obj2Move->getWorldRotation().y, Angle * RoatateSpeed);
-}
-
-void ShooterAI::MoveTowards(Unigine::Math::Vec3 MoveTowards, Unigine::NodePtr Obj2Move, int Speed) {
-
-	Unigine::Math::Vec3 Pos = Unigine::Math::lerp(
-		Obj2Move->getWorldPosition(),
-		MoveTowards,
-		Unigine::Game::getIFps() * Speed /
-		Unigine::Math::distance(Unigine::Math::vec3(Obj2Move->getWorldPosition()), Unigine::Math::vec3(MoveTowards)));
-	Obj2Move->setWorldPosition(Pos);
 }
 
 void ShooterAI::Shoot() {

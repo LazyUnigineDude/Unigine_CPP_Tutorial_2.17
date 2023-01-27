@@ -7,8 +7,22 @@ void NavigationMaker::RenderNavigation() {
 	NavMesh->renderVisualizer();
 }
 
-std::vector<Unigine::Math::Vec3> NavigationMaker::GetPath(int Num) { return List[Num]; }
 std::vector<std::vector<Unigine::Math::Vec3>> NavigationMaker::GetAllPaths() { return List; }
+std::vector<Unigine::Math::Vec3> NavigationMaker::GetPath(int Num) { return List[Num]; }
+std::vector<Unigine::Math::Vec3> NavigationMaker::GetPath(std::vector<Unigine::Math::Vec3> Points) {
+	
+	std::vector<Unigine::Math::Vec3> NewPoints;
+	Unigine::PathRoutePtr Path = Unigine::PathRoute::create();
+
+	for (int i = 0; i < Points.size() - 1; i++) {
+
+		Path->create2D(Points[i], Points[i + 1]);
+		std::vector<Unigine::Math::Vec3> _Points = GetPath(Path);
+		NewPoints.insert(NewPoints.end(), _Points.begin(), _Points.end());
+	}
+	
+	return NewPoints;
+}
 
 std::vector<Unigine::Math::Vec3> NavigationMaker::GetPath(Unigine::PathRoutePtr Path) {
 	
