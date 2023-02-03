@@ -115,8 +115,8 @@ void AIGunHandler::Shoot(double TargetSpeed) {
 	Unigine::NodePtr _Bullet = Unigine::World::loadNode(BulletFilePath);
 	_Bullet->setWorldPosition(Gun->getWorldPosition());
 
-	/*Unigine::Ptr<Bullet> bullet = Unigine::static_ptr_cast<Bullet>(_Bullet);
-	bullet->setDamage(Damage);*/
+	Unigine::Ptr<Bullet> bullet = Unigine::static_ptr_cast<Bullet>(_Bullet);
+	bullet->setDamage(Damage);
 	Unigine::BodyRigidPtr _BulletPhysics = _Bullet->getObjectBodyRigid();
 
 	if (TargetSpeed <= 1 && TargetSpeed > 0) {
