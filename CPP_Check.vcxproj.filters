@@ -61,7 +61,9 @@
     <ClCompile Include="NavigationMaker.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="DetectionMaker.cpp" />
+    <ClCompile Include="AIComponents.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -121,7 +123,9 @@
     <ClInclude Include="NavigationMaker.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="DetectionMaker.h" />
+    <ClInclude Include="AIComponents.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_MainLoop">

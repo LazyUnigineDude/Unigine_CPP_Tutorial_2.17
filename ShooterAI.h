@@ -2,8 +2,8 @@
 #include <Unigine.h>
 #include "PathMaker.h"
 #include "HealthBar.h"
-#include "Bullet.h"
 #include "NavigationMaker.h"
+#include "AIComponents.h"
 
 class ShooterAI : public Unigine::ComponentBase {
 
@@ -26,19 +26,22 @@ protected:
 	void Update();
 
 private:
-	void GetObjectEnteredInArea(Unigine::BodyPtr Body);
+	//void GetObjectEnteredInArea(Unigine::BodyPtr Body);
 	void AiState();
 	CurrentState STATE  = CurrentState::IDLE;
 	float Weight = 0, DistanceFactor = 1, CurrentTime = 0;
-	int FieldDistance = 30, CurrentHealth;
+	int CurrentHealth, const MASK_PRIMARY = 1,const MASK_SECONDARY = 2, const FIELD_DISTANCE = 30, const DAMAGE = 1;
+	bool isVisible;
 	void Shoot();
 
-	Unigine::PhysicalTriggerPtr DodgeArea;
+	//Unigine::PhysicalTriggerPtr DodgeArea;
 	HealthBar* Health;
-	PathMaker* MainPath;
-	Bullet* BulletPtr;
+	//Bullet* BulletPtr;
 	NavigationMaker* MainNav;
+	PathMaker MainPath;
+	DetectionMaker Detector;
+	AIGunHandler GunHandler;
 
-	bool isVisible = false;
-	Unigine::Math::BoundFrustum BFrustum;
+	//bool isVisible = false;
+	//Unigine::Math::BoundFrustum BFrustum;
 };
