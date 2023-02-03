@@ -1,6 +1,6 @@
 #include "AIComponents.h"
 
-inline DetectionMaker::DetectionMaker(
+ DetectionMaker::DetectionMaker(
 	Unigine::NodePtr PhysicalTrigger, 
 	Unigine::NodePtr MainObj,
 	Unigine::NodePtr ViewPosition,
@@ -12,17 +12,21 @@ inline DetectionMaker::DetectionMaker(
 	this->ViewPosition = ViewPosition;
 	this->FieldDistance = FieldDistance;
 	this->Mask = Mask;
-	DetectionArea->addEnterCallback(Unigine::MakeCallback(this, &DetectionMaker::GetObjectsInArea));
+	MainObjName = MainObj->getName();
 }
 
-inline void DetectionMaker::CalculateView() {
+ void DetectionMaker::AddCallbacks() { 
+	 DetectionArea->addEnterCallback(Unigine::MakeCallback(this, &DetectionMaker::GetObjectsInArea));
+ }
+
+ void DetectionMaker::CalculateView() {
 
 	Frustum = Unigine::Math::mat4(Unigine::Math::perspective(40, 1.4f, 0.05, FieldDistance));
 	Rotation = Unigine::Math::quat(MainObj->getWorldRotation() * Unigine::Math::quat(90, 0, 0));
 	View = Unigine::Math::Mat4(Rotation, ViewPosition->getWorldPosition());
 }
 
-inline void DetectionMaker::RenderView(bool isRender) {
+void DetectionMaker::RenderView(bool isRender) {
 
 	if (isRender) {
 		Unigine::Visualizer::renderFrustum(Frustum, View, Unigine::Math::vec4_black);
@@ -34,7 +38,7 @@ inline void DetectionMaker::RenderView(bool isRender) {
 	}
 }
 
-inline bool DetectionMaker::TargetVisibleInFrustum(Unigine::NodePtr Target, int Mask, const char* NameDetection) {
+bool DetectionMaker::TargetVisibleInFrustum(Unigine::NodePtr Target, int Mask, const char* NameDetection) {
 
 	FrustumBound = Unigine::Math::BoundFrustum(Frustum, Unigine::Math::inverse(Unigine::Math::mat4(View)));
 	this->Mask = Mask;
@@ -50,20 +54,18 @@ inline bool DetectionMaker::TargetVisibleInFrustum(Unigine::NodePtr Target, int 
 	return false;
 }
 
-inline void DetectionMaker::Dodge(bool isDodging, int DodgeDistance) { this->isDodging = isDodging; this->DodgeDistance = DodgeDistance; }
+void DetectionMaker::Dodge(bool isDodging, int DodgeDistance) { this->isDodging = isDodging; this->DodgeDistance = DodgeDistance; }
 
-inline void DetectionMaker::GetObjectsInArea(Unigine::BodyPtr Body) {
-
-	if (Body->getObject()->getName() != MainObj->getName()) {
+void DetectionMaker::GetObjectsInArea(Unigine::BodyPtr Body) {
+	
+	if (ObjectNameCheck(Body)) {
 		Unigine::ObjectPtr ObjectAboutToHit = Unigine::World::getIntersection(
-			Body->getPosition(), 
+			Body->getPosition(),
 			Body->getPosition() + Unigine::Math::Vec3(Body->getObject()->getBodyLinearVelocity()),
 			Mask);
 
-		if (ObjectAboutToHit && 
-			ObjectAboutToHit->getName() == MainObj->getName() && 
-			isDodging == true) {
-
+		if (ObjectNameCheck(ObjectAboutToHit) && isDodging == true) {
+			
 			Unigine::Math::Vec3 MainVector = Unigine::Math::Vec3(Body->getObject()->getBodyLinearVelocity()).normalize();
 			float Angle = Unigine::Math::getAngle(
 				Unigine::Math::vec3(MainObj->getWorldPosition()) + MainObj->getWorldDirection(),
@@ -76,12 +78,16 @@ inline void DetectionMaker::GetObjectsInArea(Unigine::BodyPtr Body) {
 				MainVector.x * Unigine::Math::sin(Angle) + MainVector.y * Unigine::Math::cos(Angle),
 				0).normalize();
 
-			MainObj->setWorldPosition(MainObj->getWorldPosition() + RotatedVector * DodgeDistance);
+			UpdateMainObj(RotatedVector * DodgeDistance);
 		}
 	}
 }
 
-inline AIGunHandler::AIGunHandler(
+bool DetectionMaker::ObjectNameCheck(Unigine::BodyPtr Body) { return (Body->getObject()->getName() != MainObjName) ? true : false; }
+bool DetectionMaker::ObjectNameCheck(Unigine::ObjectPtr Body) { return (Body->getName() != MainObjName) ? true : false; }
+void DetectionMaker::UpdateMainObj(Unigine::Math::Vec3 Position) { MainObj->setWorldPosition( MainObj->getWorldPosition() + Position); }
+
+AIGunHandler::AIGunHandler(
 	const char* BulletFilePath, 
 	int damage,
 	Unigine::NodePtr Target,
@@ -93,7 +99,7 @@ inline AIGunHandler::AIGunHandler(
 	this->Gun = Gun;
 }
 
-inline void AIGunHandler::CalculatePositions() {
+void AIGunHandler::CalculatePositions() {
 
 	FuturePoint = Target->getWorldPosition() + 
 		Unigine::Math::Vec3(Target->getBodyLinearVelocity().normalize());
@@ -104,13 +110,13 @@ inline void AIGunHandler::CalculatePositions() {
 		Unigine::Math::vec3(Gun->getWorldPosition()), Unigine::Math::vec3(Target->getWorldPosition()));
 }
 
-inline void AIGunHandler::Shoot(double TargetSpeed) {
+void AIGunHandler::Shoot(double TargetSpeed) {
 
 	Unigine::NodePtr _Bullet = Unigine::World::loadNode(BulletFilePath);
 	_Bullet->setWorldPosition(Gun->getWorldPosition());
 
-	Unigine::Ptr<Bullet> bullet = Unigine::static_ptr_cast<Bullet>(_Bullet);
-	bullet->setDamage(Damage);
+	/*Unigine::Ptr<Bullet> bullet = Unigine::static_ptr_cast<Bullet>(_Bullet);
+	bullet->setDamage(Damage);*/
 	Unigine::BodyRigidPtr _BulletPhysics = _Bullet->getObjectBodyRigid();
 
 	if (TargetSpeed <= 1 && TargetSpeed > 0) {
@@ -131,7 +137,7 @@ inline void AIGunHandler::Shoot(double TargetSpeed) {
 	
 }
 
-inline void AIGunHandler::RenderVisuals(bool isRender, int Mask) {
+void AIGunHandler::RenderVisuals(bool isRender, int Mask) {
 
 	if (isRender) {
 		Unigine::Visualizer::renderCapsule(

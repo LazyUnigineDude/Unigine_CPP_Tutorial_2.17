@@ -1,6 +1,7 @@
 #pragma once
 #include <Unigine.h>
 #include "Bullet.h"
+#include <string>
 
 class DetectionMaker {
 
@@ -13,6 +14,7 @@ public:
 		int FieldDistance,
 		int Mask);
 
+	void AddCallbacks();
 	void CalculateView();
 	void RenderView(bool isRender);
 	bool TargetVisibleInFrustum(Unigine::NodePtr Target, int Mask, const char* NameDetection);
@@ -20,11 +22,15 @@ public:
 
 private:
 	void GetObjectsInArea(Unigine::BodyPtr Body);
+	bool ObjectNameCheck(Unigine::BodyPtr Body);
+	bool ObjectNameCheck(Unigine::ObjectPtr Body);
+	void UpdateMainObj(Unigine::Math::Vec3 AddedPosition);
 
 	Unigine::Math::mat4 Frustum;
 	Unigine::Math::Mat4 View;
 	Unigine::Math::quat Rotation;
 	bool isDodging = false;
+	std::string MainObjName;
 
 	Unigine::PhysicalTriggerPtr DetectionArea;
 	Unigine::Math::BoundFrustum FrustumBound;
@@ -46,7 +52,7 @@ public:
 	void CalculatePositions();
 	void Shoot(double TargetSpeed);
 	void RenderVisuals(bool isRender, int Mask);
-private:
+
 	Unigine::Math::Vec3 FuturePoint;
 	Unigine::NodePtr Target, Gun;
 

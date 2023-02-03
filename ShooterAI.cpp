@@ -1,6 +1,5 @@
 #include "ShooterAI.h"
 REGISTER_COMPONENT(ShooterAI)
-#include "PhysicsController.h"
 
 void ShooterAI::Init() {
 
@@ -8,12 +7,13 @@ void ShooterAI::Init() {
 	CurrentHealth = 15;
 
 	Detector = DetectionMaker(
-		PhysicalTriggerNode.get(),
+		PhysicalTriggerNode,
 		node,
 		node->getChild(0),
 		FIELD_DISTANCE,
 		MASK_PRIMARY
 	);
+	Detector.AddCallbacks();
 
 	GunHandler = AIGunHandler(
 		BulletPrefab.get(),
@@ -34,7 +34,6 @@ void ShooterAI::Update() {
 		Unigine::Math::vec3(node->getWorldPosition()));
 
 	DistanceFactor = distance / FIELD_DISTANCE;
-
 		AiState();
 }
 
