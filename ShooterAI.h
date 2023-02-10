@@ -39,7 +39,7 @@ private:
 		const MASK_SECONDARY = 2, 
 		const FIELD_DISTANCE = 30, 
 		const DAMAGE = 1;
-	bool isVisible;
+	bool isVisible, CanMove = 0;
 
 	void Shoot();
 	void AiState();
