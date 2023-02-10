@@ -40,6 +40,7 @@ void NavigationMaker::Init() {
 	for (int i = 0; i < PathLists.size(); i++) {
 		for (int j = 0; j < PathLists[i]->PointList.size() - 1; j++) {
 
+			Path->setRadius(1.0f);
 			Path->create2D(PathLists[i]->GetPosition(j), PathLists[i]->GetPosition(j + 1));
 			List.push_back(GetPath(Path));
 		}
