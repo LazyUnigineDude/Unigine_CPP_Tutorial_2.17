@@ -31,8 +31,8 @@ void HUDMaker::Init(){
 	int z = Image->addLayer();
 	Unigine::ImagePtr _i = Unigine::Image::create(); _i->load(CrossHair.get());
 	Image->setImage(_i);
-	Image->setHeight(50);
-	Image->setWidth(50);
+	Image->setHeight(25);
+	Image->setWidth(25);
 	Image->setPosition((Width / 2) - (Image->getWidth()/2), Height / 2 - (Image->getHeight() / 2));
 	
 	//Grid
