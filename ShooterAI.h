@@ -1,8 +1,8 @@
 #pragma once
 #include <Unigine.h>
-#include "PathMaker.h"
 #include "HealthBar.h"
 #include "PhysicsController.h"
+#include "PathMaker.h"
 #include "NavigationMaker.h"
 #include "AIComponents.h"
 

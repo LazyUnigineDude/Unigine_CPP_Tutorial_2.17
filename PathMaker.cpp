@@ -1,6 +1,6 @@
 #include "PathMaker.h"
 
-inline PathMaker::PathMaker(
+PathMaker::PathMaker(
 	float DurationTime,
 	std::vector<Unigine::Math::Vec3> PathPoints) {
 
@@ -8,7 +8,7 @@ inline PathMaker::PathMaker(
 	this->DurationTime = DurationTime;
 }
 
-inline void PathMaker::InitPath() {
+void PathMaker::InitPath() {
 
 	Path = Unigine::SplineGraph::create();
 
@@ -29,14 +29,14 @@ inline void PathMaker::InitPath() {
 	}
 }
 
-inline void PathMaker::MoveAlongPath() {
+void PathMaker::MoveAlongPath() {
 	
 	Weight = Unigine::Math::clamp(Weight += (Unigine::Game::getIFps() / DurationTime), 0.0f, 1.0f);
 	if (Weight == 1.0f) { Weight = 0; num++; }
 	num %= Path->getNumPoints();
 }
 
-inline Unigine::Math::Vec3 PathMaker::GetCurrentPathPosition() { return Path->calcSegmentPoint(num, Weight); }
+Unigine::Math::Vec3 PathMaker::GetCurrentPathPosition() { return Path->calcSegmentPoint(num, Weight); }
 
 void PathMaker::RotateTowards(Unigine::Math::Vec3 RotateTowards, Unigine::NodePtr Obj2Move, float RoatateSpeed) {
 	
@@ -57,7 +57,7 @@ void PathMaker::MoveTowards(Unigine::Math::Vec3 MoveTowards, Unigine::NodePtr Ob
 	Obj2Move->setWorldPosition(Pos);
 }
 
-inline void PathMaker::MoveObject(Unigine::NodePtr Object) {
+void PathMaker::MoveObject(Unigine::NodePtr Object) {
 
 	Unigine::Math::Vec3
 		Point = Path->calcSegmentPoint(num, Weight);
@@ -69,7 +69,7 @@ inline void PathMaker::MoveObject(Unigine::NodePtr Object) {
 	Object->setWorldDirection(Dir, Up, Unigine::Math::AXIS_Y);
 }
 
-inline void PathMaker::RenderPath() {
+void PathMaker::RenderPath() {
 
 	const int segments = 50;
 

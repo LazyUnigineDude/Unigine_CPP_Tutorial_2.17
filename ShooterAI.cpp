@@ -21,6 +21,9 @@ void ShooterAI::Init() {
 		MainCharacter,
 		node->getChild(0)
 	);
+
+	MainNav = getComponent<NavigationMaker>(PathFindingNode);
+	
 }
 
 void ShooterAI::Update() {
@@ -46,6 +49,7 @@ void ShooterAI::AiState() {
 	case ShooterAI::IDLE:
 		//Unigine::Log::message("IDLE\n");
 		Weight = Unigine::Math::clamp(Weight -= Unigine::Game::getIFps(), 0.0f, 1.0f);
+		
 		//if (isVisible) { ChangeState(CurrentState::ALERT); }
 			/*if (Unigine::Math::distance(Unigine::Math::vec3(node->getWorldPosition()), Unigine::Math::vec3(Path->GetCurrentPathPosition())) > 0.1f) {
 				RotateTowards(Path->GetCurrentPathPosition(), node, 0.05f);

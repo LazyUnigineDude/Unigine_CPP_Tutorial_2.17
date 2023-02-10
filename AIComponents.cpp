@@ -59,6 +59,7 @@ void DetectionMaker::Dodge(bool isDodging, int DodgeDistance) { this->isDodging 
 void DetectionMaker::GetObjectsInArea(Unigine::BodyPtr Body) {
 	
 	if (ObjectNameCheck(Body)) {
+		Unigine::Log::message("%s Entered\n", Body->getObject()->getName());
 		Unigine::ObjectPtr ObjectAboutToHit = Unigine::World::getIntersection(
 			Body->getPosition(),
 			Body->getPosition() + Unigine::Math::Vec3(Body->getObject()->getBodyLinearVelocity()),
@@ -115,8 +116,8 @@ void AIGunHandler::Shoot(double TargetSpeed) {
 	Unigine::NodePtr _Bullet = Unigine::World::loadNode(BulletFilePath);
 	_Bullet->setWorldPosition(Gun->getWorldPosition());
 
-	Unigine::Ptr<Bullet> bullet = Unigine::static_ptr_cast<Bullet>(_Bullet);
-	bullet->setDamage(Damage);
+//	Unigine::Ptr<Bullet> bullet = Unigine::static_ptr_cast<Bullet>(_Bullet);
+//	bullet->setDamage(Damage);
 	Unigine::BodyRigidPtr _BulletPhysics = _Bullet->getObjectBodyRigid();
 
 	if (TargetSpeed <= 1 && TargetSpeed > 0) {
