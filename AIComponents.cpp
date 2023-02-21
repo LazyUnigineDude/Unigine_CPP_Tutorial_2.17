@@ -59,13 +59,13 @@ void DetectionMaker::Dodge(bool isDodging, int DodgeDistance) { this->isDodging 
 void DetectionMaker::GetObjectsInArea(Unigine::BodyPtr Body) {
 	
 	if (ObjectNameCheck(Body)) {
-		Unigine::Log::message("%s Entered\n", Body->getObject()->getName());
+		//Unigine::Log::message("%s Entered\n", Body->getObject()->getName());
 		Unigine::ObjectPtr ObjectAboutToHit = Unigine::World::getIntersection(
 			Body->getPosition(),
 			Body->getPosition() + Unigine::Math::Vec3(Body->getObject()->getBodyLinearVelocity()),
 			Mask);
 
-		if (ObjectNameCheck(ObjectAboutToHit) && isDodging == true) {
+		if (ObjectAboutToHit && ObjectNameCheck(ObjectAboutToHit) && isDodging == true) {
 			
 			Unigine::Math::Vec3 MainVector = Unigine::Math::Vec3(Body->getObject()->getBodyLinearVelocity()).normalize();
 			float Angle = Unigine::Math::getAngle(

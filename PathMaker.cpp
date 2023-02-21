@@ -1,20 +1,12 @@
 #include "PathMaker.h"
 
-PathMaker::PathMaker(
-	float DurationTime,
-	std::vector<Unigine::Math::Vec3> PathPoints) {
-
-	this->PathPoints = PathPoints;
-	this->DurationTime = DurationTime;
-}
-
-void PathMaker::InitPath() {
+bool PathMaker::InitPath() {
 
 	Path = Unigine::SplineGraph::create();
 
 	for (int i = 0; i < PathPoints.size();  i++) { Path->addPoint(PathPoints[i]); }
 	for (int i = 0; i < PathPoints.size(); i++) {
-		
+
 		int num = i % Path->getNumPoints(), 
 			num2 = (i+1) % Path->getNumPoints();
 
@@ -22,18 +14,35 @@ void PathMaker::InitPath() {
 			num, 
 			Unigine::Math::vec3(PathPoints[num2]) - Unigine::Math::vec3(PathPoints[num]),
 			Unigine::Math::vec3_up,
-			num,
+			num2,
 			Unigine::Math::vec3(PathPoints[num]) - Unigine::Math::vec3(PathPoints[num2]),
 			Unigine::Math::vec3_up
 		);
 	}
+
+	if (Path->getNumPoints() > 0) return true;
+	else return false;
 }
 
-void PathMaker::MoveAlongPath() {
-	
-	Weight = Unigine::Math::clamp(Weight += (Unigine::Game::getIFps() / DurationTime), 0.0f, 1.0f);
-	if (Weight == 1.0f) { Weight = 0; num++; }
-	num %= Path->getNumPoints();
+void PathMaker::MovePathPoint(bool isCircuit) {
+
+	if (isCircuit) {
+		if (!ReverseDirection) {
+			Weight = Unigine::Math::clamp(Weight += (Unigine::Game::getIFps() / DurationTime), 0.0f, 1.0f);
+			if (Weight == 1.0f) { num++, Weight = 0.0f; }
+			if (num == Path->getNumPoints() - 1) { Weight == 1.0f; ReverseDirection = true; }
+		}	
+		else {
+			Weight = Unigine::Math::clamp(Weight -= (Unigine::Game::getIFps() / DurationTime), 0.0f, 1.0f);
+			if (Weight == 0.0f) { num--, Weight = 1.0f; }
+			if (num < 0) { Weight == 0.0f; ReverseDirection = false; }
+		}
+	}
+	else {
+		Weight = Unigine::Math::clamp(Weight += (Unigine::Game::getIFps() / DurationTime), 0.0f, 1.0f);
+		if (Weight == 1.0f) { Weight = 0; num++; }
+		num %= Path->getNumPoints();
+	}
 }
 
 Unigine::Math::Vec3 PathMaker::GetCurrentPathPosition() { return Path->calcSegmentPoint(num, Weight); }
@@ -57,7 +66,33 @@ void PathMaker::MoveTowards(Unigine::Math::Vec3 MoveTowards, Unigine::NodePtr Ob
 	Obj2Move->setWorldPosition(Pos);
 }
 
-void PathMaker::MoveObject(Unigine::NodePtr Object) {
+void PathMaker::AddNewPath(float DurationTime, std::vector<Unigine::Math::Vec3> PathPoints) {
+	
+	if(Path) Path->deleteLater();
+	this->DurationTime = DurationTime;
+	this->PathPoints = PathPoints;
+    InitPath();
+}
+
+bool PathMaker::ObjectCloseToPathPoint(Unigine::NodePtr Object, float DistanceLimit) {
+
+	return (Unigine::Math::distance(
+		Unigine::Math::vec3(Object->getWorldPosition()),
+		Unigine::Math::vec3(GetCurrentPathPosition())) >= DistanceLimit) ?
+		true :
+		false;
+}
+
+bool PathMaker::ObjectCloseToPathPoint(Unigine::NodePtr Object, Unigine::NodePtr Object2, float DistanceLimit) {
+
+	return (Unigine::Math::distance(
+		Unigine::Math::vec3(Object->getWorldPosition()),
+		Unigine::Math::vec3(Object2->getWorldPosition())) <= DistanceLimit) ?
+		true :
+		false;
+}
+
+void PathMaker::MoveObjectAlongPathPoint(Unigine::NodePtr Object) {
 
 	Unigine::Math::Vec3
 		Point = Path->calcSegmentPoint(num, Weight);
@@ -71,7 +106,7 @@ void PathMaker::MoveObject(Unigine::NodePtr Object) {
 
 void PathMaker::RenderPath() {
 
-	const int segments = 50;
+	const int segments = 20;
 
 	for (int i = 0; i < Path->getNumPoints(); i++)
 	{
@@ -84,8 +119,8 @@ void PathMaker::RenderPath() {
 			STang = Unigine::Math::Vec3(Path->getSegmentStartTangent(i)),
 			ETang = Unigine::Math::Vec3(Path->getSegmentEndTangent(i));
 
-		Unigine::Visualizer::renderVector(SPoint, SPoint + STang, Unigine::Math::vec4_green);
-		Unigine::Visualizer::renderVector(EPoint, EPoint + ETang, Unigine::Math::vec4_red);
+		//Unigine::Visualizer::renderVector(SPoint, SPoint + STang, Unigine::Math::vec4_green);
+		//Unigine::Visualizer::renderVector(EPoint, EPoint + ETang, Unigine::Math::vec4_red);
 
 		for (int j = 0; j < segments; j++)
 		{
@@ -93,7 +128,8 @@ void PathMaker::RenderPath() {
 				p0 = Path->calcSegmentPoint(i, j / segments),
 				p1 = Path->calcSegmentPoint(i, (j +1) / segments);
 
-			Unigine::Visualizer::renderLine3D(p0, p1, Unigine::Math::vec4_white);
+			//Unigine::Visualizer::renderVector(p0, p1, Unigine::Math::vec4_white);
 		}
+		Unigine::Visualizer::renderPoint3D(GetCurrentPathPosition(), 0.1f, Unigine::Math::vec4_red);
 	}
 }
