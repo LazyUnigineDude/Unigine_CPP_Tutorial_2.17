@@ -72,6 +72,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIComponents.cpp" />
+    <ClCompile Include="AIManager.cpp" />
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="AppEditorLogic.cpp" />
     <ClCompile Include="AppSystemLogic.cpp" />
@@ -94,6 +95,7 @@
     <ClCompile Include="SomeClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIManager.h" />
     <ClInclude Include="AnimationState.h" />
     <ClInclude Include="AppEditorLogic.h" />
     <ClInclude Include="AppSystemLogic.h" />

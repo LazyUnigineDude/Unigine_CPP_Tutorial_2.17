@@ -7,6 +7,8 @@ void NavigationMaker::RenderNavigation() {
 	NavMesh->renderVisualizer();
 }
 
+int NavigationMaker::GetNumPaths() { return PathLists.size(); }
+
 std::vector<std::vector<Unigine::Math::Vec3>> NavigationMaker::GetAllPaths() { return List; }
 std::vector<Unigine::Math::Vec3> NavigationMaker::GetPath(int Num) { return List[Num]; }
 std::vector<Unigine::Math::Vec3> NavigationMaker::GetPath(std::vector<Unigine::Math::Vec3> Points) {

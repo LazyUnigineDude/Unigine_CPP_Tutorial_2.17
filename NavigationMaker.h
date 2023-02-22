@@ -18,6 +18,7 @@ public:
 		PROP_ARRAY_STRUCT(Paths, PathLists)
 
 	void RenderNavigation();
+	int GetNumPaths();
 	std::vector<std::vector<Unigine::Math::Vec3>> GetAllPaths();
 	std::vector<Unigine::Math::Vec3> GetPath(int Num);
 	std::vector<Unigine::Math::Vec3> GetPath(std::vector<Unigine::Math::Vec3> Points);

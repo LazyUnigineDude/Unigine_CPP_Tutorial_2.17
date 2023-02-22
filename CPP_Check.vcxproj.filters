@@ -64,6 +64,7 @@
     <ClCompile Include="AIComponents.cpp">
       <Filter>AI</Filter>
     </ClCompile>
+    <ClCompile Include="AIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -126,6 +127,7 @@
     <ClInclude Include="AIComponents.h">
       <Filter>AI</Filter>
     </ClInclude>
+    <ClInclude Include="AIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_MainLoop">

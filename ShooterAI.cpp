@@ -1,7 +1,9 @@
 #include "ShooterAI.h"
 REGISTER_COMPONENT(ShooterAI)
 
-void ShooterAI::Init() {
+void ShooterAI::StartAI() { CanMove = true; }
+
+void ShooterAI::Init(float Duration, std::vector<Unigine::Math::Vec3> PathLines, Unigine::NodePtr MainCharacter) {
 
 	Health = getComponent<HealthBar>(node);
 	CurrentHealth = 15;
@@ -22,7 +24,8 @@ void ShooterAI::Init() {
 		node->getChild(0)
 	);
 
-	MainNav = getComponent<NavigationMaker>(PathFindingNode);
+	this->MainCharacter = MainCharacter;
+	MainPath.AddNewPath(Duration, PathLines);
 }
 
 void ShooterAI::Update() {
@@ -43,16 +46,11 @@ void ShooterAI::AiState() {
 
 	if (CurrentHealth != Health->GetHealth() && CanMove) { ChangeState(AGGRESSIVE); Weight = 1.0f; CurrentHealth = Health->GetHealth(); }
 
-	switch (STATE)
-	{
+	switch (STATE) {
 	case ShooterAI::IDLE:
 		//Unigine::Log::message("IDLE\n");
 		Weight = Unigine::Math::clamp(Weight -= Unigine::Game::getIFps(), 0.0f, 1.0f);
 		if (isVisible) { ChangeState(CurrentState::ALERT); }
-		if (Unigine::Input::isKeyDown(Unigine::Input::KEY_C)) { // Event to start checking
-				MainPath.AddNewPath(3, MainNav->GetPath(0));
-			CanMove = true;
-		}
 		if (CanMove) {
 			MainPath.RenderPath();
 			if (MainPath.ObjectCloseToPathPoint(node, 0.1f)) {
