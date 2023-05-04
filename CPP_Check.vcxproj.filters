@@ -43,9 +43,6 @@
     <ClCompile Include="SomeClass.cpp">
       <Filter>Basics</Filter>
     </ClCompile>
-    <ClCompile Include="PathMaker.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
     <ClCompile Include="ShooterAI.cpp">
       <Filter>AI</Filter>
     </ClCompile>
@@ -58,13 +55,21 @@
     <ClCompile Include="IntersectionRay.cpp">
       <Filter>Basics</Filter>
     </ClCompile>
-    <ClCompile Include="NavigationMaker.cpp">
+    <ClCompile Include="AIManager.cpp">
       <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="AIComponents.cpp">
-      <Filter>AI</Filter>
+      <Filter>AI\Items</Filter>
     </ClCompile>
-    <ClCompile Include="AIManager.cpp" />
+    <ClCompile Include="NavigationMaker.cpp">
+      <Filter>AI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PathMaker.cpp">
+      <Filter>AI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -106,9 +111,6 @@
     <ClInclude Include="SomeClass.h">
       <Filter>Basics</Filter>
     </ClInclude>
-    <ClInclude Include="PathMaker.h">
-      <Filter>AI</Filter>
-    </ClInclude>
     <ClInclude Include="ShooterAI.h">
       <Filter>AI</Filter>
     </ClInclude>
@@ -121,13 +123,21 @@
     <ClInclude Include="IntersectionRay.h">
       <Filter>Basics</Filter>
     </ClInclude>
-    <ClInclude Include="NavigationMaker.h">
+    <ClInclude Include="AIManager.h">
       <Filter>AI</Filter>
     </ClInclude>
     <ClInclude Include="AIComponents.h">
-      <Filter>AI</Filter>
+      <Filter>AI\Items</Filter>
     </ClInclude>
-    <ClInclude Include="AIManager.h" />
+    <ClInclude Include="NavigationMaker.h">
+      <Filter>AI\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PathMaker.h">
+      <Filter>AI\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_MainLoop">
@@ -156,6 +166,15 @@
     </Filter>
     <Filter Include="Shooter">
       <UniqueIdentifier>{b7852580-1696-4dcc-a5b7-43d8ce0946eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Items">
+      <UniqueIdentifier>{e56462a6-9810-418b-80d5-f186763e30b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{505bd3a1-2c41-4b8e-9e30-1c3f1ca409ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Menu">
+      <UniqueIdentifier>{10865516-003f-406d-b088-f5bdf2cd04b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
