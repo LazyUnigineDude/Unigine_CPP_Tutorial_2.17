@@ -138,6 +138,9 @@
     <ClInclude Include="MainMenu.h">
       <Filter>Menu</Filter>
     </ClInclude>
+    <ClInclude Include="FirstPerson.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_MainLoop">

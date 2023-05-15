@@ -106,6 +106,7 @@
     <ClInclude Include="CameraFollower.h" />
     <ClInclude Include="AIComponents.h" />
     <ClInclude Include="DetectionRay.h" />
+    <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="GunHandler.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUDMaker.h" />
