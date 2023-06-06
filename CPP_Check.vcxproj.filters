@@ -179,6 +179,9 @@
     <Filter Include="Menu">
       <UniqueIdentifier>{10865516-003f-406d-b088-f5bdf2cd04b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data_Inventory">
+      <UniqueIdentifier>{d0784bd9-a4a2-4dc0-95ac-15ad53c65ad0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="../utils/natvis/unigine_stl.natvis">

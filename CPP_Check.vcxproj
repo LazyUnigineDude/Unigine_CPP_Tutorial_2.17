@@ -85,6 +85,7 @@
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUDMaker.cpp" />
     <ClCompile Include="IntersectionRay.cpp" />
+    <ClCompile Include="InventoryController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="NavigationMaker.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUDMaker.h" />
     <ClInclude Include="IntersectionRay.h" />
+    <ClInclude Include="InventoryController.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="NavigationMaker.h" />
     <ClInclude Include="PathMaker.h" />
