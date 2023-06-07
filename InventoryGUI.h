@@ -42,8 +42,7 @@ inline void InventoryGUI::Hide() {
 	GUI = Unigine::Gui::getCurrent();
 	if (GUI->isChild(BackGround)) { GUI->removeChild(BackGround); }
 	if (GUI->isChild(Grid)) { GUI->removeChild(Grid); }
-	if (GUI->isChild(TextGrid)) { GUI->removeChild(TextGrid); }
-	DeleteGrid();
+	if (GUI->isChild(TextGrid)) { GUI->removeChild(TextGrid); 	DeleteGrid(); }
 }
 
 inline void InventoryGUI::Show() {
