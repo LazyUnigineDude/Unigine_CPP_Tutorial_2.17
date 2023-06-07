@@ -13,10 +13,13 @@ public:
 		int GetValue(int& ID);
 		const char* GetImagePath(int& ID);
 
+		DatabaseController* GetDatabase() { return getComponent<DatabaseController>(Unigine::World::getNodeByID(GetRefNum())); }
+
 protected:
 	void Init();
 	void Update();
 
 private:
+	const int GetRefNum() { return 674460560; }
 	Unigine::PropertyParameterPtr Parameter;
 };

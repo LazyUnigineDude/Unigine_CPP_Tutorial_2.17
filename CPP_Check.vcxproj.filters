@@ -70,11 +70,11 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Menu</Filter>
     </ClCompile>
-    <ClCompile Include="InventoryController.cpp">
-      <Filter>Data_Inventory</Filter>
-    </ClCompile>
     <ClCompile Include="DatabaseController.cpp">
       <Filter>Data_Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryController.cpp">
+      <Filter>Data_Inventory\Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,14 +147,17 @@
     <ClInclude Include="FirstPerson.h">
       <Filter>Camera</Filter>
     </ClInclude>
-    <ClInclude Include="InventoryController.h">
-      <Filter>Data_Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="InventoryMaker.h">
-      <Filter>Data_Inventory</Filter>
-    </ClInclude>
     <ClInclude Include="DatabaseController.h">
       <Filter>Data_Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryController.h">
+      <Filter>Data_Inventory\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryMaker.h">
+      <Filter>Data_Inventory\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryGUI.h">
+      <Filter>Data_Inventory\Inventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +199,9 @@
     </Filter>
     <Filter Include="Data_Inventory">
       <UniqueIdentifier>{d0784bd9-a4a2-4dc0-95ac-15ad53c65ad0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data_Inventory\Inventory">
+      <UniqueIdentifier>{f20c039b-3bc3-47dc-996a-36492c066b77}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
