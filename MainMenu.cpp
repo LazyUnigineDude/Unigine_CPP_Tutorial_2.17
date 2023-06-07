@@ -33,7 +33,7 @@ void MainMenu::Update() {
 }
 
 void MainMenu::MenuOpened(bool isOpened) {
-
+	GUI = Unigine::Gui::getCurrent();
 	if (isOpened) {
 		if (!GUI->isChild(Button))      GUI->addChild(Button,		GUI->ALIGN_OVERLAP | GUI->ALIGN_EXPAND);
 		if (!GUI->isChild(QuitButton))  GUI->addChild(QuitButton,	GUI->ALIGN_OVERLAP | GUI->ALIGN_EXPAND);
