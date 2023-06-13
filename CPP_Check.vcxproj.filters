@@ -159,6 +159,9 @@
     <ClInclude Include="InventoryGUI.h">
       <Filter>Data_Inventory\Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="InventoryInteractor.h">
+      <Filter>Data_Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_MainLoop">

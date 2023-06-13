@@ -116,6 +116,7 @@
     <ClInclude Include="IntersectionRay.h" />
     <ClInclude Include="InventoryController.h" />
     <ClInclude Include="InventoryGUI.h" />
+    <ClInclude Include="InventoryInteractor.h" />
     <ClInclude Include="InventoryMaker.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="NavigationMaker.h" />
