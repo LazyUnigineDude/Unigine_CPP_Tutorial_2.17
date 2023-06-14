@@ -35,6 +35,7 @@ private:
 inline InventoryGUI::InventoryGUI(InventoryMaker* Inventory )  {
 	this->Inventory = Inventory; 
 	CreateBackground();
+	CreateGrid();
 }
 
 inline void InventoryGUI::Hide() {

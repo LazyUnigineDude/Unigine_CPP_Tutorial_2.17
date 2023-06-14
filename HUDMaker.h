@@ -10,6 +10,7 @@ public:
 	COMPONENT_DEFINE(HUDMaker, ComponentBase)
 		COMPONENT_INIT(Init)
 		COMPONENT_UPDATE(Update)
+		COMPONENT_SHUTDOWN(Shutdown)
 		PROP_PARAM(File, CrossHair)
 		PROP_PARAM(File, HealthImage)
 		PROP_PARAM(Node, MainCharacter)
@@ -22,6 +23,7 @@ protected:
 
 	void Init();
 	void Update();
+	void Shutdown();
 
 private:
 

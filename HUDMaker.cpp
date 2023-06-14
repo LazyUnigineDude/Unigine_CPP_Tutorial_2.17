@@ -4,10 +4,10 @@ REGISTER_COMPONENT(HUDMaker)
 
 void HUDMaker::Init(){
 	GUI = Unigine::Gui::getCurrent();
-	Canvas = Unigine::WidgetCanvas::create();
+	//Canvas = Unigine::WidgetCanvas::create();
 	Image = Unigine::WidgetSprite::create();
-	MainCharacterHealth = getComponent<HealthBar>(MainCharacter.get());
-	CurrentHealth = MainCharacterHealth->GetHealth();
+	//MainCharacterHealth = getComponent<HealthBar>(MainCharacter.get());
+	//CurrentHealth = MainCharacterHealth->GetHealth();
 
 	Width = GUI->getWidth();
 	Height = GUI->getHeight();
@@ -20,12 +20,12 @@ void HUDMaker::Init(){
 	//Canvas->setTextPosition(x, Unigine::Math::vec2((Width / 2) - (Canvas->getTextWidth(x) / 2), (Height / 2) - (Canvas->getTextHeight(x) / 2)));
 
 	// BOX
-	int y = Canvas->addPolygon(0);
+	/*int y = Canvas->addPolygon(0);
 	Canvas->setPolygonColor(y, Unigine::Math::vec4(0, 0, 0, 0.5));
 	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) - 200, Height - 150, 0));
 	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) + 300, Height - 150, 0));
 	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) + 300, Height - 70, 0));
-	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) - 200, Height - 70, 0));
+	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) - 200, Height - 70, 0));*/
 
 	// Crosshair
 	int z = Image->addLayer();
@@ -36,31 +36,37 @@ void HUDMaker::Init(){
 	Image->setPosition((Width / 2) - (Image->getWidth()/2), Height / 2 - (Image->getHeight() / 2));
 	
 	//Grid
-	Health = Unigine::WidgetGridBox::create(20,1,1);
-	AddHealth(CurrentHealth);
-	Health->setPosition((Width / 4) - 200, Height - 150);
+	//Health = Unigine::WidgetGridBox::create(20,1,1);
+	//AddHealth(CurrentHealth);
+	//Health->setPosition((Width / 4) - 200, Height - 150);
 
 
 	//GUN
-	CurrentAmount = Unigine::WidgetLabel::create();
-	MaxAmount = Unigine::WidgetLabel::create();
+	//CurrentAmount = Unigine::WidgetLabel::create();
+	//MaxAmount = Unigine::WidgetLabel::create();
 
 	GUI->addChild(Image, GUI->ALIGN_FIXED | GUI->ALIGN_OVERLAP);
-	GUI->addChild(Canvas, GUI->ALIGN_EXPAND);
-	GUI->addChild(CurrentAmount, GUI->ALIGN_FIXED | GUI->ALIGN_OVERLAP);
-	GUI->addChild(MaxAmount, GUI->ALIGN_FIXED | GUI->ALIGN_OVERLAP);
-	GUI->addChild(Health, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
+	//GUI->addChild(Canvas, GUI->ALIGN_EXPAND);
+	//GUI->addChild(CurrentAmount, GUI->ALIGN_FIXED | GUI->ALIGN_OVERLAP);
+	//GUI->addChild(MaxAmount, GUI->ALIGN_FIXED | GUI->ALIGN_OVERLAP);
+	//GUI->addChild(Health, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
 }
 
 void HUDMaker::Update()
 {
-	GUI = Unigine::Gui::getCurrent();
+	//GUI = Unigine::Gui::getCurrent();
 
-	if (CurrentHealth > MainCharacterHealth->GetHealth())
+	/*if (CurrentHealth > MainCharacterHealth->GetHealth())
 	{
 		LoseHealth(CurrentHealth - MainCharacterHealth->GetHealth());
 		CurrentHealth = MainCharacterHealth->GetHealth();
-	}
+	}*/
+}
+
+void HUDMaker::Shutdown()
+{
+	GUI = Unigine::Gui::getCurrent();
+	if (GUI->isChild(Image)) { Image->removeChild(Image); Image->deleteLater(); }
 }
 
 void HUDMaker::UpdateGun(int CAmount, int MAmount) {
