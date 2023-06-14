@@ -6,7 +6,6 @@ void DatabaseController::Init() {
 
 	Parameter = DatabaseNode->getProperty(0)->getParameterPtr(0);
 	int ID = 1;
-	Unigine::Log::message("%s %d %s\n", GetName(ID), GetValue(ID), GetImagePath(ID));
 }
 
 const char* DatabaseController::GetName(int& ID) 
@@ -22,4 +21,9 @@ int DatabaseController::GetValue(int& ID)
 const char* DatabaseController::GetImagePath(int& ID)
 {
 	return Parameter->getChild(ID)->getChild(2)->getValueString();
+}
+
+const char* DatabaseController::GetPrefabPath(int& ID)
+{
+	return Parameter->getChild(ID)->getChild(3)->getValueString();
 }

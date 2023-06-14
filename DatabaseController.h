@@ -12,6 +12,7 @@ public:
 		int GetValue(int& ID);
 		const char* GetImagePath(int& ID);
 		DatabaseController* GetDatabase() { return getComponent<DatabaseController>(Unigine::World::getNodeByID(GetRefNum())); }
+		const char* GetPrefabPath(int& ID);
 
 protected:
 	void Init();

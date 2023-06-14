@@ -1,5 +1,6 @@
 #pragma once
 #include "InventoryGUI.h"
+#include "InventoryInteractor.h"
 
 class InventoryController : public Unigine::ComponentBase {
 
@@ -19,4 +20,5 @@ private:
 	Unigine::PropertyParameterPtr Parameter;
 	InventoryMaker Inventory;
 	InventoryGUI GUI;
+	InventoryInteractor Interact;
 };

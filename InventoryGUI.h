@@ -49,6 +49,7 @@ inline void InventoryGUI::Hide() {
 inline void InventoryGUI::Show() {
 
 	GUI = Unigine::Gui::getCurrent(); // Get Current UI
+	DeleteGrid();
 	CreateGrid();	// Create New Items then Add
 	if (!GUI->isChild(BackGround)) GUI->addChild(BackGround, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
 	if (!GUI->isChild(Grid)) GUI->addChild(Grid, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
@@ -56,7 +57,7 @@ inline void InventoryGUI::Show() {
 }
 
 inline void InventoryGUI::Shutdown() {
-	DeleteGrid();	// Delete Item
+	Hide();
 	BackGround->deleteLater(); // Delete background
 }
 
