@@ -23,6 +23,7 @@ private:
 	void OnLeave(Unigine::WidgetPtr Widget);
 	void OnClick(Unigine::WidgetPtr Widget);
 	void OnDrop(Unigine::WidgetPtr Widget1, Unigine::WidgetPtr Widget2);
+
 	Unigine::GuiPtr GUI;
 	Unigine::WidgetCanvasPtr BackGround;
 	std::vector<Unigine::WidgetPtr> ImageList, TextList;
@@ -32,10 +33,9 @@ private:
 	InventoryMaker* Inventory;
 };
 
-inline InventoryGUI::InventoryGUI(InventoryMaker* Inventory )  {
+inline InventoryGUI::InventoryGUI(InventoryMaker* Inventory)  {
 	this->Inventory = Inventory; 
 	CreateBackground();
-	CreateGrid();
 }
 
 inline void InventoryGUI::Hide() {
@@ -98,7 +98,7 @@ inline void InventoryGUI::CreateBackground() {
 	BackGround->addPolygonPoint(BNum, Point[2]);
 	BackGround->addPolygonPoint(BNum, Point[3]);
 	BackGround->setPolygonColor(BNum, Unigine::Math::vec4(0,0,0,0.8));	// Blackish
-	BackGround->setPosition((GUI->getWidth() * 0.5) - (x* 0.5), (GUI->getHeight() * 0.5) - (y* 0.5) );
+	BackGround->setPosition( (GUI->getWidth() * 0.5) - (x* 0.5), (GUI->getHeight() * 0.5) - (y* 0.5) );
 											// Center Position
 }
 

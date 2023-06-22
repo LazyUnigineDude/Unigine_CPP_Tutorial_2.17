@@ -2,10 +2,9 @@
 REGISTER_COMPONENT(DatabaseController);
 
 
-void DatabaseController::Init() {
-
+void DatabaseController::Init() 
+{
 	Parameter = DatabaseNode->getProperty(0)->getParameterPtr(0);
-	int ID = 1; 
 }
 
 const char* DatabaseController::GetName(int& ID) 
