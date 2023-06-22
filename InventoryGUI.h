@@ -18,6 +18,7 @@ private:
 	void DeleteGrid();
 	void CreateBackground();
 	void CreateGrid();
+	void CreateThrowAway();
 
 	void OnHover(Unigine::WidgetPtr Widget);
 	void OnLeave(Unigine::WidgetPtr Widget);
@@ -26,6 +27,7 @@ private:
 
 	Unigine::GuiPtr GUI;
 	Unigine::WidgetCanvasPtr BackGround;
+	Unigine::WidgetSpritePtr ThrowAway;
 	std::vector<Unigine::WidgetPtr> ImageList, TextList;
 	std::map<Unigine::WidgetPtr, int> Map;
 	Unigine::WidgetGridBoxPtr Grid, TextGrid;
@@ -34,7 +36,7 @@ private:
 };
 
 inline InventoryGUI::InventoryGUI(InventoryMaker* Inventory)  {
-	this->Inventory = Inventory; 
+	this->Inventory = Inventory;
 	CreateBackground();
 }
 
@@ -42,18 +44,22 @@ inline void InventoryGUI::Hide() {
 
 	GUI = Unigine::Gui::getCurrent();	// Get Current UI and Remove Them from It
 	if (GUI->isChild(BackGround)) { GUI->removeChild(BackGround); }
-	if (GUI->isChild(Grid)) { GUI->removeChild(Grid); }
-	if (GUI->isChild(TextGrid)) { GUI->removeChild(TextGrid); 	DeleteGrid(); } // Save Space
+	if (GUI->isChild(Grid)) { 
+		GUI->removeChild(Grid); 
+		GUI->removeChild(TextGrid); 	
+		DeleteGrid(); 
+	} // Save Space 
 }
 
 inline void InventoryGUI::Show() {
 
 	GUI = Unigine::Gui::getCurrent(); // Get Current UI
-	DeleteGrid();
-	CreateGrid();	// Create New Items then Add
 	if (!GUI->isChild(BackGround)) GUI->addChild(BackGround, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
-	if (!GUI->isChild(Grid)) GUI->addChild(Grid, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
-	if (!GUI->isChild(TextGrid)) GUI->addChild(TextGrid, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
+	if (!GUI->isChild(Grid)) {
+		CreateGrid();	// Create New Items then Add
+		GUI->addChild(Grid, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
+		GUI->addChild(TextGrid, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
+	}
 }
 
 inline void InventoryGUI::Shutdown() {
@@ -156,6 +162,7 @@ inline void InventoryGUI::CreateGrid() {
 		TextList.push_back(_Text);
 		TextGrid->addChild(_Text);
 	}
+	CreateThrowAway();
 		// Setting the position into mid	
 		int x = (ImageSize * ColNum) + (ColNum - 1) * Pad, // Padding x
 			y = std::floor(InventorySize / ColNum); if (InventorySize % ColNum != 0) { y++; }
@@ -164,6 +171,19 @@ inline void InventoryGUI::CreateGrid() {
 	TextGrid->setPosition((GUI->getWidth() * 0.5) - (x* 0.5), (GUI->getHeight() * 0.5) - (y * 0.5));
 }
 
+inline void InventoryGUI::CreateThrowAway() {
+
+	Unigine::ImagePtr Image = Unigine::Image::create();
+	Image->load("Database_Inventory/Icons/ThrowAway.png");
+	ThrowAway = Unigine::WidgetSprite::create();
+	ThrowAway->setImage(Image);
+	ThrowAway->setWidth(64);
+	ThrowAway->setHeight(64);
+	ThrowAway->addCallback(GUI->DRAG_DROP, Unigine::MakeCallback(this, &InventoryGUI::OnDrop));
+	Map[ThrowAway] = Inventory->ArraySize() + 1;
+	ImageList.push_back(ThrowAway);
+	Grid->addChild(ThrowAway);
+}
 
 ////////////////////////////////////////////
 
@@ -184,7 +204,7 @@ inline void InventoryGUI::OnClick(Unigine::WidgetPtr Widget) {
 	int Pos = 0;
 	if (Map.contains(Widget)) { Pos = Map[Widget]; }
 	DatabaseController* Database = Database->GetDatabase();
-
+	
 	int ID = Inventory->GetItem(Pos).x, 
 		Amount = Inventory->GetItem(Pos).y, 
 		Value = Database->GetValue(ID);
@@ -198,8 +218,27 @@ inline void InventoryGUI::OnDrop(Unigine::WidgetPtr Widget1, Unigine::WidgetPtr 
 	int Pos1, Pos2;
 	if (Map.contains(Widget1)) { Pos1 = Map[Widget1]; }
 	if (Map.contains(Widget2)) { Pos2 = Map[Widget2]; }
+	DatabaseController* Database = Database->GetDatabase();
 
-	Inventory->Swap(Pos2, Pos1);
+	if (Pos1 > Inventory->ArraySize()) {
+		Unigine::Math::ivec2 _item = Inventory->GetItem(Pos2);
+		Inventory->Delete(Pos2);
+
+		Unigine::NodePtr Item = Unigine::World::loadNode(Database->GetPrefabPath(_item.x));
+		Item->getProperty(0)->getParameterPtr(1)->setValueInt(_item.y);
+		Item->setWorldPosition(Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()));
+
+	}
+	else if (Pos2 > Inventory->ArraySize()) {
+		Unigine::Math::ivec2 _item = Inventory->GetItem(Pos1);
+		Inventory->Delete(Pos1);
+
+		Unigine::NodePtr Item = Unigine::World::loadNode(Database->GetPrefabPath(_item.x));
+		Item->getProperty(0)->getParameterPtr(1)->setValueInt(_item.y);
+		Item->setWorldPosition(Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()));
+	}
+
+	else { Inventory->Swap(Pos2, Pos1); }
 	Hide();
 	Show();
 }
