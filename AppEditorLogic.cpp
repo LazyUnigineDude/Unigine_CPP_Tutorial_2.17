@@ -41,7 +41,7 @@ int AppEditorLogic::update()
 	return 1;
 }
 
-int AppEditorLogic::render(const Unigine::EngineWindowPtr &window)
+int AppEditorLogic::render(const Unigine::EngineWindowViewportPtr& window)
 {
 	// Write here code to be called before rendering each render frame when editor is loaded.
 	return 1;
