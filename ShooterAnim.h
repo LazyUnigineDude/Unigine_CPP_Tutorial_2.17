@@ -6,37 +6,30 @@ class ShooterAnim : public Unigine::ComponentBase
 
 public:
 	COMPONENT_DEFINE(ShooterAnim, ComponentBase)
-		COMPONENT_INIT(Init)
-		COMPONENT_UPDATE(Update)
-		PROP_PARAM(Node, CameraFollowerNode)
 		PROP_ARRAY(File, ANIM_NORMAL)
 		PROP_ARRAY(File, ANIM_EQUIP)
 		PROP_ARRAY(File, ANIM_AIM)
 		enum SHOOTER_STATE { NORMAL, EQUIPPED, AIMED, _COUNT };
+		enum ANIM_STATE { IDLE, WALK, RUN, REVERSE_WALK, SIDEWALK_L, SIDEWALK_R, COUNT };
 
-
-		//PROP_PARAM(Toggle, isEquipped)
+		void Init(Unigine::NodePtr MeshSkinnedObj);
+		void Update(float IFPS, float Time);
 		void ChangeState(SHOOTER_STATE STATE);
-
-protected:
-	void Init();
-	void Update();
+		void ChangeAnim(ANIM_STATE STATE);
 
 private:
 
 	Unigine::ObjectMeshSkinnedPtr MainCharacter;
-	float Weight = 0, Weight_ = 0, x = 2, y = 5;
+	float Weight = 0;
 	bool isWeightChanged = false;
 
-	enum ANIMSTATES { IDLE, WALK, RUN, REVERSE_WALK, SIDEWALK_L, SIDEWALK_R, COUNT };
+	void UpdateAnims();
+	const char* GetAnimation(SHOOTER_STATE S_STATE, ANIM_STATE A_STATE);
+	void SetAnimation(SHOOTER_STATE S_STATE, ANIM_STATE A_STATE, int Layer);
+	void LerpLayer() { MainCharacter->lerpLayer(0, 0, 1, Weight); }
 
-
-	void ResetWeight();
-	void ChangeState(int SHOOTERSTATE);
-	void ShooterState();
-	
-	SHOOTER_STATE State;
-	ANIMSTATES MainState = ANIMSTATES::IDLE, PrevState = ANIMSTATES::IDLE;
+	SHOOTER_STATE _STATE = SHOOTER_STATE::NORMAL, _PREVSTATE = SHOOTER_STATE::NORMAL;
+	ANIM_STATE STATE = ANIM_STATE::IDLE, PREVSTATE = ANIM_STATE::IDLE;
 	
 	Unigine::ObjectPtr Gun;
 	Unigine::NodeReferencePtr BulletPrefab;
