@@ -29,8 +29,8 @@ private:
 	bool isWeightChanged = false;
 
 
-	enum ANIMSTATES {PROCEDURAL = 0, IDLE, WALK, REVERSE_WALK, RUN, COUNT};
-	ANIMSTATES MainState = ANIMSTATES::IDLE, PrevState = ANIMSTATES::IDLE;
+	enum ANIM_STATE {PROCEDURAL = 0, IDLE, WALK, REVERSE_WALK, RUN, COUNT};
+	ANIM_STATE MainState = ANIM_STATE::IDLE, PrevState = ANIM_STATE::IDLE;
 	void ChangeState();
 	void ResetWeight();
 

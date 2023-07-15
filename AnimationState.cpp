@@ -11,31 +11,31 @@ void AnimationState::ChangeState() {
 
 	case AnimationState::IDLE:
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT))
-					{ ResetWeight(); MainState = ANIMSTATES::RUN; PrevState = ANIMSTATES::IDLE;}
+					{ ResetWeight(); MainState = ANIM_STATE::RUN; PrevState = ANIM_STATE::IDLE;}
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W)) 
-					{ ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::IDLE; }
+					{ ResetWeight(); MainState = ANIM_STATE::WALK; PrevState = ANIM_STATE::IDLE; }
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S))
-					{ ResetWeight(); MainState = ANIMSTATES::REVERSE_WALK; PrevState = ANIMSTATES::IDLE; }
-		MainCharacter->lerpLayer(ANIMSTATES::PROCEDURAL, PrevState,ANIMSTATES::IDLE, Weight * 2);
+					{ ResetWeight(); MainState = ANIM_STATE::REVERSE_WALK; PrevState = ANIM_STATE::IDLE; }
+		MainCharacter->lerpLayer(ANIM_STATE::PROCEDURAL, PrevState,ANIM_STATE::IDLE, Weight * 2);
 		break;
 	case AnimationState::WALK:
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) 
-					{ ResetWeight(); MainState = ANIMSTATES::RUN; PrevState = ANIMSTATES::WALK; }
+					{ ResetWeight(); MainState = ANIM_STATE::RUN; PrevState = ANIM_STATE::WALK; }
 		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_W)) 
-					{ ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::WALK; }
-		MainCharacter->lerpLayer(ANIMSTATES::PROCEDURAL, PrevState, ANIMSTATES::WALK, Weight * 1.7f);
+					{ ResetWeight(); MainState = ANIM_STATE::IDLE; PrevState = ANIM_STATE::WALK; }
+		MainCharacter->lerpLayer(ANIM_STATE::PROCEDURAL, PrevState, ANIM_STATE::WALK, Weight * 1.7f);
 		break;
 	case AnimationState::REVERSE_WALK:
 		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_S)) 
-					{ ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::REVERSE_WALK; }
-		MainCharacter->lerpLayer(ANIMSTATES::PROCEDURAL, PrevState, ANIMSTATES::REVERSE_WALK, Weight * 1.65f);
+					{ ResetWeight(); MainState = ANIM_STATE::IDLE; PrevState = ANIM_STATE::REVERSE_WALK; }
+		MainCharacter->lerpLayer(ANIM_STATE::PROCEDURAL, PrevState, ANIM_STATE::REVERSE_WALK, Weight * 1.65f);
 		break;
 	case AnimationState::RUN:
 		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_LEFT_SHIFT))
-					{ ResetWeight(); MainState = ANIMSTATES::WALK; PrevState = ANIMSTATES::RUN; }
+					{ ResetWeight(); MainState = ANIM_STATE::WALK; PrevState = ANIM_STATE::RUN; }
 		if (Unigine::Input::isKeyUp(Unigine::Input::KEY_W)) 
-					{ ResetWeight(); MainState = ANIMSTATES::IDLE; PrevState = ANIMSTATES::RUN; }
-		MainCharacter->lerpLayer(ANIMSTATES::PROCEDURAL, PrevState, ANIMSTATES::RUN, Weight * 3);
+					{ ResetWeight(); MainState = ANIM_STATE::IDLE; PrevState = ANIM_STATE::RUN; }
+		MainCharacter->lerpLayer(ANIM_STATE::PROCEDURAL, PrevState, ANIM_STATE::RUN, Weight * 3);
 		break;
 
 	default:
@@ -55,28 +55,28 @@ void AnimationState::Init() {
 
 	MainCharacter = Unigine::checked_ptr_cast<Unigine::ObjectMeshSkinned>(node);
 
-	MainCharacter->setNumLayers(ANIMSTATES::COUNT);
+	MainCharacter->setNumLayers(ANIM_STATE::COUNT);
 
 	int IdleNum = MainCharacter->addAnimation(Idle);
 	int WalkNum = MainCharacter->addAnimation(Walk);
 	int R_WalkNum = MainCharacter->addAnimation(RWalk);
 	int RunNum  = MainCharacter->addAnimation(Run);
 
-	MainCharacter->setAnimation(ANIMSTATES::PROCEDURAL, IdleNum); // Procedural
-	MainCharacter->setAnimation(ANIMSTATES::IDLE, IdleNum);
-	MainCharacter->setAnimation(ANIMSTATES::WALK, WalkNum);
-	MainCharacter->setAnimation(ANIMSTATES::REVERSE_WALK, R_WalkNum);
-	MainCharacter->setAnimation(ANIMSTATES::RUN, RunNum);
+	MainCharacter->setAnimation(ANIM_STATE::PROCEDURAL, IdleNum); // Procedural
+	MainCharacter->setAnimation(ANIM_STATE::IDLE, IdleNum);
+	MainCharacter->setAnimation(ANIM_STATE::WALK, WalkNum);
+	MainCharacter->setAnimation(ANIM_STATE::REVERSE_WALK, R_WalkNum);
+	MainCharacter->setAnimation(ANIM_STATE::RUN, RunNum);
 }
 
 
 void AnimationState::Update() {
 
-	MainCharacter->setFrame(ANIMSTATES::PROCEDURAL, Unigine::Game::getTime() * 30);
-	MainCharacter->setFrame(ANIMSTATES::IDLE, Unigine::Game::getTime() * 30);
-	MainCharacter->setFrame(ANIMSTATES::WALK, Unigine::Game::getTime() * 30);
-	MainCharacter->setFrame(ANIMSTATES::REVERSE_WALK, Unigine::Game::getTime() * 30);
-	MainCharacter->setFrame(ANIMSTATES::RUN, Unigine::Game::getTime() * 30);
+	MainCharacter->setFrame(ANIM_STATE::PROCEDURAL, Unigine::Game::getTime() * 30);
+	MainCharacter->setFrame(ANIM_STATE::IDLE, Unigine::Game::getTime() * 30);
+	MainCharacter->setFrame(ANIM_STATE::WALK, Unigine::Game::getTime() * 30);
+	MainCharacter->setFrame(ANIM_STATE::REVERSE_WALK, Unigine::Game::getTime() * 30);
+	MainCharacter->setFrame(ANIM_STATE::RUN, Unigine::Game::getTime() * 30);
 	
 	Weight = Unigine::Math::clamp(Weight + Unigine::Game::getIFps(), 0.0f, 1.0f);
 	
@@ -84,10 +84,10 @@ void AnimationState::Update() {
 	//Unigine::Console::message("Weight is: %f \n", Weight);
 
 	/*
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_SHIFT)) { MainState = ANIMSTATES::RUN; }
-	else if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W)) { MainState = ANIMSTATES::WALK; }
+	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_SHIFT)) { MainState = ANIM_STATE::RUN; }
+	else if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W)) { MainState = ANIM_STATE::WALK; }
 
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S)) { MainState = ANIMSTATES::REVERSE_WALK; }
+	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S)) { MainState = ANIM_STATE::REVERSE_WALK; }
 	
 
 	ChangeState();
