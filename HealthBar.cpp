@@ -2,10 +2,6 @@
 
 REGISTER_COMPONENT(HealthBar)
 
-void HealthBar::Check() { if (health <= 0) node->deleteLater(); }
-void HealthBar::DropHealth(int amount) { health -= amount; Check(); }
-
-void HealthBar::Init() {
-
-	health = Health.get();
-}
+void HealthBar::Init() { health = Health.get(); }
+int HealthBar::GetHealth() { return health; }
+void HealthBar::HealthChange(int amount) { health += amount; }

@@ -18,6 +18,6 @@ protected:
 	void Init();
 
 private:
-	const int GetRefNum() { return 674460560; }
+	const int GetRefNum() { return 1336405277; }
 	Unigine::PropertyParameterPtr Parameter;
 };

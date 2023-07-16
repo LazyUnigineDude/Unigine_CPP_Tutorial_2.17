@@ -80,6 +80,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="CameraFollower.cpp" />
+    <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="DatabaseController.cpp" />
     <ClCompile Include="DetectionRay.cpp" />
     <ClCompile Include="GunHandler.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CameraFollower.h" />
     <ClInclude Include="AIComponents.h" />
+    <ClInclude Include="CharacterController.h" />
     <ClInclude Include="DatabaseController.h" />
     <ClInclude Include="DetectionRay.h" />
     <ClInclude Include="FirstPerson.h" />

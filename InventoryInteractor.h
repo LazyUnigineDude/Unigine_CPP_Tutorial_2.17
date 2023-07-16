@@ -36,7 +36,7 @@ inline InventoryInteractor::InventoryInteractor(Unigine::PlayerPtr Camera, int M
 
 inline bool InventoryInteractor::DetectItem() {
 
-	Unigine::Math::Vec3 CamViewDir = Unigine::Math::Vec3(Camera->getWorldDirection() * 5) + Camera->getWorldPosition();
+	Unigine::Math::Vec3 CamViewDir = Unigine::Math::Vec3(Camera->getWorldDirection() * 10) + Camera->getWorldPosition();
 	Unigine::ObjectPtr _Item = Unigine::World::getIntersection(
 		Camera->getWorldPosition(),
 		CamViewDir,

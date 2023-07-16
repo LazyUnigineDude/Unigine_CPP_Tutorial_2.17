@@ -9,7 +9,7 @@ struct InventoryGUI {
 
 public:
 	InventoryGUI() = default;
-	InventoryGUI(InventoryMaker* Inventory);
+	InventoryGUI(InventoryMaker* Inventory, Unigine::NodePtr DropPoint);
 	void Hide();
 	void Show();
 	void Shutdown();
@@ -31,12 +31,13 @@ private:
 	std::vector<Unigine::WidgetPtr> ImageList, TextList;
 	std::map<Unigine::WidgetPtr, int> Map;
 	Unigine::WidgetGridBoxPtr Grid, TextGrid;
-
+	Unigine::NodePtr DropPoint;
 	InventoryMaker* Inventory;
 };
 
-inline InventoryGUI::InventoryGUI(InventoryMaker* Inventory)  {
+inline InventoryGUI::InventoryGUI(InventoryMaker* Inventory, Unigine::NodePtr DropPoint)  {
 	this->Inventory = Inventory;
+	this->DropPoint = DropPoint;
 	CreateBackground();
 }
 
@@ -226,8 +227,8 @@ inline void InventoryGUI::OnDrop(Unigine::WidgetPtr Widget1, Unigine::WidgetPtr 
 
 		Unigine::NodePtr Item = Unigine::World::loadNode(Database->GetPrefabPath(_item.x));
 		Item->getProperty(0)->getParameterPtr(1)->setValueInt(_item.y);
-		Item->setWorldPosition(Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()));
-
+		Item->setWorldPosition(DropPoint->getWorldPosition() + Unigine::Math::Vec3(DropPoint->getWorldDirection()));
+		Item->setWorldPosition(DropPoint->getWorldPosition() + Unigine::Math::Vec3(0, 0, 1));
 	}
 	else if (Pos2 > Inventory->ArraySize()) {
 		Unigine::Math::ivec2 _item = Inventory->GetItem(Pos1);
@@ -235,7 +236,8 @@ inline void InventoryGUI::OnDrop(Unigine::WidgetPtr Widget1, Unigine::WidgetPtr 
 
 		Unigine::NodePtr Item = Unigine::World::loadNode(Database->GetPrefabPath(_item.x));
 		Item->getProperty(0)->getParameterPtr(1)->setValueInt(_item.y);
-		Item->setWorldPosition(Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()));
+		Item->setWorldPosition(DropPoint->getWorldPosition() + Unigine::Math::Vec3(DropPoint->getWorldDirection()));
+		Item->setWorldPosition(DropPoint->getWorldPosition() + Unigine::Math::Vec3(0, 0, 1));
 	}
 
 	else { Inventory->Swap(Pos2, Pos1); }

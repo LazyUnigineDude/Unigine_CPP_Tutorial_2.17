@@ -5,6 +5,7 @@ REGISTER_COMPONENT(PhysicsController)
 void PhysicsController::Init(Unigine::NodePtr RigidNode) {
 
 	MainCharacter = RigidNode->getObjectBodyRigid();
+	this->RigidNode = RigidNode;
 }
 
 void PhysicsController::Move(DIRECTIONS Direction) {
@@ -22,35 +23,25 @@ void PhysicsController::Move(DIRECTIONS Direction) {
 	case PhysicsController::RIGHT:
 		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_X) * FBLR_Speed.get().z * 20);
 		break;
-	default:
-		break;
-	}
-
-	}
-
-void PhysicsController::UpdatePhysics() {
-
-	AutoRotate();
-
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) {
-		MainCharacter->setMaxLinearVelocity(Max_Speed.get() * 1.5f);
-	}
-
-	else {
-		MainCharacter->setMaxLinearVelocity(Max_Speed.get());
-	}
+	default: break; }
 }
 
-void PhysicsController::AutoRotate() {
+void PhysicsController::Run(bool isRunning) {
+		(isRunning) ?
+		MainCharacter->setMaxLinearVelocity(Max_Speed.get() * 4) : 
+		MainCharacter->setMaxLinearVelocity(Max_Speed.get() * 0.25);
+}
+
+void PhysicsController::AutoRotate(Unigine::PlayerPtr Camera) {
 
 	Unigine::Math::vec3 CameraView, PlayerView;
 
-	CameraView = Unigine::Game::getPlayer()->getWorldDirection();
-	PlayerView = node->getWorldDirection(Unigine::Math::AXIS_Y);
+	CameraView = Camera->getWorldDirection();
+	PlayerView = RigidNode->getWorldDirection(Unigine::Math::AXIS_Y);
 
-	float Angle = Unigine::Math::getAngle(CameraView, PlayerView, node->getWorldDirection(Unigine::Math::AXIS_Z));
+	float Angle = Unigine::Math::getAngle(CameraView, PlayerView, RigidNode->getWorldDirection(Unigine::Math::AXIS_Z));
 
-	MainCharacter->addAngularImpulse(node->getWorldDirection() * Angle);
+	MainCharacter->addAngularImpulse(RigidNode->getWorldDirection() * Angle);
 }
 
 double PhysicsController::getSpeed() {

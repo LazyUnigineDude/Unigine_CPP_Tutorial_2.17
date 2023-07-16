@@ -17,10 +17,7 @@
       <Filter>Animation</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Bullet_HealthBar</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
-      <Filter>Bullet_HealthBar</Filter>
+      <Filter>Character\Gun\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="CameraController.cpp">
       <Filter>Camera</Filter>
@@ -29,10 +26,7 @@
       <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="DetectionRay.cpp">
-      <Filter>Interaction_GunHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="GunHandler.cpp">
-      <Filter>Interaction_GunHandler</Filter>
+      <Filter>Character\Interact</Filter>
     </ClCompile>
     <ClCompile Include="HUDMaker.cpp">
       <Filter>HUD</Filter>
@@ -45,12 +39,6 @@
     </ClCompile>
     <ClCompile Include="ShooterAI.cpp">
       <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsController.cpp">
-      <Filter>Shooter</Filter>
-    </ClCompile>
-    <ClCompile Include="ShooterAnim.cpp">
-      <Filter>Shooter</Filter>
     </ClCompile>
     <ClCompile Include="IntersectionRay.cpp">
       <Filter>Basics</Filter>
@@ -71,10 +59,25 @@
       <Filter>Menu</Filter>
     </ClCompile>
     <ClCompile Include="DatabaseController.cpp">
-      <Filter>Data_Inventory</Filter>
+      <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="InventoryController.cpp">
-      <Filter>Data_Inventory\Inventory</Filter>
+      <Filter>Character\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsController.cpp">
+      <Filter>Character\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ShooterAnim.cpp">
+      <Filter>Character\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterController.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>Character\Healthbar</Filter>
+    </ClCompile>
+    <ClCompile Include="GunHandler.cpp">
+      <Filter>Character\Gun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,10 +94,7 @@
       <Filter>Animation</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Bullet_HealthBar</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthBar.h">
-      <Filter>Bullet_HealthBar</Filter>
+      <Filter>Character\Gun\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="CameraController.h">
       <Filter>Camera</Filter>
@@ -103,10 +103,7 @@
       <Filter>Camera</Filter>
     </ClInclude>
     <ClInclude Include="DetectionRay.h">
-      <Filter>Interaction_GunHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="GunHandler.h">
-      <Filter>Interaction_GunHandler</Filter>
+      <Filter>Character\Interact</Filter>
     </ClInclude>
     <ClInclude Include="HUDMaker.h">
       <Filter>HUD</Filter>
@@ -119,12 +116,6 @@
     </ClInclude>
     <ClInclude Include="ShooterAI.h">
       <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="ShooterAnim.h">
-      <Filter>Shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsController.h">
-      <Filter>Shooter</Filter>
     </ClInclude>
     <ClInclude Include="IntersectionRay.h">
       <Filter>Basics</Filter>
@@ -148,19 +139,34 @@
       <Filter>Camera</Filter>
     </ClInclude>
     <ClInclude Include="DatabaseController.h">
-      <Filter>Data_Inventory</Filter>
+      <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="InventoryController.h">
-      <Filter>Data_Inventory\Inventory</Filter>
+      <Filter>Character\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="InventoryMaker.h">
-      <Filter>Data_Inventory\Inventory</Filter>
+      <Filter>Character\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="InventoryGUI.h">
-      <Filter>Data_Inventory\Inventory</Filter>
+      <Filter>Character\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="InventoryInteractor.h">
-      <Filter>Data_Inventory\Inventory</Filter>
+      <Filter>Character\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsController.h">
+      <Filter>Character\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ShooterAnim.h">
+      <Filter>Character\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterController.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
+      <Filter>Character\Healthbar</Filter>
+    </ClInclude>
+    <ClInclude Include="GunHandler.h">
+      <Filter>Character\Gun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -170,14 +176,8 @@
     <Filter Include="Animation">
       <UniqueIdentifier>{19b4009a-c846-4a02-9d78-908cd46ed104}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Bullet_HealthBar">
-      <UniqueIdentifier>{24a39739-d451-424b-b7c9-dc35e5fb9092}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{2f0ca053-c6cd-4871-8a38-f9c76cd2b29e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interaction_GunHandler">
-      <UniqueIdentifier>{f447c743-443d-423c-8f73-b7ddecf77f14}</UniqueIdentifier>
     </Filter>
     <Filter Include="HUD">
       <UniqueIdentifier>{46686434-09e2-4430-8f18-c4909e3b6482}</UniqueIdentifier>
@@ -188,9 +188,6 @@
     <Filter Include="AI">
       <UniqueIdentifier>{b0001a17-9849-4ec9-85f4-2c29b1274d81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shooter">
-      <UniqueIdentifier>{b7852580-1696-4dcc-a5b7-43d8ce0946eb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AI\Items">
       <UniqueIdentifier>{e56462a6-9810-418b-80d5-f186763e30b2}</UniqueIdentifier>
     </Filter>
@@ -200,11 +197,32 @@
     <Filter Include="Menu">
       <UniqueIdentifier>{10865516-003f-406d-b088-f5bdf2cd04b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data_Inventory">
+    <Filter Include="Character">
+      <UniqueIdentifier>{b7852580-1696-4dcc-a5b7-43d8ce0946eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character\Physics">
+      <UniqueIdentifier>{18133b91-7fbf-4780-af8b-6300afd152bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character\Animation">
+      <UniqueIdentifier>{8e3edd0e-b427-4ad4-8c50-d3359dfa7823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character\Inventory">
+      <UniqueIdentifier>{f20c039b-3bc3-47dc-996a-36492c066b77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
       <UniqueIdentifier>{d0784bd9-a4a2-4dc0-95ac-15ad53c65ad0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data_Inventory\Inventory">
-      <UniqueIdentifier>{f20c039b-3bc3-47dc-996a-36492c066b77}</UniqueIdentifier>
+    <Filter Include="Character\Healthbar">
+      <UniqueIdentifier>{7cf418cf-665b-4e90-98e0-9039a733e5bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character\Gun">
+      <UniqueIdentifier>{751e7684-168a-4f45-93b8-b5e3eb8dbe57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character\Gun\Bullet">
+      <UniqueIdentifier>{24a39739-d451-424b-b7c9-dc35e5fb9092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character\Interact">
+      <UniqueIdentifier>{f447c743-443d-423c-8f73-b7ddecf77f14}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

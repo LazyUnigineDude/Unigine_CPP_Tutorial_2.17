@@ -6,7 +6,7 @@ struct InventoryMaker {
 public:
 	InventoryMaker() = default;
 	InventoryMaker(Unigine::PropertyParameterPtr Parameter);
-	bool Add(Unigine::Math::ivec2& Item);
+	bool Add(Unigine::Math::ivec2 Item);
 	bool Add(int& Position, Unigine::Math::ivec2& Item);
 	void Swap(int& Position1, int& Position2);
 	Unigine::Math::ivec2 Swap(int& Position, Unigine::Math::ivec2& Item);
@@ -26,15 +26,15 @@ inline InventoryMaker::InventoryMaker( Unigine::PropertyParameterPtr Parameter )
 	this->Parameter = Parameter; 
 }
 
-Unigine::Math::ivec2 InventoryMaker::GetItem( int& Position) { return Parameter->getChild(Position)->getValueIVec2(); }
+inline Unigine::Math::ivec2 InventoryMaker::GetItem( int& Position) { return Parameter->getChild(Position)->getValueIVec2(); }
 
 inline bool InventoryMaker::SetItem( int& Position, Unigine::Math::ivec2 Item ) {
 		Parameter->getChild(Position)->setValueIVec2(Item);
 	return true;
 }
 
-bool InventoryMaker::Add( Unigine::Math::ivec2& Item) { int Pos = 0; return Add(Pos, Item); }
-bool InventoryMaker::Add( int& Position, Unigine::Math::ivec2& Item) {
+inline bool InventoryMaker::Add( Unigine::Math::ivec2 Item) { int Pos = 0; return Add(Pos, Item); }
+inline bool InventoryMaker::Add( int& Position, Unigine::Math::ivec2& Item) {
 	if (Position > ArrayAmount) return false;
 
 	Unigine::Math::ivec2 _Item = GetItem(Position);
@@ -71,7 +71,7 @@ inline Unigine::Math::ivec2 InventoryMaker::Swap( int& Position, Unigine::Math::
 	return _Item;
 }
 
-Unigine::Math::ivec2 InventoryMaker::Delete( int& Position ) {
+inline Unigine::Math::ivec2 InventoryMaker::Delete( int& Position ) {
 	Unigine::Math::ivec2 _Item(GetItem(Position));
 	SetItem(Position, Unigine::Math::ivec2_zero);
 	return _Item;

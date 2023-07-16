@@ -3,26 +3,22 @@
 #include <Unigine.h>
 
 
-class PhysicsController : public Unigine::ComponentBase
-{ 
+class PhysicsController : public Unigine::ComponentBase {
 
 public:
 	COMPONENT_DEFINE(PhysicsController, ComponentBase)
-		COMPONENT_INIT(Init)
-		COMPONENT_UPDATE_PHYSICS(UpdatePhysics)
-
 		PROP_PARAM(Float, Max_Speed, 10)
 		PROP_PARAM(Vec4, FBLR_Speed)
+		enum DIRECTIONS{ FORWARD, REVERSE, LEFT, RIGHT };
+
 		double getSpeed();
-
-protected:
-
-	void Init();
-	void UpdatePhysics();
-
+	void Init(Unigine::NodePtr RigidNode);
+	void Move(DIRECTIONS Direction);
+	void Run(bool isRunning);
+	void AutoRotate(Unigine::PlayerPtr Camera);
 
 private:
 
 	Unigine::BodyRigidPtr MainCharacter;
-	void AutoRotate();
+	Unigine::NodePtr RigidNode;
 };

@@ -1,33 +1,19 @@
 #include "InventoryController.h"
 REGISTER_COMPONENT(InventoryController)
 
-void InventoryController::Init(){
+void InventoryController::Init(Unigine::PlayerPtr Camera, Unigine::NodePtr DropPoint){
 
 	Inventory = InventoryMaker(InventoryNode->getProperty(0)->getParameterPtr(0));
-	GUI = InventoryGUI(&Inventory);
-
-	Interact = InventoryInteractor(Unigine::Game::getPlayer(), 1);
+	GUI = InventoryGUI(&Inventory, DropPoint);
+	Interaction = InventoryInteractor(Camera, 0x00000002);
 }
 
-void InventoryController::Update(){
-
-	if (Unigine::Input::isKeyDown(Unigine::Input::KEY_Y)) {
-		GUI.Show();
-	}
-
-	if (Unigine::Input::isKeyDown(Unigine::Input::KEY_U)) {
-		GUI.Hide();
-	}
-
-	if (Unigine::Input::isKeyDown(Unigine::Input::KEY_R)) {
-		Unigine::Math::ivec2 Item = Interact.GetItem();
-		Inventory.Add(Item);
-	}
-
-	Interact.DetectItem();
-}
+void InventoryController::Show() { GUI.Show(); }
+void InventoryController::Hide() { GUI.Hide(); }
+void InventoryController::Interact() { Inventory.Add(Interaction.GetItem()); }
+void InventoryController::Update(){	Interaction.DetectItem(); }
 
 void InventoryController::Shutdown() {
 	GUI.Shutdown();
-	Interact.Shutdown();
+	Interaction.Shutdown();
 }
