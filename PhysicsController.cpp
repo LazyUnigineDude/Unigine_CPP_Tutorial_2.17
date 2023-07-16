@@ -2,37 +2,35 @@
 
 REGISTER_COMPONENT(PhysicsController)
 
-void PhysicsController::Init() {
+void PhysicsController::Init(Unigine::NodePtr RigidNode) {
 
-	MainCharacter = node->getObjectBodyRigid();
+	MainCharacter = RigidNode->getObjectBodyRigid();
 }
+
+void PhysicsController::Move(DIRECTIONS Direction) {
+
+	switch (Direction) {
+	case PhysicsController::FORWARD:
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_Y) * FBLR_Speed.get().x * 20);
+		break;
+	case PhysicsController::REVERSE:
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NY) * FBLR_Speed.get().y * 20);
+		break;
+	case PhysicsController::LEFT:
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NX) * FBLR_Speed.get().w * 20);
+		break;
+	case PhysicsController::RIGHT:
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_X) * FBLR_Speed.get().z * 20);
+		break;
+	default:
+		break;
+	}
+
+	}
 
 void PhysicsController::UpdatePhysics() {
 
 	AutoRotate();
-
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W))
-	{
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_Y) * FBLR_Speed.get().x * 20);
-	}
-
-
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S))
-	{
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NY) * FBLR_Speed.get().y * 20);
-	}
-
-
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_D))
-	{
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_X) * FBLR_Speed.get().z * 20);
-	}
-
-
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_A))
-	{
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NX) * FBLR_Speed.get().w * 20);
-	}
 
 	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) {
 		MainCharacter->setMaxLinearVelocity(Max_Speed.get() * 1.5f);
