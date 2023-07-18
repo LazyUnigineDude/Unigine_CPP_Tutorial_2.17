@@ -7,12 +7,14 @@ public:
 	COMPONENT_DEFINE(DatabaseController, ComponentBase)
 		COMPONENT_INIT(Init)
 		PROP_PARAM(Node, DatabaseNode)
+		enum ITEM_TYPE{ DEFAULT, WEAPON };
 
 		const char* GetName(int& ID);
 		int GetValue(int& ID);
 		const char* GetImagePath(int& ID);
-		DatabaseController* GetDatabase() { return getComponent<DatabaseController>(Unigine::World::getNodeByID(GetRefNum())); }
 		const char* GetPrefabPath(int& ID);
+		ITEM_TYPE GetItemType(int& ID);
+		DatabaseController* GetDatabase() { return getComponent<DatabaseController>(Unigine::World::getNodeByID(GetRefNum())); }
 
 protected:
 	void Init();

@@ -26,3 +26,8 @@ const char* DatabaseController::GetPrefabPath(int& ID)
 {
 	return Parameter->getChild(ID)->getChild(3)->getValueString();
 }
+
+DatabaseController::ITEM_TYPE DatabaseController::GetItemType(int& ID) {
+
+	return ITEM_TYPE(Parameter->getChild(ID)->getChild(4)->getValueSwitch());
+}
