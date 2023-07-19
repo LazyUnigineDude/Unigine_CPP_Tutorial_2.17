@@ -1,7 +1,6 @@
 #include "CharacterController.h"
 REGISTER_COMPONENT(CharacterController)
 
-
 void CharacterController::Init() {
 
 	Animation = getComponent<ShooterAnim>(AnimationNode);
@@ -80,7 +79,6 @@ void CharacterController::ShutDown() {
 }
 
 void CharacterController::ShowInventory(bool isOpen) { (isOpen) ? Inventory->Show() : Inventory->Hide(); }
-
 void CharacterController::ChangeState(ShooterAnim::SHOOTER_STATE State) {
 
 	switch (State) {
