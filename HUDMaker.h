@@ -15,10 +15,9 @@ public:
 		PROP_PARAM(File, HealthImage)
 		PROP_PARAM(Node, MainCharacter)
 
-		void UpdateGun(int CurrentAmount,int MaxAmount); 
-		void LoseHealth(int Amount);
-		void AddHealth(int Amount);
-
+	void UpdateGun(Unigine::Math::ivec2); 
+	void HideGun();
+	HUDMaker* MainHUD() { return getComponent<HUDMaker>(Unigine::World::getNodeByID(GetRefNum())); }
 protected:
 
 	void Init();
@@ -27,9 +26,13 @@ protected:
 
 private:
 
+	void LoseHealth(int Amount);
+	void AddHealth(int Amount);
 	HealthBar* MainCharacterHealth;
 
+	const int GetRefNum() { return 245705183; }
 	int Width, Height, CurrentHealth;
+
 	Unigine::GuiPtr GUI;
 	Unigine::WidgetCanvasPtr Canvas;
 	Unigine::WidgetSpritePtr Image;

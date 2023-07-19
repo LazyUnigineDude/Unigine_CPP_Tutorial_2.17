@@ -1,6 +1,5 @@
 #pragma once
 #include "InventoryGUI.h"
-#include "InventoryInteractor.h"
 
 class InventoryController : public Unigine::ComponentBase {
 
@@ -10,13 +9,11 @@ public:
 	void Init(Unigine::PlayerPtr Camera, Unigine::NodePtr DropPoint);
 	void Show();
 	void Hide();
-	void Update();
-	void Interact();
+	void AddToInventory(Unigine::Math::ivec2 Item);
 	void Shutdown();
 
 private:
 	Unigine::PropertyParameterPtr Parameter;
 	InventoryMaker Inventory;
 	InventoryGUI GUI;
-	InventoryInteractor Interaction;
 };

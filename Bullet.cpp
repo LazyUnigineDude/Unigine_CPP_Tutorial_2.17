@@ -19,7 +19,7 @@ void Bullet::OnEnter(Unigine::BodyPtr Body, int num) {
 		//Unigine::Log::message("Physics: %s %d\n",CapturedBody->getObject()->getName(), num);
 		HealthBar* Health = getComponent<HealthBar>(CapturedBody->getObject());
 		if (Health) {
-			Health->DropHealth(Damage);
+			Health->HealthChange(Damage);
 			Unigine::Log::message("Dropped health %d\n", Health->GetHealth());
 		}
 	}
@@ -28,7 +28,7 @@ void Bullet::OnEnter(Unigine::BodyPtr Body, int num) {
 		//Unigine::Log::message("Collision: %s %d\n", Body->getContactObject(num)->getName(), num);
 		HealthBar* Health = getComponent<HealthBar>(Body->getContactObject(num));
 		if (Health) {
-			Health->DropHealth(Damage * 2);
+			Health->HealthChange(Damage * 2);
 			Unigine::Log::message("Dropped health %d\n", Health->GetHealth());
 		}
 	}

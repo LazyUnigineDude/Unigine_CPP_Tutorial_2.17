@@ -20,9 +20,10 @@ void ShooterAnim::ChangeState(SHOOTER_STATE STATE) {
 	
 	if (this->_STATE != STATE) {
 		_PREVSTATE = this->_STATE;
-		this->_STATE = _STATE; 
+		this->_STATE = STATE; 
 		Weight = 0;
 		UpdateAnims();
+		_PREVSTATE = STATE;
 	}
 }
 void ShooterAnim::ChangeAnim(ANIM_STATE STATE) { 

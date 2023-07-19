@@ -1,65 +1,77 @@
 #include "GunHandler.h"
 REGISTER_COMPONENT(GunHandler)
 
-void GunHandler::Update()
-{
-	if (isHolding)
-	{
-		if (Unigine::Input::isMouseButtonPressed(Unigine::Input::MOUSE_BUTTON_LEFT))
-		{
-			if (Unigine::Game::getTime() > RateofFireTime)
-			{
-				RateofFireTime = Unigine::Game::getTime() + (1 / RoF);
-				Shoot(Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()) * 100);
-			}
-		}
-		if (Unigine::Input::isKeyDown(Unigine::Input::KEY_R)) {Reload(); }
-	}
+void GunHandler::Init(Unigine::PlayerPtr Camera) {
+	this->Camera = Camera;
 }
 
-void GunHandler::GetGun(Unigine::ObjectPtr Gun) { 
-	this->Gun = Gun; 
-	isHolding = true;
-	RoF = Gun->getProperty(0)->getParameterPtr(2)->getValueInt();
-	CurrentBulletAmount = Gun->getProperty(0)->getParameterPtr(3)->getValueInt();
-	ReloadAmount = Gun->getProperty(0)->getParameterPtr(4)->getValueInt();
+void GunHandler::GrabGun(Unigine::Math::ivec2 GunValue) {
 
-	HUD = getComponent<HUDMaker>(GUNHUD);
+	DatabaseController* Database = Database->GetDatabase();
+	GunProperty = Database->GetGunProperty(GunValue.x);
+	Item = GunValue;
+	isGrabbed = true;
+}
+
+void GunHandler::Equip() {
+	
+	DatabaseController* Database = Database->GetDatabase();
+	Gun = Unigine::World::loadNode(Database->GetPrefabPath(Item.x));
+	HandlePosition->addChild(Gun);
+	Gun->setPosition(Unigine::Math::Vec3_zero);
+	Gun->setRotation(Unigine::Math::quat_zero);
+
+	isHolding = true;
 	Reload();
 }
 
+void GunHandler::UnEquip() {
+	Gun->deleteLater();
+	Item.y += AmountInGun;
+	isHolding = false;
+}
+
+void GunHandler::Shoot(float Time) {
+
+	if (isHolding && Time > RateofFireTime) {
+		RateofFireTime = Time + (1 / GunProperty.RoF);
+		Shoot(Camera->getWorldPosition() + Unigine::Math::Vec3(Camera->getWorldDirection()) * 100);
+	}
+}
+
 void GunHandler::Shoot(Unigine::Math::Vec3 Lookat) {
+
 	if (AmountInGun > 0) {
-	Unigine::NodePtr _Bullet = Unigine::World::loadNode(Gun->getProperty(0)->getParameterPtr(0)->getValueFile());
-	_Bullet->setWorldPosition(/*Gun.get()->getChild(0)->getWorldPosition()*/Unigine::Game::getPlayer()->getWorldPosition() + Unigine::Math::Vec3(Unigine::Game::getPlayer()->getWorldDirection()));
+	Unigine::NodePtr _Bullet = Unigine::World::loadNode(GunProperty.BulletPath);
+	_Bullet->setWorldPosition(Gun->getWorldPosition() + Unigine::Math::Vec3(Gun->getWorldDirection()));
 	_Bullet->worldLookAt(Lookat);
 
 	Bullet* bullet = getComponent<Bullet>(_Bullet);
-	bullet->setDamage(Gun->getProperty(0)->getParameterPtr(1)->getValueInt());
+	bullet->setDamage(GunProperty.Damage);
 
 	Unigine::BodyRigidPtr _BulletPhysics = _Bullet->getObjectBodyRigid();
 	_BulletPhysics->addLinearImpulse(_Bullet->getWorldDirection(Unigine::Math::AXIS_Y) * 100);
 	AmountInGun--;
-	HUD->UpdateGun(AmountInGun,CurrentBulletAmount);
 	}
 	else if (AmountInGun == 0) { Reload(); }
 }
 
 void GunHandler::Reload() {
 
-	int reload = ReloadAmount - AmountInGun;
+	int reload = GunProperty.Reload - AmountInGun;
 
-	if (CurrentBulletAmount + AmountInGun == 0) { Unigine::Log::message("Empty\n"); }
-	else if (CurrentBulletAmount >= reload) {
-		CurrentBulletAmount -= reload;
+	if (Item.y + AmountInGun == 0) { Unigine::Log::message("Empty\n"); }
+	else if (Item.y >= reload) {
+		Item.y -= reload;
 		AmountInGun += reload;
 	}
-	else if (CurrentBulletAmount < reload) {
-		AmountInGun += CurrentBulletAmount;
-		CurrentBulletAmount = 0;
+	else if (Item.y < reload) {
+		AmountInGun += Item.y;
+		Item.y = 0;
 	}
-	HUD->UpdateGun(AmountInGun, CurrentBulletAmount);
 }
+
+Unigine::Math::ivec2 GunHandler::GetGUIValues() { return Unigine::Math::ivec2(AmountInGun, Item.y); }
 
 //void ShooterAnim::GetGun(Unigine::ObjectPtr Gun) {
 //

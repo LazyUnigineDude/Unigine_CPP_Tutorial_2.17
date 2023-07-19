@@ -1,31 +1,33 @@
 #pragma once
 #include <Unigine.h>
 #include "Bullet.h"
-#include "HUDMaker.h"
+#include "DatabaseController.h"
 
 class GunHandler : public Unigine::ComponentBase
 {
 public:
 	COMPONENT_DEFINE(GunHandler, ComponentBase)
-		PROP_PARAM(Node, GUNHUD)
-		COMPONENT_UPDATE_PHYSICS(Update)
-		void GetGun(Unigine::ObjectPtr Gun);
-	
+		PROP_PARAM(Node, HandlePosition)
 
-protected:
-	void Update();
+		void Init(Unigine::PlayerPtr Camera);
+	void GrabGun(Unigine::Math::ivec2 GunValue);
+	void Equip();
+	void UnEquip();
+	void Shoot(float Time);
+	void Reload();
+	bool IsHolding() { return isHolding; }
+	bool IsGrabbed() { return isGrabbed; }
+	Unigine::Math::ivec2 GetGUIValues();
 
 private:
 
 	void Shoot(Unigine::Math::Vec3 Lookat);
-	void Reload();
-
-	Unigine::ObjectPtr Gun = nullptr;
-	float RateofFireTime = 0, RoF = 1;
-	bool isHolding = false;
-	int CurrentBulletAmount,
-		ReloadAmount,
-		AmountInGun = 0;
-
-	HUDMaker* HUD;
+	Unigine::PlayerPtr Camera;
+	Unigine::NodePtr Gun;
+	int AmountInGun = 0;
+	float RateofFireTime = 0;
+	bool isHolding = false, isGrabbed = false;
+	
+	Unigine::Math::ivec2 Item;
+	DatabaseController::GUNProps GunProperty;
 };

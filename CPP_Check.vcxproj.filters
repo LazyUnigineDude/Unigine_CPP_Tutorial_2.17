@@ -25,9 +25,6 @@
     <ClCompile Include="CameraFollower.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="DetectionRay.cpp">
-      <Filter>Character\Interact</Filter>
-    </ClCompile>
     <ClCompile Include="HUDMaker.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
@@ -79,6 +76,9 @@
     <ClCompile Include="GunHandler.cpp">
       <Filter>Character\Gun</Filter>
     </ClCompile>
+    <ClCompile Include="Interactor.cpp">
+      <Filter>Character\Interact</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -101,9 +101,6 @@
     </ClInclude>
     <ClInclude Include="CameraFollower.h">
       <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="DetectionRay.h">
-      <Filter>Character\Interact</Filter>
     </ClInclude>
     <ClInclude Include="HUDMaker.h">
       <Filter>HUD</Filter>
@@ -150,9 +147,6 @@
     <ClInclude Include="InventoryGUI.h">
       <Filter>Character\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="InventoryInteractor.h">
-      <Filter>Character\Inventory</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsController.h">
       <Filter>Character\Physics</Filter>
     </ClInclude>
@@ -167,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="GunHandler.h">
       <Filter>Character\Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="Interactor.h">
+      <Filter>Character\Interact</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

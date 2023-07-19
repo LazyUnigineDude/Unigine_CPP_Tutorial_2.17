@@ -82,10 +82,10 @@
     <ClCompile Include="CameraFollower.cpp" />
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="DatabaseController.cpp" />
-    <ClCompile Include="DetectionRay.cpp" />
     <ClCompile Include="GunHandler.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUDMaker.cpp" />
+    <ClCompile Include="Interactor.cpp" />
     <ClCompile Include="IntersectionRay.cpp" />
     <ClCompile Include="InventoryController.cpp" />
     <ClCompile Include="main.cpp" />
@@ -110,7 +110,6 @@
     <ClInclude Include="AIComponents.h" />
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="DatabaseController.h" />
-    <ClInclude Include="DetectionRay.h" />
     <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="GunHandler.h" />
     <ClInclude Include="HealthBar.h" />
@@ -118,7 +117,7 @@
     <ClInclude Include="IntersectionRay.h" />
     <ClInclude Include="InventoryController.h" />
     <ClInclude Include="InventoryGUI.h" />
-    <ClInclude Include="InventoryInteractor.h" />
+    <ClInclude Include="Interactor.h" />
     <ClInclude Include="InventoryMaker.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="NavigationMaker.h" />

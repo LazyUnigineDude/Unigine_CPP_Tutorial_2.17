@@ -4,7 +4,9 @@
 #include "PhysicsController.h"
 #include "HealthBar.h"
 #include "InventoryController.h"
-
+#include "Interactor.h"
+#include "GunHandler.h"
+#include "HUDMaker.h"
 
 class CharacterController : public Unigine::ComponentBase {
 public:
@@ -17,6 +19,8 @@ public:
 		PROP_PARAM(Node, PhysicsNode)
 		PROP_PARAM(Node, HealthBarNode)
 		PROP_PARAM(Node, InventoryNode)
+		PROP_PARAM(Node, DetectionNode)
+		PROP_PARAM(Node, GunNode)
 
 protected:
 	void Init();
@@ -27,8 +31,12 @@ protected:
 private:
 	bool OpenUI = 0;
 	void ShowInventory(bool isOpen);
+	void ChangeState(ShooterAnim::SHOOTER_STATE State);
 	ShooterAnim* Animation;
 	PhysicsController* Physics;
 	HealthBar* Health;
 	InventoryController* Inventory;
+	Interactor* Interact;
+	GunHandler* Gun;
+	HUDMaker* HUD;
 };
