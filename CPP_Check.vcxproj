@@ -110,6 +110,7 @@
     <ClInclude Include="AIComponents.h" />
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="DatabaseController.h" />
+    <ClInclude Include="EquipmentMaker.h" />
     <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="GunHandler.h" />
     <ClInclude Include="HealthBar.h" />

@@ -165,6 +165,9 @@
     <ClInclude Include="Interactor.h">
       <Filter>Character\Interact</Filter>
     </ClInclude>
+    <ClInclude Include="EquipmentMaker.h">
+      <Filter>Character\Equipment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_MainLoop">
@@ -220,6 +223,9 @@
     </Filter>
     <Filter Include="Character\Interact">
       <UniqueIdentifier>{f447c743-443d-423c-8f73-b7ddecf77f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character\Equipment">
+      <UniqueIdentifier>{d3093369-dd5d-4183-af54-499241a1265a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
