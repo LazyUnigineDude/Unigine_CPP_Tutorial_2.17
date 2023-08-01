@@ -79,6 +79,9 @@
     <ClCompile Include="Interactor.cpp">
       <Filter>Character\Interact</Filter>
     </ClCompile>
+    <ClCompile Include="EquipmentMaker.cpp">
+      <Filter>Character\Equipment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">

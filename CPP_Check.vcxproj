@@ -82,6 +82,7 @@
     <ClCompile Include="CameraFollower.cpp" />
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="DatabaseController.cpp" />
+    <ClCompile Include="EquipmentMaker.cpp" />
     <ClCompile Include="GunHandler.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUDMaker.cpp" />
