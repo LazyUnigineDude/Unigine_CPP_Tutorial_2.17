@@ -18,7 +18,7 @@ bool Interactor::Update() {
 
 	Unigine::ObjectPtr IObj = Unigine::World::getIntersection(
 		Camera->getWorldPosition(),
-		Camera->getWorldPosition() + Unigine::Math::Vec3((Camera->getWorldDirection() * 100)),
+		Camera->getWorldPosition() + Unigine::Math::Vec3((Camera->getWorldDirection() * 5)),
 		MaskNum,
 		Intersection
 	);
@@ -32,14 +32,29 @@ bool Interactor::Update() {
 				IObj->getProperty(0)->getParameterPtr(1)->getValueInt());
 
 			DatabaseController* Database = Database->GetDatabase();
+			std::string _String;
 			Item = IObj;
+			Type = Database->GetItemType(_item.x);
 
-			DatabaseController::ITEM_TYPE Type = Database->GetItemType(_item.x);
-			std::string _String = "Item: ";
-			_String += Database->GetName(_item.x);
-			_String += (Type == Database->DEFAULT) ?  "\nAmount: " : "\nAmmo: ";
-			_String += std::to_string(_item.y);
-
+			switch (Type) {
+			case DatabaseController::DEFAULT:
+				_String += "Item: ";
+				_String += Database->GetName(_item.x);
+				_String += "\nAmount: ";
+				_String += std::to_string(_item.y);
+				break;
+			case DatabaseController::WEAPON:
+				_String += "Item: ";
+				_String += Database->GetName(_item.x);
+				_String += "\nAmmo: ";
+				_String += std::to_string(_item.y);
+				break;
+			case DatabaseController::TRIGGER:
+				_String += "Interact";
+				break;
+			default:
+				break;
+			}
 			Label->setText(_String.c_str());
 		}
 		return 1;
@@ -55,7 +70,11 @@ Unigine::Math::ivec2 Interactor::GetItemFromDetection() {
 	Item = nullptr;
 	if (Update()) {
 		Unigine::Log::message("%d %d\n", _item.x, _item.y);
-		Item->deleteLater();
+		if(Type != DatabaseController::TRIGGER) Item->deleteLater();
+		else {
+			DoorOpener* Door = getComponent<DoorOpener>(Item->getChild(0));
+			if (Door) Door->OpenDoor();
+		}
 		return _item;
 	}
 	return Unigine::Math::ivec2_zero;

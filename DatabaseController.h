@@ -7,7 +7,7 @@ public:
 	COMPONENT_DEFINE(DatabaseController, ComponentBase)
 		COMPONENT_INIT(Init)
 		PROP_PARAM(Node, DatabaseNode)
-		enum ITEM_TYPE{ DEFAULT, WEAPON };
+		enum ITEM_TYPE{ DEFAULT, WEAPON, TRIGGER };
 
 		const char* GetName(int& ID);
 		int GetValue(int& ID);

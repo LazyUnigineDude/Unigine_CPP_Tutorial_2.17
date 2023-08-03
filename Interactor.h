@@ -1,6 +1,7 @@
 #pragma once
 #include "InventoryMaker.h"
 #include "DatabaseController.h"
+#include "DoorOpener.h"
 #include <string>
 
 struct Interactor : public Unigine::ComponentBase {
@@ -21,4 +22,5 @@ private:
 	Unigine::ObjectPtr Item;
 	Unigine::Math::ivec2 _item;
 	Unigine::GuiPtr GUI;
+	DatabaseController::ITEM_TYPE Type;
 };

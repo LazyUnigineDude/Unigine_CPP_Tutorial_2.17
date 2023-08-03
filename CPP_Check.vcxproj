@@ -82,7 +82,7 @@
     <ClCompile Include="CameraFollower.cpp" />
     <ClCompile Include="CharacterController.cpp" />
     <ClCompile Include="DatabaseController.cpp" />
-    <ClCompile Include="EquipmentMaker.cpp" />
+    <ClCompile Include="DoorOpener.cpp" />
     <ClCompile Include="GunHandler.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUDMaker.cpp" />
@@ -92,6 +92,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="NavigationMaker.cpp" />
+    <ClCompile Include="MissionController.cpp" />
     <ClCompile Include="PathMaker.cpp" />
     <ClCompile Include="PhysicsController.cpp" />
     <ClCompile Include="PropertyChecker.cpp" />
@@ -111,7 +112,7 @@
     <ClInclude Include="AIComponents.h" />
     <ClInclude Include="CharacterController.h" />
     <ClInclude Include="DatabaseController.h" />
-    <ClInclude Include="EquipmentMaker.h" />
+    <ClInclude Include="DoorOpener.h" />
     <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="GunHandler.h" />
     <ClInclude Include="HealthBar.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="InventoryMaker.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="NavigationMaker.h" />
+    <ClInclude Include="MissionController.h" />
     <ClInclude Include="PathMaker.h" />
     <ClInclude Include="PhysicsController.h" />
     <ClInclude Include="PropertyChecker.h" />
