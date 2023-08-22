@@ -79,8 +79,9 @@
     <ClCompile Include="Interactor.cpp">
       <Filter>Character\Interact</Filter>
     </ClCompile>
-    <ClCompile Include="EquipmentMaker.cpp">
-      <Filter>Character\Equipment</Filter>
+    <ClCompile Include="MissionController.cpp" />
+    <ClCompile Include="DoorOpener.cpp">
+      <Filter>Basics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,8 +169,9 @@
     <ClInclude Include="Interactor.h">
       <Filter>Character\Interact</Filter>
     </ClInclude>
-    <ClInclude Include="EquipmentMaker.h">
-      <Filter>Character\Equipment</Filter>
+    <ClInclude Include="MissionController.h" />
+    <ClInclude Include="DoorOpener.h">
+      <Filter>Basics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
