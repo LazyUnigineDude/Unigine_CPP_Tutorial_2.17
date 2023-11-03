@@ -83,6 +83,9 @@
     <ClCompile Include="DoorOpener.cpp">
       <Filter>Basics</Filter>
     </ClCompile>
+    <ClCompile Include="SoundController.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -172,6 +175,9 @@
     <ClInclude Include="MissionController.h" />
     <ClInclude Include="DoorOpener.h">
       <Filter>Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundController.h">
+      <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

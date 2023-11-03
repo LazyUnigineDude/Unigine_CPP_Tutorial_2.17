@@ -5,7 +5,7 @@
 
 class HUDMaker : public Unigine::ComponentBase
 {
-public: 
+public:
 	
 	COMPONENT_DEFINE(HUDMaker, ComponentBase)
 		COMPONENT_INIT(Init)

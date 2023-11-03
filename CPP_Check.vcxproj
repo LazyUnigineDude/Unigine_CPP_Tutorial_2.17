@@ -99,6 +99,7 @@
     <ClCompile Include="ShooterAI.cpp" />
     <ClCompile Include="ShooterAnim.cpp" />
     <ClCompile Include="SomeClass.cpp" />
+    <ClCompile Include="SoundController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="ShooterAI.h" />
     <ClInclude Include="ShooterAnim.h" />
     <ClInclude Include="SomeClass.h" />
+    <ClInclude Include="SoundController.h" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="../utils/natvis/unigine_stl.natvis" />
