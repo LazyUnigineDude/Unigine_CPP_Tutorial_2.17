@@ -14,6 +14,6 @@ protected:
 
 private:
 	Unigine::SoundSourcePtr Source;
-
+	Unigine::AmbientSourcePtr Ambience;
 };
 
