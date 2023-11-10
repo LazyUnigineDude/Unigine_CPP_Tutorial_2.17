@@ -84,7 +84,7 @@
       <Filter>Basics</Filter>
     </ClCompile>
     <ClCompile Include="SoundController.cpp">
-      <Filter>Sound</Filter>
+      <Filter>Character\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +177,7 @@
       <Filter>Basics</Filter>
     </ClInclude>
     <ClInclude Include="SoundController.h">
-      <Filter>Sound</Filter>
+      <Filter>Character\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +201,6 @@
     </Filter>
     <Filter Include="AI\Items">
       <UniqueIdentifier>{e56462a6-9810-418b-80d5-f186763e30b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sound">
-      <UniqueIdentifier>{505bd3a1-2c41-4b8e-9e30-1c3f1ca409ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="Menu">
       <UniqueIdentifier>{10865516-003f-406d-b088-f5bdf2cd04b4}</UniqueIdentifier>
@@ -237,6 +234,9 @@
     </Filter>
     <Filter Include="Character\Equipment">
       <UniqueIdentifier>{d3093369-dd5d-4183-af54-499241a1265a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character\Sound">
+      <UniqueIdentifier>{505bd3a1-2c41-4b8e-9e30-1c3f1ca409ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
