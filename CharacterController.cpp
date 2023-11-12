@@ -9,6 +9,7 @@ void CharacterController::Init() {
 	Inventory = getComponent<InventoryController>(InventoryNode);
 	Interact = getComponent<Interactor>(DetectionNode);
 	Gun = getComponent<GunHandler>(GunNode);
+	Sound = getComponent<SoundController>(FootStepNode);
 
 	//Unigine::EngineWindowPtr window = Unigine::WindowManager::getMainWindow();
 	//window->setSize(Unigine::Math::ivec2(900, 400));
@@ -20,6 +21,7 @@ void CharacterController::Init() {
 	Inventory->Init(Unigine::Game::getPlayer(), node);
 	Interact->Init(Unigine::Game::getPlayer());
 	Gun->Init(Unigine::Game::getPlayer());
+	Sound->Init();
 
 	HUD = HUD->MainHUD();
 }
@@ -28,6 +30,9 @@ void CharacterController::Update() {
 
 	Interact->Update();
 	Animation->Update(Unigine::Game::getIFps(), Unigine::Game::getTime());
+
+	if (Animation->IsIdle()) { Sound->StopSound(); }
+	else Sound->PlaySound();
 
 	if (!OpenUI) {
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_SPACE)) { Animation->ChangeAnim(Animation->RUN); }

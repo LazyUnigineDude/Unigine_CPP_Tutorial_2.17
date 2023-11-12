@@ -100,6 +100,7 @@
     <ClCompile Include="ShooterAnim.cpp" />
     <ClCompile Include="SomeClass.cpp" />
     <ClCompile Include="SoundController.cpp" />
+    <ClCompile Include="WorldSoundChanger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
@@ -133,9 +134,13 @@
     <ClInclude Include="ShooterAnim.h" />
     <ClInclude Include="SomeClass.h" />
     <ClInclude Include="SoundController.h" />
+    <ClInclude Include="WorldSoundChanger.h" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="../utils/natvis/unigine_stl.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

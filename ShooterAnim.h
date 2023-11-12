@@ -16,6 +16,7 @@ public:
 		void Update(float IFPS, float Time);
 		void ChangeState(SHOOTER_STATE STATE);
 		void ChangeAnim(ANIM_STATE STATE);
+		bool IsIdle();
 
 private:
 

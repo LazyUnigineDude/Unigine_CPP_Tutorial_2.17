@@ -5,13 +5,14 @@ class SoundController : public Unigine::ComponentBase {
 
 public:
 	COMPONENT_DEFINE(SoundController, ComponentBase)
-		COMPONENT_INIT(Init)
 
-protected:
+		PROP_PARAM(File, SoundFile);
 	void Init();
+
+	void PlaySound();
+	void StopSound();
+	bool isPlaying() { return Source->isPlaying(); }
 
 private:
 	Unigine::SoundSourcePtr Source;
-	Unigine::AmbientSourcePtr Ambience;
 };
-

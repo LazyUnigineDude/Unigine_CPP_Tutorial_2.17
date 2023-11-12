@@ -84,7 +84,10 @@
       <Filter>Basics</Filter>
     </ClCompile>
     <ClCompile Include="SoundController.cpp">
-      <Filter>Character\Sound</Filter>
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSoundChanger.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +180,10 @@
       <Filter>Basics</Filter>
     </ClInclude>
     <ClInclude Include="SoundController.h">
-      <Filter>Character\Sound</Filter>
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSoundChanger.h">
+      <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +241,7 @@
     <Filter Include="Character\Equipment">
       <UniqueIdentifier>{d3093369-dd5d-4183-af54-499241a1265a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Character\Sound">
+    <Filter Include="Sound">
       <UniqueIdentifier>{505bd3a1-2c41-4b8e-9e30-1c3f1ca409ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -243,5 +249,8 @@
     <Natvis Include="../utils/natvis/unigine_stl.natvis">
       <Filter>_MainLoop</Filter>
     </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ public:
 		PROP_PARAM(Node, InventoryNode)
 		PROP_PARAM(Node, DetectionNode)
 		PROP_PARAM(Node, GunNode)
-		PROP_PARAM(Node, SoundControllerNode)
+		PROP_PARAM(Node, FootStepNode)
 
 protected:
 	void Init();

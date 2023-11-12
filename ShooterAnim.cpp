@@ -42,6 +42,7 @@ void ShooterAnim::UpdateAnims() {
 	SetAnimation(_STATE, STATE, 1);
 }
 
+bool ShooterAnim::IsIdle() { return STATE == IDLE; }
 const char* ShooterAnim::GetAnimation(SHOOTER_STATE S_STATE, ANIM_STATE A_STATE) {
 
 	const char* Temp;
