@@ -43,7 +43,7 @@ void CharacterController::Update() {
 		else Animation->ChangeAnim(Animation->IDLE);
 	}
 	
-	if (Unigine::Input::isKeyDown(Unigine::Input::KEY_Q)) { OpenUI = (OpenUI) ? 0 : 1; ShowInventory(OpenUI); }
+	if (Unigine::Input::isKeyDown(Unigine::Input::KEY_TAB)) { OpenUI = (OpenUI) ? 0 : 1; ShowInventory(OpenUI); }
 	if (Unigine::Input::isKeyDown(Unigine::Input::KEY_E)) { 
 
 		Unigine::Math::ivec2 Item = Interact->GetItemFromDetection();
@@ -59,8 +59,9 @@ void CharacterController::Update() {
 		if (Unigine::Input::isMouseButtonUp(Unigine::Input::MOUSE_BUTTON_RIGHT)) { ChangeState(Animation->EQUIPPED); }
 		if (Unigine::Input::isKeyDown(Unigine::Input::KEY_R)) { Gun->Reload(); 	HUD->UpdateGun(Gun->GetGUIValues()); }
 	}
-	if ((Unigine::Input::isKeyDown(Unigine::Input::KEY_Y))) {
-		(Gun->IsHolding()) ? ChangeState(Animation->NORMAL) : ChangeState(Animation->EQUIPPED);
+	if ((Unigine::Input::isKeyDown(Unigine::Input::KEY_Q))) {
+		if (!Gun->IsGrabbed()) { Unigine::Log::message("Find a Gun first!\n"); ChangeState(Animation->NORMAL); }
+			else ChangeState(Animation->EQUIPPED);
 	}
 }
 

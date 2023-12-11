@@ -92,7 +92,9 @@
     <ClCompile Include="MenuWithLoad.cpp">
       <Filter>Menu</Filter>
     </ClCompile>
-    <ClCompile Include="GameMenu.cpp" />
+    <ClCompile Include="GameMenu.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -195,7 +197,9 @@
     <ClInclude Include="SaveManager.h">
       <Filter>Menu</Filter>
     </ClInclude>
-    <ClInclude Include="GameMenu.h" />
+    <ClInclude Include="GameMenu.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_MainLoop">

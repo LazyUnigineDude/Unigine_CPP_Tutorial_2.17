@@ -38,4 +38,5 @@ private:
 	Unigine::WidgetSpritePtr Image;
 	Unigine::WidgetLabelPtr CurrentAmount, MaxAmount;
 	Unigine::WidgetGridBoxPtr Health;
+	Unigine::WidgetLabelPtr Buttons;
 };

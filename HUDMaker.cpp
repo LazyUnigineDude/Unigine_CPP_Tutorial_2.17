@@ -5,6 +5,7 @@ void HUDMaker::Init(){
 	GUI = Unigine::Gui::getCurrent();
 	Canvas = Unigine::WidgetCanvas::create();
 	Image = Unigine::WidgetSprite::create();
+	Buttons = Unigine::WidgetLabel::create();
 	MainCharacterHealth = getComponent<HealthBar>(MainCharacter.get());
 	CurrentHealth = MainCharacterHealth->GetHealth();
 
@@ -21,10 +22,10 @@ void HUDMaker::Init(){
 	// BOX
 	int y = Canvas->addPolygon(0);
 	Canvas->setPolygonColor(y, Unigine::Math::vec4(0, 0, 0, 0.5));
-	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) - 200, Height - 150, 0));
-	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) + 300, Height - 150, 0));
-	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) + 300, Height - 70, 0));
-	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width / 4) - 200, Height - 70, 0));
+	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) - 200, Height - 120, 0));
+	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) +  50, Height - 120, 0));
+	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) +  50, Height - 70, 0));
+	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) - 200, Height - 70, 0));
 
 	// Crosshair
 	int z = Image->addLayer();
@@ -32,22 +33,30 @@ void HUDMaker::Init(){
 	Image->setImage(_i);
 	Image->setHeight(25);
 	Image->setWidth(25);
-	Image->setPosition((Width / 2) - (Image->getWidth()/2), Height / 2 - (Image->getHeight() / 2));
+	Image->setPosition((Width * 0.5) - (Image->getWidth() * 0.5), Height * 0.5 - (Image->getHeight() * 0.5));
 	
-	//HealthGrid
-	Health = Unigine::WidgetGridBox::create(20,1,1);
+	// HealthGrid
+	Health = Unigine::WidgetGridBox::create(10,1,1);
 	AddHealth(CurrentHealth);
-	Health->setPosition((Width / 4) - 200, Height - 150);
+	Health->setPosition((Width * 0.25) - 200, Height - 120);
 
-	//GUN
+	// GUN
 	CurrentAmount = Unigine::WidgetLabel::create();
 	MaxAmount = Unigine::WidgetLabel::create();
+
+	// Buttons
+	Buttons->setText("Press TAB to Open/Close Inventory\nPress Q to Equip Gun\nPress R to Reload\nPress E to Pickup Highlighted Objects\n");
+	Buttons->setPosition((Width * 0.1), 200);
+	Buttons->setFontSize(21);
+	Buttons->setFontOutline(2);
+
 
 	GUI->addChild(Image, GUI->ALIGN_FIXED | GUI->ALIGN_OVERLAP);
 	GUI->addChild(Canvas, GUI->ALIGN_EXPAND);
 	GUI->addChild(CurrentAmount, GUI->ALIGN_FIXED | GUI->ALIGN_OVERLAP);
 	GUI->addChild(MaxAmount, GUI->ALIGN_FIXED | GUI->ALIGN_OVERLAP);
 	GUI->addChild(Health, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
+	GUI->addChild(Buttons, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
 }
 
 void HUDMaker::Update() {
@@ -71,6 +80,7 @@ void HUDMaker::Shutdown()
 	if (GUI->isChild(CurrentAmount)) { GUI->removeChild(CurrentAmount); CurrentAmount->deleteLater(); }
 	if (GUI->isChild(MaxAmount)) { GUI->removeChild(MaxAmount); MaxAmount->deleteLater(); }
 	if (GUI->isChild(Health)) { LoseHealth(CurrentHealth); GUI->removeChild(Health); Health->deleteLater(); }
+	if (GUI->isChild(Buttons)) { GUI->removeChild(Buttons); Buttons->deleteLater(); }
 }
 
 void HUDMaker::HideGun() { CurrentAmount->setText(" "); MaxAmount->setText(" "); }
