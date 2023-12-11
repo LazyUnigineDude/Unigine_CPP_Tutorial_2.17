@@ -16,7 +16,7 @@
 }
 
  void DetectionMaker::AddCallbacks() { 
-	 DetectionArea->addEnterCallback(Unigine::MakeCallback(this, &DetectionMaker::GetObjectsInArea));
+	 if (DetectionArea) DetectionArea->addEnterCallback(Unigine::MakeCallback(this, &DetectionMaker::GetObjectsInArea));
  }
 
  void DetectionMaker::CalculateView() {
@@ -34,22 +34,28 @@ void DetectionMaker::RenderView(bool isRender) {
 			MainObj->getWorldPosition(),
 			MainObj->getWorldPosition() + Unigine::Math::Vec3(MainObj->getWorldDirection(Unigine::Math::AXIS_Y)) * 2, 
 			Unigine::Math::vec4_black);
-		Unigine::Visualizer::renderSphere(DetectionArea->getSize().x, DetectionArea->getWorldTransform(), Unigine::Math::vec4_red);
+		if (DetectionArea) Unigine::Visualizer::renderSphere(DetectionArea->getSize().x, DetectionArea->getWorldTransform(), Unigine::Math::vec4_red);
 	}
+}
+
+bool DetectionMaker::TargetVisibleInFrustum(Unigine::NodePtr Target, int Mask) {
+	
+	FrustumBound = Unigine::Math::BoundFrustum(Frustum, Unigine::Math::inverse(Unigine::Math::mat4(View)));
+	this->Mask = Mask;
+	if (FrustumBound.inside(Unigine::Math::vec3(Target->getWorldPosition()))) return true;
+	return false;
 }
 
 bool DetectionMaker::TargetVisibleInFrustum(Unigine::NodePtr Target, int Mask, const char* NameDetection) {
 
-	FrustumBound = Unigine::Math::BoundFrustum(Frustum, Unigine::Math::inverse(Unigine::Math::mat4(View)));
-	this->Mask = Mask;
-	if (FrustumBound.inside(Unigine::Math::vec3(Target->getWorldPosition()))) {
+	if (TargetVisibleInFrustum(Target, Mask)) {
 
 		Unigine::ObjectPtr Obj = Unigine::World::getIntersection(
-			MainObj->getWorldPosition(),
+			ViewPosition->getWorldPosition(),
 			Target->getWorldPosition(),
 			Mask
 		);
-		if (Obj->getName() == NameDetection) return true;
+		if (Obj && Obj->getName() == NameDetection) return true;
 	}
 	return false;
 }

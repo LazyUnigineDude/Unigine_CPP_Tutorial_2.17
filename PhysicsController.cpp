@@ -10,26 +10,27 @@ void PhysicsController::Init(Unigine::NodePtr RigidNode) {
 
 void PhysicsController::Move(DIRECTIONS Direction) {
 
+	float CorrectedMass = MainCharacter->getMass() * Unigine::Physics::getIFps();
+
 	switch (Direction) {
 	case PhysicsController::FORWARD:
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_Y) * FBLR_Speed.get().x * 20);
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_Y) * FBLR_Speed.get().x * CorrectedMass);
 		break;
 	case PhysicsController::REVERSE:
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NY) * FBLR_Speed.get().y * 20);
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NY) * FBLR_Speed.get().y * CorrectedMass);
 		break;
 	case PhysicsController::LEFT:
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NX) * FBLR_Speed.get().w * 20);
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_NX) * FBLR_Speed.get().w * CorrectedMass);
 		break;
 	case PhysicsController::RIGHT:
-		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_X) * FBLR_Speed.get().z * 20);
+		MainCharacter->addLinearImpulse(node->getWorldDirection(Unigine::Math::AXIS_X) * FBLR_Speed.get().z * CorrectedMass);
 		break;
 	default: break; }
 }
 
 void PhysicsController::Run(bool isRunning) {
-		(isRunning) ?
-		MainCharacter->setMaxLinearVelocity(Max_Speed.get() * 4) : 
-		MainCharacter->setMaxLinearVelocity(Max_Speed.get() * 0.25);
+
+		if (isRunning) MainCharacter->addLinearImpulse(MainCharacter->getLinearVelocity().normalize() * Max_Speed.get());
 }
 
 void PhysicsController::AutoRotate(Unigine::PlayerPtr Camera) {

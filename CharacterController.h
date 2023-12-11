@@ -16,6 +16,7 @@ public:
 		COMPONENT_UPDATE(Update)
 		COMPONENT_UPDATE_PHYSICS(UpdatePhysics)
 		COMPONENT_SHUTDOWN(ShutDown)
+		PROP_PARAM(Node, ObjectSkin)
 		PROP_PARAM(Node, AnimationNode)
 		PROP_PARAM(Node, PhysicsNode)
 		PROP_PARAM(Node, HealthBarNode)

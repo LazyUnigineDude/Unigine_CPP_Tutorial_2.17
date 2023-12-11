@@ -15,7 +15,7 @@ void CharacterController::Init() {
 	//window->setSize(Unigine::Math::ivec2(900, 400));
 	//window->setPosition(Unigine::Math::ivec2(100, 100));
 
-	Animation->Init(node);
+	Animation->Init(ObjectSkin);
 	Physics->Init(node);
 	Health->Init();
 	Inventory->Init(Unigine::Game::getPlayer(), node);

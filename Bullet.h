@@ -1,14 +1,15 @@
 #pragma once
 #include <Unigine.h>
 
-class Bullet : public Unigine::ComponentBase
-{
+class Bullet : public Unigine::ComponentBase {
+
 public:
 	COMPONENT_DEFINE(Bullet, ComponentBase)
 		COMPONENT_INIT(Init)
 		COMPONENT_UPDATE_PHYSICS(Update)
+		PROP_PARAM(Int, DamageAmount, 1)
 
-	void setDamage(int num) { Damage = num; }
+	void setDamage(int num) { DamageAmount = num; }
 
 protected:
 	void Init();
@@ -16,7 +17,6 @@ protected:
 
 private:
 	float StartTime, LifeTime = 5.0f;
-	int Damage = 0;
 
 	Unigine::BodyPtr Body;
 	void OnEnter(Unigine::BodyPtr Body, int num);

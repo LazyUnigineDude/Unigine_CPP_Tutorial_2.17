@@ -17,6 +17,7 @@ public:
 	void AddCallbacks();
 	void CalculateView();
 	void RenderView(bool isRender);
+	bool TargetVisibleInFrustum(Unigine::NodePtr Target, int Mask);
 	bool TargetVisibleInFrustum(Unigine::NodePtr Target, int Mask, const char* NameDetection);
 	void Dodge(bool isDodging, int DodgeDistance);
 
