@@ -95,6 +95,9 @@
     <ClCompile Include="GameMenu.cpp">
       <Filter>Menu</Filter>
     </ClCompile>
+    <ClCompile Include="TurretClass.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="GameMenu.h">
       <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="TurretClass.h">
+      <Filter>AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

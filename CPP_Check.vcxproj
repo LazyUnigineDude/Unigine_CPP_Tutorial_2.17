@@ -102,6 +102,7 @@
     <ClCompile Include="ShooterAnim.cpp" />
     <ClCompile Include="SomeClass.cpp" />
     <ClCompile Include="SoundController.cpp" />
+    <ClCompile Include="TurretClass.cpp" />
     <ClCompile Include="WorldSoundChanger.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +140,7 @@
     <ClInclude Include="ShooterAnim.h" />
     <ClInclude Include="SomeClass.h" />
     <ClInclude Include="SoundController.h" />
+    <ClInclude Include="TurretClass.h" />
     <ClInclude Include="WorldSoundChanger.h" />
   </ItemGroup>
   <ItemGroup>
