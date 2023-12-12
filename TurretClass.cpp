@@ -18,6 +18,8 @@ void TurretClass::Init() {
 
 		std::string Label = std::to_string(H->GetHealth()) +" / " + std::to_string(MaxHealth[i]);
 		Unigine::WidgetLabelPtr _Health = Unigine::WidgetLabel::create(Label.c_str());
+		_Health->setFontOutline(2);
+		_Health->setFontColor(Unigine::Math::vec4_red);
 		_Health->setFontSize(28);
 		_GUI->getGui()->addChild(_Health, Unigine::Gui::ALIGN_EXPAND | Unigine::Gui::ALIGN_OVERLAP);
 
@@ -29,7 +31,7 @@ void TurretClass::Init() {
 	}
 
 
-	Detection = DetectionMaker(nullptr, RotObj, ShootArea, 40, 0);
+	Detection = DetectionMaker(nullptr, RotObj, ShootArea, 150, 0);
 }
 
 void TurretClass::Update() {
@@ -47,41 +49,52 @@ void TurretClass::Update() {
 			CurHealth[i] = Health[i]->GetHealth();
 
 			std::string Label = std::to_string(CurHealth[i]) + " / " + std::to_string(MaxHealth[i]);
-			if(HealthLabel[i]) HealthLabel[i]->setText(Label.c_str());
+			if (HealthLabel[i]) HealthLabel[i]->setText(Label.c_str());
 		}
 	}
 
+	auto isVisible = [&]() {
+		if (Detection.TargetVisibleInFrustum(EnemyNode, 0)) {
 
+			Unigine::ObjectPtr Obj = Unigine::World::getIntersection(
+				ShootArea->getWorldPosition(),
+				EnemyNode->getWorldPosition(),
+				MaskNode
+			);
 
-	//if(isDestroyed == 0){ 
-	//switch (State) {
-	//case TurretClass::SEARCH:
-	//	RotObj->worldRotate(0,0,Unigine::Game::getIFps() * Speed);
-	//	if (Health->GetHealth() < CurrHealth) { CurrHealth = Health->GetHealth(); State = ATTACK; }
-	//	if (Detection.TargetVisibleInFrustum(EnemyNode, 0)) { 
-	//		State = ATTACK;
-	//		CurrTime = Unigine::Game::getTime() + (1 / RoF);
-	//	}
-	//	break;
-	//case TurretClass::ATTACK:
-	//	RotObj->worldLookAt(EnemyNode->getWorldPosition());
-	//	ShootArea->worldLookAt(EnemyNode->getWorldPosition() + Unigine::Math::Vec3_up);
-	//	Unigine::Visualizer::renderLine3D(ShootArea->getWorldPosition(), ShootArea->getWorldPosition() + Unigine::Math::Vec3(ShootArea->getWorldDirection(Unigine::Math::AXIS_Y) * 100), Unigine::Math::vec4_red);
-	//	if (!Detection.TargetVisibleInFrustum(EnemyNode, 0)) State = SEARCH;
+			if (Obj && strcmp(Obj->getName(), "MainCharacter") == 0) return true;
+			return false;
+		}
+	};
 
-	//	if (CurrTime < Unigine::Game::getTime() ) {
-	//		CurrTime = Unigine::Game::getTime() + (1 / RoF);
-	//		Unigine::String X = Bullet.get();
-	//		Unigine::NodePtr _Bullet = Unigine::World::loadNode(Bullet);
-	//		_Bullet->setWorldPosition(ShootArea->getWorldPosition());
-	//		_Bullet->setWorldRotation(ShootArea->getWorldRotation());
-	//		_Bullet->getObjectBodyRigid()->addLinearImpulse(ShootArea->getWorldDirection(Unigine::Math::AXIS_Y) * 25);
-	//	}
-	//	break;
-	//default: break; }
-	//}
+	switch (State) {
 
-	//if (CurrHealth == 0) isDestroyed = 1;
+	case TurretClass::SEARCH:
+		RotObj->worldRotate(0,0,Unigine::Game::getIFps() * Speed);
+		if (isVisible()) {
+				State = ATTACK;
+				CurrTime = Unigine::Game::getTime() + (1 / RoF);
+		}		
+		break;
+
+	case TurretClass::ATTACK:
+		RotObj->worldLookAt(EnemyNode->getWorldPosition());
+		ShootArea->worldLookAt(EnemyNode->getWorldPosition());
+		Unigine::Visualizer::renderLine3D(ShootArea->getWorldPosition(), ShootArea->getWorldPosition() + Unigine::Math::Vec3(ShootArea->getWorldDirection(Unigine::Math::AXIS_Y) * 100), Unigine::Math::vec4_red);
+		if (!isVisible()) State = SEARCH;
+
+		if (CurrTime < Unigine::Game::getTime() ) {
+			CurrTime = Unigine::Game::getTime() + (1 / RoF);
+			Unigine::String X = Bullet.get();
+			Unigine::NodePtr _Bullet = Unigine::World::loadNode(Bullet);
+			_Bullet->setWorldPosition(ShootArea->getWorldPosition());
+			_Bullet->setWorldRotation(ShootArea->getWorldRotation());
+			_Bullet->getObjectBodyRigid()->addLinearImpulse(ShootArea->getWorldDirection(Unigine::Math::AXIS_Y) * 50);
+		}
+		break;
+
+	default: break; }
+
 }
 
 void TurretClass::Shutdown() { ClearGUI(); }

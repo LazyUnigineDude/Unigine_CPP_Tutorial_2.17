@@ -33,11 +33,15 @@ void CharacterController::Update() {
 	Interact->Update();
 	Animation->Update(Unigine::Game::getIFps(), Unigine::Game::getTime());
 
-	if (Animation->IsIdle()) { Sound->StopSound(); }
-	else Sound->PlaySound();
+	if (FootNodes[0]->getWorldPosition().z > 0.1f) { isFootUpL = 1; }
+	if (FootNodes[1]->getWorldPosition().z > 0.1f) { isFootUpR = 1; }
+
+	if (FootNodes[0]->getWorldPosition().z < 0.1f && isFootUpL) { Sound->PlaySound(); isFootUpL = 0; }
+	if (FootNodes[1]->getWorldPosition().z < 0.1f && isFootUpR) { Sound->PlaySound(); isFootUpR = 0; }
+	
 
 	if (!OpenUI) {
-		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_SPACE)) { Animation->ChangeAnim(Animation->RUN); }
+		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) { Animation->ChangeAnim(Animation->RUN); }
 		if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W)) { Animation->ChangeAnim(Animation->WALK); }
 		else if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_S)) { Animation->ChangeAnim(Animation->REVERSE_WALK); }
 		else if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_A)) { Animation->ChangeAnim(Animation->SIDEWALK_L); }
@@ -71,7 +75,7 @@ void CharacterController::Update() {
 void CharacterController::UpdatePhysics() {
 
 	if(!OpenUI){
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_SPACE)) { Physics->Run(true); }
+	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) { Physics->Run(true); }
 	else Physics->Run(false);
 
 	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W)) { Physics->Move(Physics->FORWARD); }

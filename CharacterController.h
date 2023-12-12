@@ -25,6 +25,7 @@ public:
 		PROP_PARAM(Node, DetectionNode)
 		PROP_PARAM(Node, GunNode)
 		PROP_PARAM(Node, FootStepNode)
+		PROP_ARRAY(Node, FootNodes)
 
 protected:
 	void Init();
@@ -33,7 +34,7 @@ protected:
 	void ShutDown();
 
 private:
-	bool OpenUI = 0;
+	bool OpenUI = 0, isFootUpL, isFootUpR;
 	void ShowInventory(bool isOpen);
 	void ChangeState(ShooterAnim::SHOOTER_STATE State);
 	ShooterAnim* Animation;

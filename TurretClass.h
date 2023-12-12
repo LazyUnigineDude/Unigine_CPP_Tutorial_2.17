@@ -14,6 +14,7 @@ public:
 		PROP_PARAM(Node, ShootArea)
 		PROP_PARAM(Node, EnemyNode)
 		PROP_PARAM(File, Bullet)
+		PROP_PARAM(Mask, MaskNode)
 		PROP_ARRAY(Node, HealthBarNode)
 
 protected:
@@ -23,7 +24,6 @@ private:
 	void ClearGUI();
 	enum STATE { SEARCH, ATTACK };
 	STATE State = SEARCH;
-	bool isDestroyed = 0;
 	Unigine::Vector<HealthBar*> Health;
 	int Speed = 5, TotalHealth;
 	float RoF = 0.5f, CurrTime = 0;

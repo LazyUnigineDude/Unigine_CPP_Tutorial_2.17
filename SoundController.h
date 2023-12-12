@@ -16,3 +16,5 @@ public:
 private:
 	Unigine::SoundSourcePtr Source;
 };
+
+inline int GetRand(int Num) { return std::rand() % Num; }

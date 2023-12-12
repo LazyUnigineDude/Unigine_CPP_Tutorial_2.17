@@ -50,12 +50,17 @@ bool DetectionMaker::TargetVisibleInFrustum(Unigine::NodePtr Target, int Mask, c
 
 	if (TargetVisibleInFrustum(Target, Mask)) {
 
+		Unigine::Visualizer::renderLine3D(
+			ViewPosition->getWorldPosition(),
+			Target->getWorldPosition(), 
+			Unigine::Math::vec4_red);
+
 		Unigine::ObjectPtr Obj = Unigine::World::getIntersection(
 			ViewPosition->getWorldPosition(),
 			Target->getWorldPosition(),
 			Mask
 		);
-		if (Obj && Obj->getName() == NameDetection) return true;
+		if (Obj && strcmp(Obj->getName(), NameDetection) == 0) return true;
 	}
 	return false;
 }
