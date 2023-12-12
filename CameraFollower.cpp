@@ -25,10 +25,7 @@ void CameraFollower::SetState(CAMERASTATE STATE) {
 }
 
 void CameraFollower::Update() {
-	
-	if (isAiming) { SetState(CAMERASTATE::Aiming); }
-	else SetState(CAMERASTATE::Normal);
-	
+		
 	LerpLayer(STATE);
 	UpdateCamera();
 }

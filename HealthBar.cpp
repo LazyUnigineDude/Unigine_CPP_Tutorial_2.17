@@ -5,4 +5,4 @@ REGISTER_COMPONENT(HealthBar)
 void HealthBar::Init() { health = Health.get(); }
 void HealthBar::Init(int Health) { health = Health; }
 int HealthBar::GetHealth() { return health; }
-void HealthBar::HealthChange(int amount) { health += amount; }
+void HealthBar::HealthChange(int amount) { health = std::clamp(health += amount, 0 , INT_MAX); }

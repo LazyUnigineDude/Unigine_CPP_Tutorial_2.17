@@ -9,7 +9,6 @@ public:
 	COMPONENT_DEFINE(CameraFollower, ComponentBase)
 		COMPONENT_INIT(Init)
 		COMPONENT_UPDATE(Update)
-		bool isAiming = false;
 		
 	enum CAMERASTATE { Normal, Aiming };
 	void SetState(CAMERASTATE STATE);

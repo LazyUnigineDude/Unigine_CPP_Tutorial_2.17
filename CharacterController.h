@@ -8,6 +8,7 @@
 #include "GunHandler.h"
 #include "HUDMaker.h"
 #include "SoundController.h"
+#include "CameraFollower.h"
 
 class CharacterController : public Unigine::ComponentBase {
 public:
@@ -43,4 +44,5 @@ private:
 	GunHandler* Gun;
 	HUDMaker* HUD;
 	SoundController* Sound;
+	CameraFollower* Camera;
 };

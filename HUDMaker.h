@@ -8,9 +8,9 @@ class HUDMaker : public Unigine::ComponentBase
 public:
 	
 	COMPONENT_DEFINE(HUDMaker, ComponentBase)
-		COMPONENT_INIT(Init)
-		COMPONENT_UPDATE(Update)
-		COMPONENT_SHUTDOWN(Shutdown)
+		COMPONENT_INIT(Init, 1)
+		COMPONENT_UPDATE(Update, 1)
+		COMPONENT_SHUTDOWN(Shutdown, 1)
 		PROP_PARAM(File, CrossHair)
 		PROP_PARAM(File, HealthImage)
 		PROP_PARAM(Node, MainCharacter)

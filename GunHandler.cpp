@@ -43,7 +43,7 @@ void GunHandler::Shoot(Unigine::Math::Vec3 Lookat) {
 
 	if (AmountInGun > 0) {
 	Unigine::NodePtr _Bullet = Unigine::World::loadNode(GunProperty.BulletPath);
-	_Bullet->setWorldPosition(Gun->getWorldPosition());
+	_Bullet->setWorldPosition(Gun->getChild(0)->getWorldPosition());
 	_Bullet->worldLookAt(Lookat);
 
 	Bullet* bullet = getComponent<Bullet>(_Bullet);

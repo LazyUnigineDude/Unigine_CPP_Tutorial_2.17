@@ -24,6 +24,8 @@ void CharacterController::Init() {
 	Sound->Init();
 
 	HUD = HUD->MainHUD();
+
+	Camera = getComponent<CameraFollower>(Unigine::Game::getPlayer());
 }
 
 void CharacterController::Update() {
@@ -55,12 +57,13 @@ void CharacterController::Update() {
 
 	if (Gun->IsHolding()) {
 		if (Unigine::Input::isMouseButtonDown(Unigine::Input::MOUSE_BUTTON_LEFT)) { Gun->Shoot(Unigine::Game::getTime()); HUD->UpdateGun(Gun->GetGUIValues()); }
-		if (Unigine::Input::isMouseButtonDown(Unigine::Input::MOUSE_BUTTON_RIGHT)) { ChangeState(Animation->AIMED); }
-		if (Unigine::Input::isMouseButtonUp(Unigine::Input::MOUSE_BUTTON_RIGHT)) { ChangeState(Animation->EQUIPPED); }
-		if (Unigine::Input::isKeyDown(Unigine::Input::KEY_R)) { Gun->Reload(); 	HUD->UpdateGun(Gun->GetGUIValues()); }
+		if (Unigine::Input::isMouseButtonDown(Unigine::Input::MOUSE_BUTTON_RIGHT)) { ChangeState(Animation->AIMED); Camera->SetState(Camera->Aiming); }
+		if (Unigine::Input::isMouseButtonUp(Unigine::Input::MOUSE_BUTTON_RIGHT)) { ChangeState(Animation->EQUIPPED);  Camera->SetState(Camera->Normal); }
+		if (Unigine::Input::isKeyDown(Unigine::Input::KEY_R)) { Gun->Reload();	HUD->UpdateGun(Gun->GetGUIValues()); }
 	}
 	if ((Unigine::Input::isKeyDown(Unigine::Input::KEY_Q))) {
-		if (!Gun->IsGrabbed()) { Unigine::Log::message("Find a Gun first!\n"); ChangeState(Animation->NORMAL); }
+		if (!Gun->IsGrabbed()) { Unigine::Log::message("Find a Gun first!\n"); ChangeState(Animation->NORMAL); Camera->SetState(Camera->Normal); }
+		else if (Gun->IsGrabbed() && Gun->IsHolding()) { ChangeState(Animation->NORMAL);  Camera->SetState(Camera->Normal); }
 			else ChangeState(Animation->EQUIPPED);
 	}
 }

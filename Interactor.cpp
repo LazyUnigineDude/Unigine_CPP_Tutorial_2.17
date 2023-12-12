@@ -18,7 +18,7 @@ bool Interactor::Update() {
 
 	Unigine::ObjectPtr IObj = Unigine::World::getIntersection(
 		Camera->getWorldPosition(),
-		Camera->getWorldPosition() + Unigine::Math::Vec3((Camera->getWorldDirection() * 5)),
+		Camera->getWorldPosition() + Unigine::Math::Vec3((Camera->getWorldDirection() * 10)),
 		MaskNum,
 		Intersection
 	);

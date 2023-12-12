@@ -4,8 +4,6 @@
 REGISTER_COMPONENT(Bullet)
 
 void Bullet::OnEnter(Unigine::BodyPtr Body, int num) {
-	// Delete first, then interaction
-	node->deleteLater();
 	Unigine::BodyPtr
 		Body1 = Body->getContactBody0(num),
 		Body2 = Body->getContactBody1(num),
@@ -28,16 +26,19 @@ void Bullet::OnEnter(Unigine::BodyPtr Body, int num) {
 		//Unigine::Log::message("Collision: %s %d\n", Body->getContactObject(num)->getName(), num);
 		HealthBar* Health = getComponent<HealthBar>(Body->getContactObject(num));
 		if (Health) {
-			Health->HealthChange(-DamageAmount * 2);
+			Health->HealthChange(-DamageAmount);
 			Unigine::Log::message("Dropped health %d\n", Health->GetHealth());
 		}
 	}
+
+	Body->removeContactEnterCallback(Callback);
+	node->deleteLater();
 }
 
 void Bullet::Init() { 
 	StartTime = Unigine::Game::getTime(); 
 	Body = node->getObjectBodyRigid();
-	Body->addContactEnterCallback(Unigine::MakeCallback(this,&Bullet::OnEnter));
+	Callback = Body->addContactEnterCallback(Unigine::MakeCallback(this,&Bullet::OnEnter));
 }
 
 void Bullet::Update() {

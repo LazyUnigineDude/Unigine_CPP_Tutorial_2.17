@@ -20,4 +20,5 @@ private:
 
 	Unigine::BodyPtr Body;
 	void OnEnter(Unigine::BodyPtr Body, int num);
+	void* Callback;
 };
