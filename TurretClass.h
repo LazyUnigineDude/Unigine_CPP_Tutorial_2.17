@@ -2,6 +2,7 @@
 #include <Unigine.h>
 #include "HealthBar.h"
 #include "AIComponents.h"
+#include "SoundController.h"
 
 class TurretClass : public Unigine::ComponentBase {
 
@@ -16,12 +17,16 @@ public:
 		PROP_PARAM(File, Bullet)
 		PROP_PARAM(Mask, MaskNode)
 		PROP_ARRAY(Node, HealthBarNode)
+		PROP_PARAM(Node, SoundNode)
 
 protected:
 	void Init(), Update(), Shutdown();
 
 private:
+	SoundController* Sound;
 	void ClearGUI();
+	Unigine::Math::Vec3 CalculatePosition();
+
 	enum STATE { SEARCH, ATTACK };
 	STATE State = SEARCH;
 	Unigine::Vector<HealthBar*> Health;

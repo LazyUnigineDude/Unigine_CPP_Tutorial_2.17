@@ -45,7 +45,7 @@ void HUDMaker::Init(){
 	MaxAmount = Unigine::WidgetLabel::create();
 
 	// Buttons
-	Buttons->setText("Press TAB to Open/Close Inventory\nPress Q to Equip Gun\nPress R to Reload\nPress E to Pickup Highlighted Objects\nHold LShift to Run");
+	Buttons->setText("Press Esc to Open Menu\nPress TAB to Open/Close Inventory\nPress Q to Equip Gun\nPress R to Reload\nPress E to Pickup Highlighted Objects\nHold LShift to Run");
 	Buttons->setPosition((Width * 0.1), 200);
 	Buttons->setFontSize(21);
 	Buttons->setFontOutline(2);

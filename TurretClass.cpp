@@ -30,13 +30,14 @@ void TurretClass::Init() {
 		HealthLabel.push_back(_Health);
 	}
 
-
 	Detection = DetectionMaker(nullptr, RotObj, ShootArea, 150, 0);
+	Sound = getComponent<SoundController>(SoundNode);
+	Sound->Init();
 }
 
 void TurretClass::Update() {
 
-	if (TotalHealth == 0) { ClearGUI(); node->deleteLater(); return; }
+	if (TotalHealth <= 0) { ClearGUI(); node->deleteLater(); return; }
 	Detection.CalculateView();
 	Detection.RenderView(true);
 
@@ -44,7 +45,6 @@ void TurretClass::Update() {
 		if (Health[i]->GetHealth() < CurHealth[i]) {
 
 			if (State != ATTACK) State = ATTACK;
-
 			TotalHealth -= (CurHealth[i] - Health[i]->GetHealth());
 			CurHealth[i] = Health[i]->GetHealth();
 
@@ -79,17 +79,19 @@ void TurretClass::Update() {
 
 	case TurretClass::ATTACK:
 		RotObj->worldLookAt(EnemyNode->getWorldPosition());
-		ShootArea->worldLookAt(EnemyNode->getWorldPosition());
+		ShootArea->worldLookAt(CalculatePosition());
 		Unigine::Visualizer::renderLine3D(ShootArea->getWorldPosition(), ShootArea->getWorldPosition() + Unigine::Math::Vec3(ShootArea->getWorldDirection(Unigine::Math::AXIS_Y) * 100), Unigine::Math::vec4_red);
 		if (!isVisible()) State = SEARCH;
 
 		if (CurrTime < Unigine::Game::getTime() ) {
+			// Shoot
+			Sound->PlaySound();
 			CurrTime = Unigine::Game::getTime() + (1 / RoF);
 			Unigine::String X = Bullet.get();
 			Unigine::NodePtr _Bullet = Unigine::World::loadNode(Bullet);
 			_Bullet->setWorldPosition(ShootArea->getWorldPosition());
 			_Bullet->setWorldRotation(ShootArea->getWorldRotation());
-			_Bullet->getObjectBodyRigid()->addLinearImpulse(ShootArea->getWorldDirection(Unigine::Math::AXIS_Y) * 50);
+			_Bullet->getObjectBodyRigid()->addLinearImpulse(ShootArea->getWorldDirection(Unigine::Math::AXIS_Y) * 5000);
 		}
 		break;
 
@@ -112,4 +114,10 @@ void TurretClass::ClearGUI() {
 	}
 	LabelGUI.clear();
 	HealthLabel.clear();
+}
+
+Unigine::Math::Vec3 TurretClass::CalculatePosition() {
+
+	return EnemyNode->getWorldPosition() +
+		Unigine::Math::Vec3(EnemyNode->getParent()->getBodyLinearVelocity().normalize());
 }
