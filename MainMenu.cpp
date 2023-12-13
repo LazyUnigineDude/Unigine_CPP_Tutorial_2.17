@@ -3,19 +3,24 @@ REGISTER_COMPONENT(MainMenu)
 
 void MainMenu::Init() {
 
+	GUI = Unigine::Gui::getCurrent();
+
 	Button = Unigine::WidgetButton::create();
 	Button->setText(WorldChangerName);
-	Button->setFontSize(75);
+	Button->setFontSize(50);
+	Button->setWidth(200);
 	Button->setFontColor(Unigine::Math::vec4_white);
 	Button->addCallback(GUI->CLICKED, Unigine::MakeCallback(this, &MainMenu::onClicked));
-	Button->setPosition(400, 100);
+	Button->setPosition((GUI->getWidth() * 0.5) - 100, (GUI->getHeight() * 0.5) - 50);
 
 	QuitButton = Unigine::WidgetButton::create();
 	QuitButton->setText("Quit");
-	QuitButton->setFontSize(75);
+	QuitButton->setFontSize(50);
+	QuitButton->setWidth(200);
 	QuitButton->setFontColor(Unigine::Math::vec4_white);
+	QuitButton->setButtonColor(Unigine::Math::vec4(0.6,0.3,0.3,0.8));
 	QuitButton->addCallback(GUI->CLICKED, Unigine::MakeCallback(this, &MainMenu::onQuit));
-	QuitButton->setPosition(400, 250);
+	QuitButton->setPosition((GUI->getWidth() * 0.5) - 100, (GUI->getHeight() * 0.5) + 50);
 
 	MenuOpened(isMainMenu);
 }
