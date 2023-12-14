@@ -12,7 +12,8 @@ void MissionController::Init() {
 	Label->setFontSize(32);
 	Label->setFontOutline(2);
 	Label->setPosition((GUI->getWidth() * 0.5) - 60, 10);
-	GUI->addChild(Label, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);
+	GUI->addChild(Label, GUI->ALIGN_EXPAND | GUI->ALIGN_OVERLAP);;
+	Unigine::Input::setMouseHandle(Unigine::Input::MOUSE_HANDLE_GRAB);
 
 	for (int i = 0; i < TurretNodes.size(); i++) { AddToController(getComponent<TurretClass>(TurretNodes[i])); }
 	Character = getComponent<CharacterController>(CharacterNode);
@@ -29,6 +30,7 @@ void MissionController::Update() {
 		Menu->MenuOpened(1);
 		Unigine::Input::setMouseHandle(Unigine::Input::MOUSE_HANDLE_USER);
 		isPaused = 1;
+		Unigine::Game::getPlayer()->setListener(0);
 		return;
 	}
 
@@ -42,6 +44,7 @@ void MissionController::Update() {
 		Menu->MenuOpened(1);
 		Unigine::Input::setMouseHandle(Unigine::Input::MOUSE_HANDLE_USER);
 		isPaused = 1;
+		Unigine::Game::getPlayer()->setListener(0);
 		return;
 	}
 

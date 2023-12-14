@@ -24,8 +24,8 @@ void HUDMaker::Init(){
 	Canvas->setPolygonColor(y, Unigine::Math::vec4(0, 0, 0, 0.5));
 	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) - 200, Height - 120, 0));
 	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) +  50, Height - 120, 0));
-	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) +  50, Height - 70, 0));
-	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) - 200, Height - 70, 0));
+	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) +  50, Height - 45, 0));
+	Canvas->addPolygonPoint(y, Unigine::Math::vec3((Width * 0.25) - 200, Height - 45, 0));
 
 	// Crosshair
 	int z = Image->addLayer();
@@ -45,7 +45,7 @@ void HUDMaker::Init(){
 	MaxAmount = Unigine::WidgetLabel::create();
 
 	// Buttons
-	Buttons->setText("Press Esc to Open Menu\nPress TAB to Open/Close Inventory\nPress Q to Equip Gun\nPress R to Reload\nPress E to Pickup Highlighted Objects\nHold LShift to Run");
+	Buttons->setText("Press Esc to Open Menu\nPress TAB to Open/Close Inventory\nClick on an Apple to Restore 2 Health!\n\nPress Q to Equip Gun when picked up\nPress R to Reload\nPress E to Pickup Highlighted Objects\nHold LShift to Run");
 	Buttons->setPosition(50, 20);
 	Buttons->setFontSize(21);
 	Buttons->setFontOutline(2);

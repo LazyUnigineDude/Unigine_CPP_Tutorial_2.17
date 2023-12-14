@@ -18,7 +18,7 @@ void CharacterController::Init() {
 	Animation->Init(ObjectSkin);
 	Physics->Init(node);
 	Health->Init();
-	Inventory->Init(Unigine::Game::getPlayer(), node);
+	Inventory->Init(Unigine::Game::getPlayer(), node, Health);
 	Interact->Init(Unigine::Game::getPlayer());
 	Gun->Init(Unigine::Game::getPlayer());
 	Sound->Init();
@@ -68,7 +68,7 @@ void CharacterController::Update() {
 		if (Unigine::Input::isKeyDown(Unigine::Input::KEY_R)) { Gun->Reload();	HUD->UpdateGun(Gun->GetGUIValues()); }
 	}
 	if ((Unigine::Input::isKeyDown(Unigine::Input::KEY_Q))) {
-		if (!Gun->IsGrabbed()) { Unigine::Log::message("Find a Gun first!\n"); ChangeState(Animation->NORMAL); Camera->SetState(Camera->Normal); }
+		if (!Gun->IsGrabbed()) { ChangeState(Animation->NORMAL); Camera->SetState(Camera->Normal); }
 		else if (Gun->IsGrabbed() && Gun->IsHolding()) { ChangeState(Animation->NORMAL);  Camera->SetState(Camera->Normal); }
 			else ChangeState(Animation->EQUIPPED);
 	}

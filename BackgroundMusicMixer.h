@@ -17,7 +17,7 @@ protected:
 	void Init(), Update(), Shutdown();
 
 private:
-	float MaxVol1 = 0, MaxVol2 = 0;
+	float MaxVol1 = 0, MaxVol2 = 0, MinVol1, MinVol2;
 	Unigine::SoundSourcePtr Part1, Part2;
 	Unigine::Vector<TurretClass*> Turrets;
 };

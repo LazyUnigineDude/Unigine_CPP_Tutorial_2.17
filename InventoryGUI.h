@@ -1,6 +1,7 @@
 #pragma once
 #include "DatabaseController.h"
 #include "InventoryMaker.h"
+#include "HealthBar.h"
 #include <vector>
 #include <string>
 #include <map>
@@ -9,7 +10,7 @@ struct InventoryGUI {
 
 public:
 	InventoryGUI() = default;
-	InventoryGUI(InventoryMaker* Inventory, Unigine::NodePtr DropPoint);
+	InventoryGUI(InventoryMaker* Inventory, Unigine::NodePtr DropPoint, HealthBar* Health);
 	void Hide();
 	void Show();
 	void Shutdown();
@@ -33,11 +34,13 @@ private:
 	Unigine::WidgetGridBoxPtr Grid, TextGrid;
 	Unigine::NodePtr DropPoint;
 	InventoryMaker* Inventory;
+	HealthBar* Health;
 };
 
-inline InventoryGUI::InventoryGUI(InventoryMaker* Inventory, Unigine::NodePtr DropPoint)  {
+inline InventoryGUI::InventoryGUI(InventoryMaker* Inventory, Unigine::NodePtr DropPoint, HealthBar* Health)  {
 	this->Inventory = Inventory;
 	this->DropPoint = DropPoint;
+	this->Health = Health;
 	CreateBackground();
 }
 
@@ -210,7 +213,14 @@ inline void InventoryGUI::OnClick(Unigine::WidgetPtr Widget) {
 		Amount = Inventory->GetItem(Pos).y, 
 		Value = Database->GetValue(ID);
 	const char* Name = Database->GetName(ID);
-	Unigine::Log::message("Name: %s  ID: %d  Amount: %d  Value: %d\n", Name, ID, Amount, Value);
+
+	if (ID == 1) {
+
+		Inventory->Add(Unigine::Math::ivec2(ID, -1));
+		Health->HealthChange(2);
+		Hide();
+		Show();
+	}
 
 }
 

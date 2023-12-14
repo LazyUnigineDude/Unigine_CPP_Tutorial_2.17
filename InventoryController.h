@@ -6,7 +6,7 @@ class InventoryController : public Unigine::ComponentBase {
 public:
 	COMPONENT_DEFINE(InventoryController, ComponentBase)
 		PROP_PARAM(Node ,InventoryNode)
-	void Init(Unigine::PlayerPtr Camera, Unigine::NodePtr DropPoint);
+	void Init(Unigine::PlayerPtr Camera, Unigine::NodePtr DropPoint, HealthBar* Health);
 	void Show();
 	void Hide();
 	void AddToInventory(Unigine::Math::ivec2 Item);
