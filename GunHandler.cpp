@@ -34,6 +34,10 @@ void GunHandler::UnEquip() {
 void GunHandler::Shoot(float Time) {
 
 	if (isHolding && Time > RateofFireTime) {
+
+		Unigine::SoundSourcePtr Sound = Unigine::static_ptr_cast<Unigine::SoundSource>(Gun->getChild(1));
+		Sound->play();
+
 		RateofFireTime = Time + (1 / GunProperty.RoF);
 		Shoot(Camera->getWorldPosition() + Unigine::Math::Vec3(Camera->getWorldDirection()) * 100);
 	}

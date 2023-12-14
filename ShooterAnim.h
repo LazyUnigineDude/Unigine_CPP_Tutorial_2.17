@@ -17,6 +17,7 @@ public:
 		void ChangeState(SHOOTER_STATE STATE);
 		void ChangeAnim(ANIM_STATE STATE);
 		bool IsIdle();
+		SHOOTER_STATE GetState();
 
 private:
 
