@@ -23,6 +23,16 @@ void MainMenu::Init() {
 	QuitButton->setPosition((GUI->getWidth() * 0.5) - 100, (GUI->getHeight() * 0.5) + 50);
 
 	MenuOpened(isMainMenu);
+
+	if (isMainMenu) {
+
+		Description = Unigine::WidgetLabel::create();
+		Description->setText("Tech Demo of Unigine making a Game\nAll Components Made through Code\n\nKill the turrets before they Kill you!\n");
+		Description->setFontSize(21);
+		Description->setFontOutline(2);
+		Description->setPosition((GUI->getWidth() * 0.4), (GUI->getHeight() * 0.2));
+		GUI->addChild(Description, GUI->ALIGN_OVERLAP | GUI->ALIGN_EXPAND);
+	}
 }
 
 void MainMenu::Update() {
@@ -44,11 +54,12 @@ void MainMenu::MenuOpened(bool isOpened) {
 		if (!GUI->isChild(QuitButton))  GUI->addChild(QuitButton,	GUI->ALIGN_OVERLAP | GUI->ALIGN_EXPAND);
 	}
 	else {
-		if (GUI->isChild(Button))		GUI->removeChild(Button);
-		if (GUI->isChild(QuitButton))	GUI->removeChild(QuitButton);
+		if (GUI->isChild(Button))									GUI->removeChild(Button);
+		if (GUI->isChild(QuitButton))								GUI->removeChild(QuitButton);
+		if (Description && GUI->isChild(Description))				GUI->removeChild(Description);
 	}
 }
 
-void MainMenu::ShutDown() { MenuOpened(false); Button->deleteLater(); QuitButton->deleteLater(); }
+void MainMenu::ShutDown() { MenuOpened(false); Button->deleteLater(); QuitButton->deleteLater(); if (Description) Description->deleteLater(); }
 void MainMenu::onClicked() { Unigine::World::loadWorld(WorldChanger); }
 void MainMenu::onQuit() { Unigine::Engine::get()->quit(); }

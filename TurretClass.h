@@ -16,24 +16,29 @@ public:
 		PROP_PARAM(Node, EnemyNode)
 		PROP_PARAM(File, Bullet)
 		PROP_PARAM(Mask, MaskNode)
-		PROP_ARRAY(Node, HealthBarNode)
+		PROP_PARAM(Node, HealthBarNode)
 		PROP_PARAM(Node, SoundNode)
+		PROP_PARAM(Node, IdleSoundNode)
+		PROP_PARAM(Node, ParticleNode)
+
+	bool isDestroyed() { return State == DESTROYED; }
+	bool isAttacking() { return State == ATTACK; }
 
 protected:
 	void Init(), Update(), Shutdown();
 
 private:
-	SoundController* Sound;
+	SoundController* Sound, *IdleSound;
 	void ClearGUI();
-	Unigine::Math::Vec3 CalculatePosition();
 
-	enum STATE { SEARCH, ATTACK };
+	enum STATE { SEARCH, ATTACK, DESTROYED };
 	STATE State = SEARCH;
-	Unigine::Vector<HealthBar*> Health;
-	int Speed = 5, TotalHealth;
+	int Speed = 5, MaxHealth, CurHealth;;
 	float RoF = 0.5f, CurrTime = 0;
 	DetectionMaker Detection;
-	Unigine::Vector<Unigine::ObjectGuiPtr> LabelGUI;
-	Unigine::Vector<Unigine::WidgetLabelPtr> HealthLabel;
-	Unigine::Vector<int> MaxHealth, CurHealth;
+	Unigine::Vector<HealthBar*> Health;
+	Unigine::ObjectGuiPtr LabelGUI;
+	Unigine::WidgetLabelPtr HealthLabel;
+	Unigine::ObjectParticlesPtr Particle;
+	Unigine::Math::Vec3 CalculatePosition();
 };

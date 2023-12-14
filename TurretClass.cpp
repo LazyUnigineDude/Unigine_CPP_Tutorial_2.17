@@ -3,53 +3,53 @@ REGISTER_COMPONENT(TurretClass)
 
 void TurretClass::Init() {
 
-	for (int i = 0; i < HealthBarNode.size(); i++) {
-		HealthBar* H = getComponent<HealthBar>(HealthBarNode[i]);
-		H->Init();
-		CurHealth.push_back(H->GetHealth());
-		MaxHealth.push_back(H->GetHealth());
-		TotalHealth += H->GetHealth();
-		Health.push_back(H);
+	HealthBar* H = getComponent<HealthBar>(HealthBarNode);
+	H->Init();
+	CurHealth = H->GetHealth();
+	MaxHealth = H->GetHealth();
+	Health.push_back(H);
 
-		Unigine::ObjectGuiPtr _GUI = Unigine::ObjectGui::create(2, 2);
-		_GUI->setBillboard(1);
-		_GUI->setBackground(0);
-		_GUI->setScreenSize(100, 50);
+	LabelGUI = Unigine::ObjectGui::create(2, 2);
+	LabelGUI->setBillboard(1);
+	LabelGUI->setBackground(0);
+	LabelGUI->setScreenSize(100, 50);
 
-		std::string Label = std::to_string(H->GetHealth()) +" / " + std::to_string(MaxHealth[i]);
-		Unigine::WidgetLabelPtr _Health = Unigine::WidgetLabel::create(Label.c_str());
-		_Health->setFontOutline(2);
-		_Health->setFontColor(Unigine::Math::vec4_red);
-		_Health->setFontSize(28);
-		_GUI->getGui()->addChild(_Health, Unigine::Gui::ALIGN_EXPAND | Unigine::Gui::ALIGN_OVERLAP);
+	std::string Label = std::to_string(CurHealth) +" / " + std::to_string(MaxHealth);
+	HealthLabel = Unigine::WidgetLabel::create(Label.c_str());
+	HealthLabel->setFontOutline(2);
+	HealthLabel->setFontColor(Unigine::Math::vec4_red);
+	HealthLabel->setFontSize(28);
+	LabelGUI->getGui()->addChild(HealthLabel, Unigine::Gui::ALIGN_EXPAND | Unigine::Gui::ALIGN_OVERLAP);
 
-		_GUI->setParent(HealthBarNode[i]);
-		_GUI->setPosition(Unigine::Math::Vec3(0, 2, 8 - i));
+	LabelGUI->setParent(HealthBarNode);
+	LabelGUI->setPosition(Unigine::Math::Vec3(0, 2, 8));
 
-		LabelGUI.push_back(_GUI);
-		HealthLabel.push_back(_Health);
-	}
 
 	Detection = DetectionMaker(nullptr, RotObj, ShootArea, 150, 0);
 	Sound = getComponent<SoundController>(SoundNode);
 	Sound->Init();
+	IdleSound = getComponent<SoundController>(IdleSoundNode);
+	IdleSound->Init();
+	IdleSound->PlaySound();
+	Particle = Unigine::static_ptr_cast<Unigine::ObjectParticles>(ParticleNode.get());
 }
 
 void TurretClass::Update() {
 
-	if (TotalHealth <= 0) { ClearGUI(); node->deleteLater(); return; }
+	// Logic 
+	if (CurHealth <= 0) { ClearGUI(); if(State != DESTROYED) State = DESTROYED; }
 	Detection.CalculateView();
-	Detection.RenderView(true);
+	if (State != DESTROYED) Detection.RenderView(true);
 
-	for (int i = 0; i < MaxHealth.size(); i++) {
-		if (Health[i]->GetHealth() < CurHealth[i]) {
+	// HealthGUI Update
+	for (int i = 0; i < Health.size(); i++) {
+		if (Health[i]->GetHealth() < CurHealth) {
 
 			if (State != ATTACK) State = ATTACK;
-			TotalHealth -= (CurHealth[i] - Health[i]->GetHealth());
-			CurHealth[i] = Health[i]->GetHealth();
 
-			std::string Label = std::to_string(CurHealth[i]) + " / " + std::to_string(MaxHealth[i]);
-			if (HealthLabel[i]) HealthLabel[i]->setText(Label.c_str());
+			CurHealth -= (CurHealth - Health[i]->GetHealth());
+			std::string Label = std::to_string(CurHealth) + " / " + std::to_string(MaxHealth);
+			if (HealthLabel) HealthLabel->setText(Label.c_str());
 		}
 	}
 
@@ -95,25 +95,24 @@ void TurretClass::Update() {
 		}
 		break;
 
-	default: break; }
+	case TurretClass::DESTROYED:
+		if (Particle->isEnabled() == 0) Particle->setEnabled(1);
+		if (IdleSound->isPlaying()) IdleSound->StopSound();
+		HealthBarNode->setRotation(Unigine::Math::quat(50,35,0));
+		break;
 
+	default: break; }
 }
 
 void TurretClass::Shutdown() { ClearGUI(); }
 
 void TurretClass::ClearGUI() {
-	for (auto& i : LabelGUI) {
-		for (auto& j : HealthLabel) {
 
-			if (i->getGui()->isChild(j)) {
-				i->getGui()->removeChild(j);
-				j->deleteLater();
-			}
-		}
-		i->deleteLater();
+	if (LabelGUI) { 
+		if (HealthLabel && LabelGUI->getGui()->isChild(HealthLabel)) { LabelGUI->getGui()->removeChild(HealthLabel); }
+		LabelGUI->deleteLater(); LabelGUI = nullptr;
 	}
-	LabelGUI.clear();
-	HealthLabel.clear();
+	if (HealthLabel) { HealthLabel->deleteLater(); HealthLabel = nullptr; }
 }
 
 Unigine::Math::Vec3 TurretClass::CalculatePosition() {

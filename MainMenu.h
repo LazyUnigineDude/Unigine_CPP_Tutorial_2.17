@@ -24,6 +24,7 @@ private:
 	void onQuit();
 	bool isPaused;
 	Unigine::WidgetButtonPtr Button, QuitButton;
+	Unigine::WidgetLabelPtr Description;
 	Unigine::GuiPtr GUI = Unigine::Gui::getCurrent();
 };
 

@@ -62,6 +62,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>NDEBUG;UNIGINE_DOUBLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX64</TargetMachine>
@@ -77,6 +78,7 @@
     <ClCompile Include="AppEditorLogic.cpp" />
     <ClCompile Include="AppSystemLogic.cpp" />
     <ClCompile Include="AppWorldLogic.cpp" />
+    <ClCompile Include="BackgroundMusicMixer.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="CameraFollower.cpp" />
@@ -111,6 +113,7 @@
     <ClInclude Include="AppEditorLogic.h" />
     <ClInclude Include="AppSystemLogic.h" />
     <ClInclude Include="AppWorldLogic.h" />
+    <ClInclude Include="BackgroundMusicMixer.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CameraFollower.h" />

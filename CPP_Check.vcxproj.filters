@@ -100,6 +100,9 @@
     <ClCompile Include="MissionController.cpp">
       <Filter>Mission</Filter>
     </ClCompile>
+    <ClCompile Include="BackgroundMusicMixer.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="MissionController.h">
       <Filter>Mission</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundMusicMixer.h">
+      <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
