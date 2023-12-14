@@ -16,7 +16,7 @@ public:
 		ITEM_TYPE GetItemType(int& ID);
 		DatabaseController* GetDatabase() { return getComponent<DatabaseController>(Unigine::World::getNodeByID(GetRefNum())); }
 
-		struct GUNProps { const char* BulletPath; int Damage, RoF, Reload; };
+		struct GUNProps { const char* BulletPath; int Damage, Reload; float RoF; };
 		GUNProps GetGunProperty(int& ID);
 protected:
 	void Init();

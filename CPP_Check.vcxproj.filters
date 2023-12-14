@@ -79,7 +79,6 @@
     <ClCompile Include="Interactor.cpp">
       <Filter>Character\Interact</Filter>
     </ClCompile>
-    <ClCompile Include="MissionController.cpp" />
     <ClCompile Include="DoorOpener.cpp">
       <Filter>Basics</Filter>
     </ClCompile>
@@ -97,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="TurretClass.cpp">
       <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="MissionController.cpp">
+      <Filter>Mission</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,7 +186,6 @@
     <ClInclude Include="Interactor.h">
       <Filter>Character\Interact</Filter>
     </ClInclude>
-    <ClInclude Include="MissionController.h" />
     <ClInclude Include="DoorOpener.h">
       <Filter>Basics</Filter>
     </ClInclude>
@@ -205,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="TurretClass.h">
       <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="MissionController.h">
+      <Filter>Mission</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +268,9 @@
     </Filter>
     <Filter Include="Sound">
       <UniqueIdentifier>{505bd3a1-2c41-4b8e-9e30-1c3f1ca409ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mission">
+      <UniqueIdentifier>{eee04bc3-854a-4b9d-b829-c849ae7cdd44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

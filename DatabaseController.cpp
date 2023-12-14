@@ -38,7 +38,7 @@ DatabaseController::GUNProps DatabaseController::GetGunProperty(int& ID)
 
 	Gun.BulletPath = Parameter->getChild(ID)->getChild(5)->getChild(0)->getValueFile();
 	Gun.Damage	   = Parameter->getChild(ID)->getChild(5)->getChild(1)->getValueInt();
-	Gun.RoF		   = Parameter->getChild(ID)->getChild(5)->getChild(2)->getValueInt();
+	Gun.RoF		   = Parameter->getChild(ID)->getChild(5)->getChild(2)->getValueFloat();
 	Gun.Reload	   = Parameter->getChild(ID)->getChild(5)->getChild(3)->getValueInt();
 
 	return Gun;

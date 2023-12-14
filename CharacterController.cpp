@@ -30,6 +30,8 @@ void CharacterController::Init() {
 
 void CharacterController::Update() {
 
+	if (Health && isDead()) { return; }
+
 	Interact->Update();
 	Animation->Update(Unigine::Game::getIFps(), Unigine::Game::getTime());
 
@@ -73,9 +75,10 @@ void CharacterController::Update() {
 }
 
 void CharacterController::UpdatePhysics() {
+	if (Health && isDead()) return;
 
 	if(!OpenUI){
-	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) { Physics->Run(true); }
+	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W) && Unigine::Input::isKeyPressed(Unigine::Input::KEY_LEFT_SHIFT)) { if(Animation->GetState() == Animation->NORMAL) Physics->Run(true); }
 	else Physics->Run(false);
 
 	if (Unigine::Input::isKeyPressed(Unigine::Input::KEY_W)) { Physics->Move(Physics->FORWARD); }

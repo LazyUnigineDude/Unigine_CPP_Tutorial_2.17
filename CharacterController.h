@@ -13,7 +13,7 @@
 class CharacterController : public Unigine::ComponentBase {
 public:
 	COMPONENT_DEFINE(CharacterController,ComponentBase)
-		COMPONENT_INIT(Init)
+		COMPONENT_INIT(Init, -1)
 		COMPONENT_UPDATE(Update)
 		COMPONENT_UPDATE_PHYSICS(UpdatePhysics)
 		COMPONENT_SHUTDOWN(ShutDown)
@@ -26,6 +26,8 @@ public:
 		PROP_PARAM(Node, GunNode)
 		PROP_PARAM(Node, FootStepNode)
 		PROP_ARRAY(Node, FootNodes)
+
+		bool isDead() { return Health->GetHealth() == 0; }
 
 protected:
 	void Init();
