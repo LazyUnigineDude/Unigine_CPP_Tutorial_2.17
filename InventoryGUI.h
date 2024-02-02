@@ -209,14 +209,13 @@ inline void InventoryGUI::OnClick(Unigine::WidgetPtr Widget) {
 	if (Map.contains(Widget)) { Pos = Map[Widget]; }
 	DatabaseController* Database = Database->GetDatabase();
 	
-	int ID = Inventory->GetItem(Pos).x, 
-		Amount = Inventory->GetItem(Pos).y, 
-		Value = Database->GetValue(ID);
-	const char* Name = Database->GetName(ID);
+	Unigine::Math::ivec2 Item = Inventory->Delete(Pos);
 
-	if (ID == 1) {
+	if (Item.x == 1) {
+		
+		Item.y--;
+		if (Item.y != 0) Inventory->Add(Pos, Item);
 
-		Inventory->Add(Unigine::Math::ivec2(ID, -1));
 		Health->HealthChange(2);
 		Hide();
 		Show();

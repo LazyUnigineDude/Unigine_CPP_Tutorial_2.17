@@ -22,7 +22,8 @@ void MainMenu::Init() {
 	QuitButton->addCallback(GUI->CLICKED, Unigine::MakeCallback(this, &MainMenu::onQuit));
 	QuitButton->setPosition((GUI->getWidth() * 0.5) - 100, (GUI->getHeight() * 0.5) + 50);
 
-	MenuOpened(isMainMenu);
+	MenuOpened(isMainMenu); 
+	Unigine::Console::writeLine("show_fps 1");
 
 	if (isMainMenu) {
 
