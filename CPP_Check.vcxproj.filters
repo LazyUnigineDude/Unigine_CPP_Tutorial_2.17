@@ -103,6 +103,9 @@
     <ClCompile Include="BackgroundMusicMixer.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
+    <ClCompile Include="TruckController.cpp">
+      <Filter>Vehicles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEditorLogic.h">
@@ -216,6 +219,9 @@
     <ClInclude Include="BackgroundMusicMixer.h">
       <Filter>Sound</Filter>
     </ClInclude>
+    <ClInclude Include="TruckController.h">
+      <Filter>Vehicles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_MainLoop">
@@ -277,6 +283,9 @@
     </Filter>
     <Filter Include="Mission">
       <UniqueIdentifier>{eee04bc3-854a-4b9d-b829-c849ae7cdd44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vehicles">
+      <UniqueIdentifier>{01ef9296-deb9-4f25-86db-2ce25cf841f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
