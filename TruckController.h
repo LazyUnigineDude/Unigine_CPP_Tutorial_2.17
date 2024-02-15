@@ -16,8 +16,8 @@ public:
 
 	PROP_PARAM(Float, Acceleration, 5);
 	PROP_PARAM(Float, BreakingValue, 10);
-	PROP_PARAM(Float, MaxTorque, 100);
-	PROP_PARAM(Float, MaxVelocity, 50);
+	PROP_PARAM(Float, MaxTorque, 30);
+	PROP_PARAM(Float, MaxVelocity, 60);
 
 protected:
 

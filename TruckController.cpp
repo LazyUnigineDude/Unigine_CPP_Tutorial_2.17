@@ -56,7 +56,7 @@ void TruckController::UpdatePhysics() {
 	wheelR->setAngularVelocity(currVel);
 	for (auto& i : wheelBack) i->setAngularVelocity(currVel);
 
-	wheelL->setAngularTorque(currTor * 4);
-	wheelR->setAngularTorque(currTor * 4);
+	wheelL->setAngularTorque(currTor);
+	wheelR->setAngularTorque(currTor);
 	for (auto& i : wheelBack) i->setAngularTorque(currTor);
 }
